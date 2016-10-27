@@ -3,5 +3,5 @@ project(ueb1)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.c datastructure.h datetime.c tools.h datetime.h)
 add_executable(ueb1 ${SOURCE_FILES})
