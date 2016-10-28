@@ -1,18 +1,41 @@
-//
-// Created by tim on 27.10.16.
-//
+#ifndef DATETIME_H
+#define DATETIME_H DATETIME_H
 
-#ifndef UEB1_DATETIME_H
-#define UEB1_DATETIME_H
+/**********************************
+* Funktionergebnisse ist Wahrheitswert,
+* ob angegebene Datum ein gültiges Datum ist
+**********************************/
+int getDateFromString(char *, TDate *);
 
-int isLeapYear (int year);
+/**********************************
+* checks if the entered date is valid
+**********************************/
+int isDateValid (TDate);
 
-int getDaysOfMonth(TDate date);
+/**********************************
+* Is a year leap?
+**********************************/
+int isLeapYear (int Y);
 
-int isDateValid(TDate date);
 
-int getDateFromString(char *input, TDate *date);
+/**********************************
+* Checks 31th day
+** 1,3,5,7 months have 31 day, 8,10,12 have the same.
+** the rest has 30 days
+**********************************/
+int getDaysOfMonth(TDate);
 
-int getTimeFromString(char *input, TTime *time);
+/**********************************
+* INext 2 Funktions check the time
+**********************************/
+int getTimeFromString (char *, TTime *);
 
-#endif //UEB1_DATETIME_H
+
+/**********************************
+* checks if the entered time is valid
+**********************************/
+int isTimeValid (TTime);
+
+
+
+#endif

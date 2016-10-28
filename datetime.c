@@ -1,29 +1,38 @@
-//
-// Created by tim on 27.10.16.
-//
-
-#include "datastructure.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "datastructure.h"
 
-int isLeapYear (int year){
-    /*
-     * Wenn teilbar durch 400 teilbar, dann Schaltjahr.
-     * Wenn teilbar durch 100, dann kein Schaltjahr.
-     * Wenn teilbar durch 4, dann Schaltjahr.
-     */
 
-    if (year % 400 == 0)
-        return 1;
+/* checks if the entered date is valid */
 
-    else if (year % 100 == 0)
-        return 0;
+int isLeapYear (int Y)
+{
+    int leap;
 
-    else if (year % 4 == 0)
-        return 1;
+    if (Y % 4 == 0)
+    {
+        if (Y % 100 != 0)
+        {
+            leap = 1;
+        }
 
+        else
+        if (Y % 400 == 0)
+        {
+            leap = 1;
+        }
+
+        else
+        {
+            leap = 0;
+        }
+    }
     else
-        return 0;
+    {
+        leap = 0;
+    }
+
+    return leap;
 }
 
 int getDaysOfMonth(TDate date){
@@ -53,6 +62,65 @@ int isDateValid(TDate date){
     }
 }
 
+
+/* Checks if the entered year is a leap year, if a 29.02 was entered
+*/
+
+
+int getDateFromString(char *Input, TDate *Date)
+{
+
+    int D, M, Y, CheckDate;
+    char point = '.';
+    char *pD, *pM, *pY, *tmp;
+
+    pD = Input;
+    tmp = Input;
+
+    // Looking for a first non-digit sign and moving a pointer to a month´s side
+    while (*tmp && (*tmp >= '0' && *tmp <= '9'))
+    {
+        tmp++;
+    }
+
+    D = atoi(pD);
+
+    // checks if the correct point was entered
+    CheckDate = (point == *tmp);
+
+    tmp++; // Skips the dots
+
+    pM = tmp;
+
+    while (*tmp && (*tmp >= '0' && *tmp <= '9'))
+    {
+        tmp++;
+    }
+
+    M = atoi(pM);
+
+    CheckDate *= (point == *tmp);
+
+    if (*tmp == '\0') {
+        return 0;
+    }
+    tmp++; // Skips the dots
+    pY = tmp;
+
+    Y = atoi(pY);
+
+    Date->Day = D;
+    Date->Month = M;
+    Date->Year = Y;
+
+    CheckDate *= isDateValid (*Date);
+
+
+    return CheckDate;
+
+}
+
+
 int isTimeValid(TTime time){
     if(time.Hour >= 0 && time.Hour <= 23 && time.Minute >= 0 && time.Minute <= 59 && time.Second >= 0 && time.Second <= 59)
         return 1;
@@ -60,108 +128,68 @@ int isTimeValid(TTime time){
         return 0;
 }
 
-void parse(char *input, char *first, char *second, char *third, char delimiter) {
-    int countc = 0;
-    int counti = 0;
-    int cycle = 1;
 
-    //TDate *tmpDate = malloc(sizeof(TDate));
+int getTimeFromString (char *Input, TTime *Time)
+{
+    int H, Min, S, CheckTime;
+    char semicol = ':';
+    char *pH, *pMin, *pS, *tmpT;
 
+    pH = Input;
+    tmpT = Input;
 
-    while (*(input + counti)) {
-        if (*(input + counti) != delimiter) {
-            switch (cycle) {
-                case 1:
-                    *(first + countc) = *(input + counti);
-                    counti++;
-                    countc++;
-                    break;
-                case 2:
-                    *(second + countc) = *(input + counti);
-                    counti++;
-                    countc++;
-                    break;
-                case 3:
-                    *(third + countc) = *(input + counti);
-                    counti++;
-                    countc++;
-
-                    if (!*(input + counti)) {
-                        *(third + countc) = '\0';
-                        //(*tmpDate).Year = atoi(third);
-                    }
-                    break;
-            }
-
-        } else {
-            switch (cycle) {
-                case 1:
-                    *(first + countc) = '\0';
-                    counti++;
-                    // (*tmpDate).Day = atoi(first);
-                    break;
-                case 2:
-                    *(second + countc) = '\0';
-                    //(*tmpDate).Month = atoi(second);
-                    counti++;
-                    break;
-                case 3:
-                    *(third + countc) = '\0';
-                    //(*tmpDate).Year = atoi(third);
-                    counti++;
-                    break;
-            }
-            cycle++;
-            countc = 0;
-
-        }
-
+    while (*tmpT >= '0' && *tmpT <= '9' )
+    {
+        tmpT++;
     }
+
+    // the (probably) semicolon was found
+    // reading the hours
+    H = atoi (pH);
+
+    // checking if a semicolon stays in a string entered
+    CheckTime = (semicol == *tmpT);
+
+    tmpT++;
+    pMin = tmpT;
+
+    while (*tmpT >= '0' && *tmpT <= '9' )
+    {
+        tmpT++;
+    }
+
+    // the (probably) semicolon was found
+    // reading the minutes
+    Min = atoi (pMin);
+
+    // checking if a semicolon stays in a string entered
+    CheckTime *= (semicol == *tmpT);
+
+    tmpT++;
+    pS = tmpT;
+
+
+    // reading the seconds
+    S = atoi (pS);
+
+    CheckTime *= isTimeValid (*Time);
+
+    Time->Hour = H;
+    Time->Minute = Min;
+    Time->Second = S;
+
+    return CheckTime;
+
 }
 
-int getDateFromString(char *input, TDate *date){
-
-    char *cday = malloc(sizeof(input));
-    char *cmonth = malloc(sizeof(input));
-    char *cyear = malloc(sizeof(input));
-
-    parse(input, cday, cmonth, cyear, '.');
-
-    TDate *tmpDate = malloc(sizeof(TDate));
-
-    (*tmpDate).Day = atoi(cday);
-    (*tmpDate).Month = atoi(cmonth);
-    (*tmpDate).Year = atoi(cyear);
 
 
-    if (isDateValid(*tmpDate)){
-        *date = *tmpDate;
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
 
-int getTimeFromString(char *input, TTime *time){
-    char *csecond = malloc(sizeof(input));
-    char *cminute = malloc(sizeof(input));
-    char *chour = malloc(sizeof(input));
 
-    parse (input, csecond, cminute, chour, ':');
 
-    TTime *tmpTime = malloc(sizeof(TTime));
 
-    (*tmpTime).Second = atoi(csecond);
-    (*tmpTime).Minute = atoi(cminute);
-    (*tmpTime).Hour = atoi(chour);
 
-    if (isTimeValid(*tmpTime)){
-        *time = *tmpTime;
-        return 1;
-    }
-    else {
-        return 0;
-    }
 
-}
+
+
+
