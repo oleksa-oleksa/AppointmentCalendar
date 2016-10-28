@@ -4,44 +4,54 @@
 
 #ifndef UEB1_DATETIME_H
 #define UEB1_DATETIME_H
-/*****************************************************
- * Funktion: isLeapYear
- * Beschreibung: Überprüft ob das Jahr ein Schaltjahr ist
- * Parameter: int year, Jahreszahl
- * Ergebnis: Wahrheitswert int
- */
+/***************************************************************************
+ *  function:    isLeapYear
+ *  description: Checks if the input date is a leap year.
+ *  parameter:   year: the input year
+ *  result :     Returns if the year is a leap year.
+ ***************************************************************************/
 int isLeapYear (int year);
 
-/*****************************************************
- * Funktion: getDaysofMonth
- * Beschreibung: Ordnet den Monaten die passende Anzahl an Tagen zu
- * Parameter: TDate Struktur mit dem Jahr,Monat und Tag
- * Ergebnis: gibt die Anzahl der Tage des Monats zürück
- */
+/***************************************************************************
+ *  function:    getDaysOfMonth
+ *  description: Returns the amount of days of the input month.
+ *  parameter:   date: the input date
+ *  result :     Returns the number of days as integer.
+ ***************************************************************************/
 int getDaysOfMonth(TDate date);
 
-/*****************************************************
- * Funktion: isDateValid
- * Beschreibung: Überprüft ob das Datum gültig ist
- * Parameter: TDate Struktur mit dem Jahr,Monat und Tag
- * Ergebnis: Wahrheitswert int
- */
+/***************************************************************************
+ *  function:    isDateValid
+ *  description: Checks if the input date is valid.
+ *  parameter:   date: The input date to check.
+ *  result :     Returns 1 if valid, 0 if invalid.
+ ***************************************************************************/
 int isDateValid(TDate date);
 
-/*****************************************************
- * Funktion: getDateFromString
- * Beschreibung: Wandelt die Eingabe in der Zeichenkette in ein gültiges Datum um
- * Parameter: char Zeiger auf die Eingabe, Zeiger auf die TDate Struktur
- * Ergebnis: Gibt das Datum in der passenden Form zurück
- */
+/***************************************************************************
+ *  function:    isTimeValid
+ *  description: Checks if the input time is valid.
+ *  parameter:   time: The input time to check.
+ *  result :     Returns 1 if valid, 0 if invalid.
+ ***************************************************************************/
+int isTimeValid(TTime time);
+
+/***************************************************************************
+ *  function:    getDateFromString
+ *  description: Parses the input string into a TDate.
+ *  parameter:   input: the input string
+ *               date: the output TDate
+ *  result :     1 if the date is valid, 0 if the date is invalid.
+ ***************************************************************************/
 int getDateFromString(char *input, TDate *date);
 
-/*****************************************************
- * Funktion: getTimeFromString
- * Beschreibung: Wandelt die Eingabe der Zeit aus der Zeichenkette in eine gültige Uhrzeit um
- * Parameter: char Zeiger auf die Eingabe, Zeiger auf die TTime Struktur
- * Ergebnis: Gibt die Uhrzeit in der passenden Form zurück
- */
+/***************************************************************************
+ *  function:    getTimeFromString
+ *  description: Parses the input string into a TTime.
+ *  parameter:   input: the input string
+ *               date: the output TTime
+ *  result :     1 if the date is valid, 0 if the date is invalid.
+ ***************************************************************************/
 int getTimeFromString(char *input, TTime *time);
 
 #endif //UEB1_DATETIME_H
