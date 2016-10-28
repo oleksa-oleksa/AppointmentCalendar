@@ -5,6 +5,9 @@
 #ifndef UEB1_DATASTRUCTURE_H
 #define UEB1_DATASTRUCTURE_H
 
+//TODO: TDayOfTheWeek
+//TODO: TAppointment
+
 typedef struct {
     int Day;
     int Month;
@@ -16,6 +19,5 @@ typedef struct {
     int Minute;
     int Second;
 } TTime;
-
 
 #endif //UEB1_DATASTRUCTURE_H

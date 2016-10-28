@@ -5,6 +5,9 @@
 #ifndef TOOLS_TOOLS_H
 #define TOOLS_TOOLS_H
 
+//TODO: waitForEnter
+//TODO: printLine
+
 /***************************************************************************
  *  function:    clearBuffer
  *  description: clears the input buffer
