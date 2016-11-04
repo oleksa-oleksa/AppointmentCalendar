@@ -28,6 +28,6 @@
      *  parameter:   text: the message (question) to be asked.
      *  result :     returns 1 if the input is 'j'; 0 if it's 'n'.
      ***************************************************************************/
-    int askYesOrNo(char *);
+    int askYesOrNo (char *);
 
 #endif //TOOLS_TOOLS_H
