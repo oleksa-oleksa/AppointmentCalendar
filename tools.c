@@ -3,7 +3,6 @@
 
 //TODO: waitForEnter
 //TODO: printLine
-// TODO: New Comment
 
 /***************************************************************************
  *  function:    clearBuffer
