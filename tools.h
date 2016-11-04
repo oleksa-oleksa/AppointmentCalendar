@@ -14,13 +14,11 @@
  *  parameter:   -
  *  result :     returns 0
  ***************************************************************************/
-int clearBuffer(){
+void clearBuffer(){
     char c;
     do{
         scanf("%c", &c);
     }while(c != '\n');
-
-    return 0;
 }
 
 
