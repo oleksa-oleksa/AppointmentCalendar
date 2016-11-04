@@ -64,7 +64,7 @@ int isDateValid(TDate date){
 
 
 /* Checks if the entered year is a leap year, if a 29.02 was entered
-*/ // added new
+*/ // added new Tim
 
 
 int getDateFromString(char *Input, TDate *Date)
