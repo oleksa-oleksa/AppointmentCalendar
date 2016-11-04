@@ -4,6 +4,7 @@
 
 #ifndef TOOLS_TOOLS_H
 #define TOOLS_TOOLS_H
+#include <stdlib.h>
 
 //TODO: waitForEnter
 //TODO: printLine
@@ -37,6 +38,10 @@ void clearScreen()
 #ifdef unix
     printf("\033[2J");
 #endif
+
+#ifdef __APPLE__
+    system("clear");
+#endif
 }
 
 /***************************************************************************
@@ -49,7 +54,8 @@ int askYesOrNo(char *text) {
 
     char Abfrage;
     int Erg;
-    do{
+    do
+    {
         //   Beispielausgabe("Möchten Sie noch einmal? (j/n) ", 'I');
         printf(text);
         Erg = scanf("%c", &Abfrage);
@@ -57,7 +63,7 @@ int askYesOrNo(char *text) {
 
         if(Abfrage != 'J' && Abfrage != 'j' && Abfrage != 'n' && Abfrage != 'N')
             Erg = 0;
-    }while(!Erg);
+    } while(!Erg);
     if(Abfrage == 'j' || Abfrage == 'J')
         return 1;
     else
