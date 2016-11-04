@@ -2,11 +2,12 @@
 // Created by Tim on 02.06.2016.
 //
 
+
+#include <stdio.h>
+#include "tools.h"
+
 //TODO: waitForEnter
 //TODO: printLine
-
-#ifndef UEB1_TOOLS_H
-#define UEB1_TOOLS_H
 
 /***************************************************************************
  *  function:    clearBuffer
@@ -14,7 +15,12 @@
  *  parameter:   -
  *  result :     returns 0
  ***************************************************************************/
-void clearBuffer();
+void clearBuffer(){
+    char c;
+    do{
+        scanf("%c", &c);
+    }while(c != '\n');
+}
 
 
 /***************************************************************************
@@ -23,7 +29,20 @@ void clearBuffer();
  *  parameter:   -
  *  result :     -
  ***************************************************************************/
-void clearScreen();
+void clearScreen()
+{
+#ifdef _WIN32
+    system("cls");
+#endif //WIN_32
+
+#ifdef unix
+    printf("\033[2J");
+#endif
+
+#ifdef __APPLE__
+    system("clear");
+#endif
+}
 
 /***************************************************************************
  *  function:    askYesOrNo
@@ -31,7 +50,24 @@ void clearScreen();
  *  parameter:   text: the message (question) to be asked.
  *  result :     returns 1 if the input is 'j'; 0 if it's 'n'.
  ***************************************************************************/
-int askYesOrNo(char *text);
+int askYesOrNo(char *text) {
+
+    char Abfrage;
+    int Erg;
+    do
+    {
+        //   Beispielausgabe("Möchten Sie noch einmal? (j/n) ", 'I');
+        printf(text);
+        Erg = scanf("%c", &Abfrage);
+        clearBuffer();
+
+        if(Abfrage != 'J' && Abfrage != 'j' && Abfrage != 'n' && Abfrage != 'N')
+            Erg = 0;
+    } while(!Erg);
+    if(Abfrage == 'j' || Abfrage == 'J')
+        return 1;
+    else
+        return 0;
+}
 
 
-#endif //UEB1_DATETIME_H
