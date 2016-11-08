@@ -35,26 +35,34 @@ int isLeapYear (int Y)
     return leap;
 }
 
-int getDaysOfMonth(TDate date){
+int getDaysOfMonth(TDate Date)
+{
     int daysOfMonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if(date.Month == 2){
-        if(isLeapYear(date.Year)){
+    if(Date.Month == 2)
+    {
+        if(isLeapYear(Date.Year))
+        {
             return 29;
         }
-        else{
+        else
+        {
             return 28;
         }
     }
-    if(date.Month >= 1 && date.Month <=12){
-        return daysOfMonth[date.Month];
+    if(Date.Month >= 1 && Date.Month <=12)
+    {
+        return daysOfMonth[Date.Month];
     }
-    else{
+    else
+    {
         return 0;
     }
 }
 
-int isDateValid(TDate date){
-    if(getDaysOfMonth(date) && date.Day <= getDaysOfMonth(date) && date.Day > 0 && date.Year >= 0 ){
+int isDateValid(TDate Date)
+{
+    if(getDaysOfMonth(Date) && Date.Day <= getDaysOfMonth(Date) && Date.Day > 0 && Date.Year >= 0 )
+    {
         return 1;
     }
     else{
@@ -121,8 +129,9 @@ int getDateFromString(char *Input, TDate *Date)
 }
 
 
-int isTimeValid(TTime time){
-    if(time.Hour >= 0 && time.Hour <= 23 && time.Minute >= 0 && time.Minute <= 59 && time.Second >= 0 && time.Second <= 59)
+int isTimeValid(TTime Time)
+{
+    if(Time.Hour >= 0 && Time.Hour <= 23 && Time.Minute >= 0 && Time.Minute <= 59 && Time.Second >= 0 && Time.Second <= 59)
         return 1;
     else
         return 0;

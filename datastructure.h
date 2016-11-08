@@ -1,23 +1,42 @@
-//
-// Created by tim on 27.10.16.
-//
+#ifndef DATASTRUCTURE_H
+    #define DATASTRUCTURE_H DATASTRUCTURE_H
+    #define MAX-APPOINTMENTS 100;
 
-#ifndef UEB1_DATASTRUCTURE_H
-#define UEB1_DATASTRUCTURE_H
+    typedef struct
+    {
+        int NotADay = 0;
+        int Mo = 1;
+        int Tu = 2;
+        int We = 3;
+        int Th = 4;
+        int Fr = 5;
+        int Sa = 6;
+        int Su = 7;
 
-//TODO: TDayOfTheWeek
-//TODO: TAppointment
+    } TDayOfTheWeek;
 
-typedef struct {
-    int Day;
-    int Month;
-    int Year;
-} TDate;
+    typedef struct
+    {
+        int Day;
+        int Month;
+        int Year;
+        TDayOfTheWeek DayOfTheWeek;
+    } TDate;
 
-typedef struct {
-    int Hour;
-    int Minute;
-    int Second;
-} TTime;
+    typedef struct
+    {
+        int Hour;
+        int Minute;
+        int Second;
+    } TTime;
+
+    typedef struct
+    {
+        TDate Date;
+        TTime Time;
+        char Decription;
+        char Location;
+
+    } TAppointment;
 
 #endif //UEB1_DATASTRUCTURE_H
