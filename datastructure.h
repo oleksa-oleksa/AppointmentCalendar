@@ -1,19 +1,22 @@
 #ifndef DATASTRUCTURE_H
     #define DATASTRUCTURE_H DATASTRUCTURE_H
-    #define MAX-APPOINTMENTS 100;
+
+    #define MAX_APPOINTMENTS 100
 
     typedef struct
     {
-        int NotADay = 0;
-        int Mo = 1;
-        int Tu = 2;
-        int We = 3;
-        int Th = 4;
-        int Fr = 5;
-        int Sa = 6;
-        int Su = 7;
+        TDate Date;
+        TTime Time;
+        char Decription;
+        char Location;
 
-    } TDayOfTheWeek;
+    } TAppointment;
+
+    extern int countAppointment;
+    extern TAppointment Calendar[];
+
+
+  enum TDayOfTheWeek {NotaDay, Mo, Tu, We, Th, Fr, Sa, Su};
 
     typedef struct
     {
@@ -30,13 +33,6 @@
         int Second;
     } TTime;
 
-    typedef struct
-    {
-        TDate Date;
-        TTime Time;
-        char Decription;
-        char Location;
 
-    } TAppointment;
 
-#endif //UEB1_DATASTRUCTURE_H
+#endif //DATASTRUCTURE_H

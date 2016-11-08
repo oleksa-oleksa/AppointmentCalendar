@@ -2,8 +2,21 @@
 #define TOOLS_H TOOLS_H
 
 
-//TODO: waitForEnter
-//TODO: printLine
+    /***************************************************************************
+     *  function:    waitForEnter
+     *  description: Holds the program flow before Enter key is pressed
+     *  parameter:   -
+     *  result :     -
+     ***************************************************************************/
+    void waitForEnter ();
+
+    /***************************************************************************
+     *  function:    printLine
+     *  description: prints '-' n times
+     *  parameter:   Char to be printed, n as am amounts of repeats
+     *  result :     -
+     ***************************************************************************/
+    void printLine (char s, int n);
 
     /***************************************************************************
      *  function:    clearBuffer
