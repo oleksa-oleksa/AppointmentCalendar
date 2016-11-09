@@ -3,17 +3,10 @@
 
     #define MAX_APPOINTMENTS 100
 
-    typedef struct
-    {
-        TDate Date;
-        TTime Time;
-        char Decription;
-        char Location;
 
-    } TAppointment;
 
     extern int countAppointment;
-    extern TAppointment Calendar[];
+
 
 
   enum TDayOfTheWeek {NotaDay, Mo, Tu, We, Th, Fr, Sa, Su};
@@ -23,8 +16,9 @@
         int Day;
         int Month;
         int Year;
-        TDayOfTheWeek DayOfTheWeek;
+        enum TDayOfTheWeek DayOfTheWeek;
     } TDate;
+
 
     typedef struct
     {
@@ -34,5 +28,14 @@
     } TTime;
 
 
+typedef struct
+{
+    TDate Date;
+    TTime Time;
+    char Decription;
+    char Location;
 
+} TAppointment;
+
+extern TAppointment Calendar[];
 #endif //DATASTRUCTURE_H
