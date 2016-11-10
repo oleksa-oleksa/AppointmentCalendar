@@ -36,5 +36,5 @@ int main()
             case 6: listCalendar();
                     break;
         }
-    }while (askYesOrNo("Nochmal (j/n)?"));
+    }while (askYesOrNo("Nochmal (j/n)? "));
 }
