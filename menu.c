@@ -4,23 +4,25 @@
 
 #include "menu.h"
 #include "tools.h"
+#include <stdio.h>
 
 //TODO: getMenu
 int getMenu(char *Title, char* Points[], int anz){
     int valid = 0;
-    i = 0;
     int choice;
     do{
+        int i = 0;
         clearScreen();
         printf("%s \n",Title);
-        printf("============"); // eigentlich printline()
-        for (int i = 0; i < anz; ++i) {
-            printf("%i. %s \n",i,Points[i]); //TODO:Punkt ?
+        printf("==================\n\n");
+        for (0; i < anz; ++i) {
+            printf("%i. %s \n",i+1,Points[i]); //TODO:Punkt ?
         }
-        printf("\nBitte wählen Sie einen Menüpunkt");
+        printf("\nBitte wählen Sie einen Menüpunkt: ");
         valid = scanf("%i",&choice);
+        clearBuffer();
         if(choice > anz || choice <= 0){
-            printf("Fehler, keine gültige Menüwahl");
+            printf("Fehler, keine gültige Menüwahl \n\n");
             valid = 0;
         }
 

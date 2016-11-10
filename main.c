@@ -19,11 +19,22 @@ int main()
 
     do
     {
-        int choice = getMenu("Kalender", Menu, 7);
+        int choice = getMenu("Terminverwaltung", Menu, 7);
 
         switch(choice)
         {
-            //case 1:
+            case 1: createAppointment();
+                    break;
+            case 2: editAppointment();
+                    break;
+            case 3: deleteAppointment();
+                    break;
+            case 4: searchAppointment();
+                    break;
+            case 5: sortCalendar();
+                    break;
+            case 6: listCalendar();
+                    break;
         }
-    }while (askYesOrNo("Nochmal?"));
+    }while (askYesOrNo("Nochmal (j/n)?"));
 }
