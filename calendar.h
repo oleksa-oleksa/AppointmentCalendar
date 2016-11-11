@@ -22,7 +22,7 @@ void createAppointment();
 void editAppointment();
 //TODO: deleteAppointment
 /***************************************************************************
- *  function:    
+ *  function:    deleteAppointment
  *  description: 
  *  parameter:   
  *  result :     
@@ -30,7 +30,7 @@ void editAppointment();
 void deleteAppointment();
 //TODO: searchAppointment
 /***************************************************************************
- *  function:
+ *  function:    searchAppointment
  *  description:
  *  parameter:
  *  result :
@@ -38,7 +38,7 @@ void deleteAppointment();
 void searchAppointment();
 //TODO: sortCalendar
 /***************************************************************************
- *  function:
+ *  function:    sortCalendar
  *  description:
  *  parameter:
  *  result :
@@ -46,7 +46,7 @@ void searchAppointment();
 void sortCalendar();
 //TODO: listCalendar
 /***************************************************************************
- *  function:
+ *  function:    listCalendar
  *  description:
  *  parameter:
  *  result :
