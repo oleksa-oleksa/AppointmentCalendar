@@ -4,7 +4,7 @@
 
 #ifndef UEB1_CALENDAR_H
 #define UEB1_CALENDAR_H
-//TODO: createAppointment
+
 /***************************************************************************
  *  function:    createAppointment
  *  description:  
@@ -12,7 +12,6 @@
  *  result :     
  ***************************************************************************/
 void createAppointment();
-//TODO: editAppointment
 /***************************************************************************
  *  function:    editAppointment
  *  description: 
@@ -20,7 +19,6 @@ void createAppointment();
  *  result :     
  ***************************************************************************/
 void editAppointment();
-//TODO: deleteAppointment
 /***************************************************************************
  *  function:    deleteAppointment
  *  description: 
@@ -28,7 +26,6 @@ void editAppointment();
  *  result :     
  ***************************************************************************/
 void deleteAppointment();
-//TODO: searchAppointment
 /***************************************************************************
  *  function:    searchAppointment
  *  description:
@@ -36,7 +33,6 @@ void deleteAppointment();
  *  result :
  ***************************************************************************/
 void searchAppointment();
-//TODO: sortCalendar
 /***************************************************************************
  *  function:    sortCalendar
  *  description:
@@ -44,7 +40,6 @@ void searchAppointment();
  *  result :
  ***************************************************************************/
 void sortCalendar();
-//TODO: listCalendar
 /***************************************************************************
  *  function:    listCalendar
  *  description:
@@ -53,5 +48,8 @@ void sortCalendar();
  ***************************************************************************/
 void listCalendar();
 
-
+//TODO: freeCalendar
+//TODO: freeAppointment
+//TODO: listCalendar
+//TODO: createAppointment
 #endif //UEB1_CALENDAR_H

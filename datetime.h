@@ -51,5 +51,18 @@
      ***************************************************************************/
     int getTimeFromString(char *input, TTime *time);
 
+/***************************************************************************
+ *  function:    getDate
+ *  description: Asks for time input by user
+ *  parameter:   char *prompt: prompt for input
+ *
+ *  result :
+ ***************************************************************************/
+//TODO: getDate
+//TODO: getTime
+//TODO: getDateFromString
+//TODO: getTimeFromString
+//TODO: printDate
+//TODO: printTime
 #endif //UEB1_DATETIME_H
 

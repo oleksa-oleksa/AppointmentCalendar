@@ -7,7 +7,6 @@
 
 int main()
 {
-//TODO: Menü in Schleife anzeigen.
 
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -35,6 +34,7 @@ int main()
                     break;
             case 6: listCalendar();
                     break;
+            default: printf("Fehler");
         }
     }while (askYesOrNo("Nochmal (j/n)? "));
 }
