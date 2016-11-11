@@ -12,19 +12,19 @@ TAppointment Calendar[MAX_APPOINTMENTS];
 void createAppointment(){
 
 }
-//TODO: editAppointment
+
 void editAppointment(){
 
 }
-//TODO: deleteAppointment
+
 void deleteAppointment(){
 
 }
-//TODO: searchAppointment
+
 void searchAppointment(){
 
 }
-//TODO: sortCalendar
+
 void sortCalendar(){
 
 }

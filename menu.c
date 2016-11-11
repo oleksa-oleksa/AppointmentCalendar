@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 
-//TODO: getMenu
 int getMenu(char *Title, char* Points[], int anz){
     int valid = 0;
     int choice;
@@ -17,7 +16,7 @@ int getMenu(char *Title, char* Points[], int anz){
         printf("%s \n",Title);
         printLine('=', strlen(Title));
         for (0; i < anz; ++i) {
-            printf("%i. %s \n",i+1,Points[i]); //TODO:Punkt ?
+            printf("%i. %s \n",i+1,Points[i]);
         }
         printf("\nBitte wählen Sie einen Menüpunkt: ");
         valid = scanf("%i",&choice);
