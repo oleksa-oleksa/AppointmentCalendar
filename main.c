@@ -9,6 +9,7 @@ int main()
 {
 //TODO: Menü in Schleife anzeigen.
 
+    int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
                     "Termin löschen",
@@ -19,7 +20,7 @@ int main()
 
     do
     {
-        int choice = getMenu("Terminverwaltung", Menu, 7);
+        choice = getMenu("Terminverwaltung", Menu, 7);
 
         switch(choice)
         {
@@ -36,5 +37,5 @@ int main()
             case 6: listCalendar();
                     break;
         }
-    }while (askYesOrNo("Nochmal (j/n)? "));
+    } while (choice != 7);
 }

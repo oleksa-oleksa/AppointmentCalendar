@@ -5,8 +5,9 @@
 #include "calendar.h"
 #include "datastructure.h"
 
-extern int AppointmentCount;
-extern TAppointment Calendar[MAX_APPOINTMENTS];
+int AppointmentCount = 0;
+TAppointment Calendar[MAX_APPOINTMENTS];
+
 //TODO: createAppointment
 void createAppointment(){
 
