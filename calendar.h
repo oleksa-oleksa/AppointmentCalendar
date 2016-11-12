@@ -48,8 +48,8 @@ void sortCalendar();
  ***************************************************************************/
 void listCalendar();
 
-//TODO: freeCalendar
-//TODO: freeAppointment
-//TODO: listCalendar gibt nach Ausgabe einer Listenüberschrift alle Termine tabellarisch aus. Zuerst wird das Datum ausgegeben, darunter alle Termine dieses Datums.
-//TODO: createAppointment lässt den Benutzer einen neuen Termin erstellen. Benutzer soll Datum, Uhrzeit, Terminbeschreibung, Ort und Dauer eingeben können.
+//TODO: Tim: freeCalendar
+//TODO: Kati: freeAppointment
+//TODO: Tim: listCalendar gibt nach Ausgabe einer Listenüberschrift alle Termine tabellarisch aus. Zuerst wird das Datum ausgegeben, darunter alle Termine dieses Datums.
+//TODO: Kati: createAppointment lässt den Benutzer einen neuen Termin erstellen. Benutzer soll Datum, Uhrzeit, Terminbeschreibung, Ort und Dauer eingeben können.
 #endif //UEB1_CALENDAR_H
