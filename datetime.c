@@ -138,7 +138,7 @@ int isTimeValid(TTime Time)
 }
 
 
-int getTimeFromString (char *Input, TTime *Time)
+int getTimeFromString(char *Input, TTime *Time, int withSec)
 {
     int H, Min, S, CheckTime;
     char semicol = ':';
@@ -189,6 +189,10 @@ int getTimeFromString (char *Input, TTime *Time)
 
     return CheckTime;
 
+}
+
+void printTime(TTime time) {
+    printf("%d:%d", time.Hour, time.Minute);
 }
 
 
