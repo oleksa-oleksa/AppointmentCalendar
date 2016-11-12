@@ -50,6 +50,6 @@ void listCalendar();
 
 //TODO: freeCalendar
 //TODO: freeAppointment
-//TODO: listCalendar
-//TODO: createAppointment
+//TODO: listCalendar gibt nach Ausgabe einer Listenüberschrift alle Termine tabellarisch aus. Zuerst wird das Datum ausgegeben, darunter alle Termine dieses Datums.
+//TODO: createAppointment lässt den Benutzer einen neuen Termin erstellen. Benutzer soll Datum, Uhrzeit, Terminbeschreibung, Ort und Dauer eingeben können.
 #endif //UEB1_CALENDAR_H

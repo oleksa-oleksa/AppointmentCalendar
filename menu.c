@@ -7,14 +7,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int getMenu(char *Title, char* Points[], int anz){
+int getMenu(char *Title, char **Points, unsigned int anz){
     int valid = 0;
     int choice;
     do{
         int i = 0;
         clearScreen();
         printf("%s \n",Title);
-        printLine('=', strlen(Title));
+        printLine('=', (int) strlen(Title));
         for (0; i < anz; ++i) {
             printf("%i. %s \n",i+1,Points[i]);
         }

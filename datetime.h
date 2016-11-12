@@ -58,11 +58,11 @@
  *
  *  result :
  ***************************************************************************/
-//TODO: getDate
-//TODO: getTime
-//TODO: getDateFromString
-//TODO: getTimeFromString
-//TODO: printDate
-//TODO: printTime
+//TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben.
+//TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben.
+//TODO: getDateFromString um Ermittlung des Wochentags erweitern.
+//TODO: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben.
+//TODO: printDate soll Datum formatiert ausgeben
+//TODO: printTime soll Zeit formatiert ausgeben.
 #endif //UEB1_DATETIME_H
 

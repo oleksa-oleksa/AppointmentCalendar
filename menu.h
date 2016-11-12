@@ -13,5 +13,5 @@
  *               int anz: the amount of items
  *  result :     the chosen item
  ***************************************************************************/
-int getMenu(char*, char* [], int);
+int getMenu(char *, char **, unsigned int);
 #endif //UEB1_MENU_H

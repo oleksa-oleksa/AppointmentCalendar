@@ -43,6 +43,6 @@
      ***************************************************************************/
     int askYesOrNo (char *);
 
-//TODO: getText
+//TODO: Alexandra: getText
 
 #endif //TOOLS_TOOLS_H
