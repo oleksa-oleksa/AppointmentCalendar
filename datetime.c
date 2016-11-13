@@ -140,7 +140,7 @@ int isTimeValid(TTime Time)
 
 int getTimeFromString(char *Input, TTime *Time, int withSec)
 {
-    int H, Min, S, CheckTime;
+    int H, Min, S = 0, CheckTime;
     char semicol = ':';
     char *pH, *pMin, *pS, *tmpT;
 
@@ -171,15 +171,17 @@ int getTimeFromString(char *Input, TTime *Time, int withSec)
     // reading the minutes
     Min = atoi (pMin);
 
-    // checking if a semicolon stays in a string entered
-    CheckTime *= (semicol == *tmpT);
+    if (withSec) {
+        // checking if a semicolon stays in a string entered
+        CheckTime *= (semicol == *tmpT);
 
-    tmpT++;
-    pS = tmpT;
+        tmpT++;
+        pS = tmpT;
 
 
-    // reading the seconds
-    S = atoi (pS);
+        // reading the seconds
+        S = atoi(pS);
+    }
 
     CheckTime *= isTimeValid (*Time);
 

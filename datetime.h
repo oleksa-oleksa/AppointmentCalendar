@@ -70,7 +70,7 @@ void printTime(TTime time);
 //TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben.
 //TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben.
 //TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern.
-//TODO: Tim: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben.
+//TODO: Tim: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben. - FERTIG
 //TODO: Kati: printDate soll Datum formatiert ausgeben
 //TODO: Tim: printTime soll Zeit formatiert ausgeben. - FERTIG
 #endif //UEB1_DATETIME_H
