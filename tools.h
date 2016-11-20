@@ -13,7 +13,7 @@
     /***************************************************************************
      *  function:    printLine
      *  description: prints '-' n times
-     *  parameter:   Char to be printed, n as am amounts of repeats
+     *  parameter:   Char to be printed, n as an amounts of repeats
      *  result :     -
      ***************************************************************************/
     void printLine (char s, int n);

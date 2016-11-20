@@ -51,22 +51,24 @@
      ***************************************************************************/
     int getTimeFromString(char *input, TTime *time);
 
-/***************************************************************************
- *  function:    getDate
- *  description: Asks for time input by user
- *  parameter:   char *prompt: prompt for input
- *
- *  result :
- ***************************************************************************/
 
+     /***************************************************************************
+     *  function:    printTime
+     *  description: prints a TTime one the screen
+     *  parameter:   time: the time to print
+     *  result :
+     ***************************************************************************/
+    void printTime(TTime time);
 
-/***************************************************************************
- *  function:    printTime
- *  description: prints a TTime one the screen
- *  parameter:   time: the time to print
- *  result :
- ***************************************************************************/
-void printTime(TTime time);
+    /***************************************************************************
+     *  function:    getDate
+     *  description: reads an user´s Input, calls the sub-functions for check
+     *  parameter:   InfoText: Information for user what to do
+     *               TDate: pointer for data structure
+     *  result :
+     ***************************************************************************/
+    void getDate (char *InfoText, TDate *Date)
+
 //TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben.
 //TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben.
 //TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern.

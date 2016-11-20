@@ -2,6 +2,7 @@
 #define DATASTRUCTURE_H DATASTRUCTURE_H
 
 #define MAX_APPOINTMENTS 100
+#define MAX_CHARS 20
 
 typedef enum {
     NotaDay, Mo, Tu, We, Th, Fr, Sa, Su

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "datastructure.h"
+#include "tools.c"
 
 
 /* checks if the entered date is valid */
@@ -200,6 +201,49 @@ void printTime(TTime time) {
     printf("%d:%d", time.Hour, time.Minute);
 }
 
+
+// reads the user´s input, calls the sub-function
+void getDate (char *InfoText, TDate *Date)
+{
+    char EnteredDate[MAX_CHARS];
+    int CheckDate;
+
+    do
+    {
+        printf("%s", InfoText);
+        CheckDate = scanf("%s", EnteredDate);
+        clearBuffer();
+        if (CheckDate)
+        {
+
+            CheckDate *= getDateFromString(EnteredDate, Date);
+        }
+
+    } while (!CheckDate);
+
+}
+
+
+// reads the user´s input, calls the sub-function
+void getTime (char *InfoText, TTime *Time, int withSec)
+{
+    char EnteredDate[MAX_CHARS];
+    int CheckDate;
+
+    do
+    {
+        printf("%s", InfoText);
+        CheckDate = scanf("%s", EnteredDate);
+        clearBuffer();
+        if (CheckDate)
+        {
+
+            CheckDate *= getTimeFromString(EnteredDate, Time, withSec);
+        }
+
+    } while (!CheckDate);
+
+}
 
 
 

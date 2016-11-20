@@ -17,7 +17,7 @@ int getMenu(char *Title, char **Points, unsigned int anz){
         printf("%s \n",Title);
         printLine('=', strlen(Title));
         printf("\n");
-        for (0; i < anz; ++i)
+        for (i = 0; i < anz; ++i)
         {
             printf("%i. %s \n",i+1,Points[i]);
         }
