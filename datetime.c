@@ -4,8 +4,10 @@
 #include "tools.c"
 
 
-/* checks if the entered date is valid */
-
+/***************************************************************************
+*  function:    isLeapYear
+*  description: Checks if the input date is a leap year.
+***************************************************************************/
 int isLeapYear (int Y)
 {
     int leap;
@@ -36,6 +38,10 @@ int isLeapYear (int Y)
     return leap;
 }
 
+/***************************************************************************
+*  function:    getDaysOfMonth
+*  description: Returns the amount of days of the input month.
+***************************************************************************/
 int getDaysOfMonth(TDate Date)
 {
     int daysOfMonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -59,6 +65,10 @@ int getDaysOfMonth(TDate Date)
         return 0;
     }
 }
+/***************************************************************************
+*  function:    isDateValid
+*  description: Checks if the input date is valid.
+***************************************************************************/
 
 int isDateValid(TDate Date)
 {
@@ -75,7 +85,10 @@ int isDateValid(TDate Date)
 /* Checks if the entered year is a leap year, if a 29.02 was entered
 */ // added new Tim
 
-
+/***************************************************************************
+ *  function:    getDateFromString
+ *  description: Parses the input string into a TDate.
+ ***************************************************************************/
 int getDateFromString(char *Input, TDate *Date)
 {
 
@@ -129,7 +142,10 @@ int getDateFromString(char *Input, TDate *Date)
 
 }
 
-
+/***************************************************************************
+*  function:    isTimeValid
+*  description: Checks if the input time is valid.
+***************************************************************************/
 int isTimeValid(TTime Time)
 {
     if(Time.Hour >= 0 && Time.Hour <= 23 && Time.Minute >= 0 && Time.Minute <= 59 && Time.Second >= 0 && Time.Second <= 59)
@@ -138,7 +154,10 @@ int isTimeValid(TTime Time)
         return 0;
 }
 
-
+/***************************************************************************
+*  function:    getTimeFromString
+*  description: Parses the input string into a TTime.
+***************************************************************************/
 int getTimeFromString(char *Input, TTime *Time, int withSec)
 {
     //h = hour, m = minute, s = second
@@ -202,7 +221,10 @@ void printTime(TTime time) {
 }
 
 
-// reads the user´s input, calls the sub-function
+/***************************************************************************
+*  function:    getDate
+*  description: reads an user´s Input, calls the sub-function for check
+***************************************************************************/
 void getDate (char *InfoText, TDate *Date)
 {
     char EnteredDate[MAX_CHARS];
@@ -224,7 +246,10 @@ void getDate (char *InfoText, TDate *Date)
 }
 
 
-// reads the user´s input, calls the sub-function
+/***************************************************************************
+*  function:    getTime
+*  description: reads an user´s Input, calls the sub-function for check
+***************************************************************************/
 void getTime (char *InfoText, TTime *Time, int withSec)
 {
     char EnteredDate[MAX_CHARS];

@@ -62,12 +62,23 @@
 
     /***************************************************************************
      *  function:    getDate
-     *  description: reads an user´s Input, calls the sub-functions for check
+     *  description: reads an user´s Input, calls the sub-function for check
      *  parameter:   InfoText: Information for user what to do
      *               TDate: pointer for data structure
      *  result :
      ***************************************************************************/
-    void getDate (char *InfoText, TDate *Date)
+    void getDate (char *InfoText, TDate *Date);
+
+    /***************************************************************************
+     *  function:    getTime
+     *  description: reads an user´s Input, calls the sub-function for check
+     *  parameter:   InfoText: Information for user what to do
+     *               TTime: pointer for data structure
+     *               withSec: 1 is for reading the seconds; 0 is for ignoring the input of seconds
+     *  result :
+     ***************************************************************************/
+    void getDate (char *InfoText, TTime *Time, int witSec);
+
 
 //TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben.
 //TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben.
