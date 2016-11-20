@@ -138,10 +138,13 @@ int isTimeValid(TTime Time)
 }
 
 
-int getTimeFromString (char *Input, TTime *Time)
+int getTimeFromString(char *Input, TTime *Time, int withSec)
 {
-    int H, Min, S, CheckTime;
+    //h = hour, m = minute, s = second
+    int H, Min, S = 0, CheckTime;
     char semicol = ':';
+
+    //pH = pHour, pM = pMinute, pS = pSecond, tmpT = pTmpTime
     char *pH, *pMin, *pS, *tmpT;
 
     pH = Input;
@@ -171,15 +174,17 @@ int getTimeFromString (char *Input, TTime *Time)
     // reading the minutes
     Min = atoi (pMin);
 
-    // checking if a semicolon stays in a string entered
-    CheckTime *= (semicol == *tmpT);
+    if (withSec) {
+        // checking if a semicolon stays in a string entered
+        CheckTime *= (semicol == *tmpT);
 
-    tmpT++;
-    pS = tmpT;
+        tmpT++;
+        pS = tmpT;
 
 
-    // reading the seconds
-    S = atoi (pS);
+        // reading the seconds
+        S = atoi(pS);
+    }
 
     CheckTime *= isTimeValid (*Time);
 
@@ -189,6 +194,10 @@ int getTimeFromString (char *Input, TTime *Time)
 
     return CheckTime;
 
+}
+
+void printTime(TTime time) {
+    printf("%d:%d", time.Hour, time.Minute);
 }
 
 

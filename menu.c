@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int getMenu(char *Title, char* Points[], int anz){
+int getMenu(char *Title, char **Points, unsigned int anz){
     int valid = 0;
     int choice;
     do

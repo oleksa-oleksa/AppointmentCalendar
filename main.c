@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <malloc.h>
 #include "datastructure.h"
 #include "datetime.h"
 #include "tools.h"
@@ -7,7 +8,11 @@
 
 int main()
 {
+    TTime time = {.Hour = 12, .Minute = 22, .Second = 33};
+    printTime(time);
+    waitForEnter();
 
+/*
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -38,4 +43,5 @@ int main()
             default: printf("Fehler");
         }
     } while (choice != 7);
+    */
 }

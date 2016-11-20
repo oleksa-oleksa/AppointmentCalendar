@@ -58,11 +58,20 @@
  *
  *  result :
  ***************************************************************************/
-//TODO: getDate
-//TODO: getTime
-//TODO: getDateFromString
-//TODO: getTimeFromString
-//TODO: printDate
-//TODO: printTime
+
+
+/***************************************************************************
+ *  function:    printTime
+ *  description: prints a TTime one the screen
+ *  parameter:   time: the time to print
+ *  result :
+ ***************************************************************************/
+void printTime(TTime time);
+//TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben.
+//TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben.
+//TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern.
+//TODO: Tim: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben. - FERTIG
+//TODO: Kati: printDate soll Datum formatiert ausgeben
+//TODO: Tim: printTime soll Zeit formatiert ausgeben. - FERTIG
 #endif //UEB1_DATETIME_H
 
