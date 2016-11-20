@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 
 
@@ -80,4 +82,43 @@ void waitForEnter ()
     char c;
     scanf("%c", &c);
     clearBuffer();
+}
+
+/***************************************************************************
+*  function:    getText
+*  description: Reads description / location of appointment
+***************************************************************************/
+void getText (char *InfoText, int MaxInput, char **CalendarItem, short EmptyIsOn)
+{
+    int CheckDate;
+    char *pCalendarItem = (char *) malloc(MaxInput); // reserves a place in memory for user´s input
+
+    printf("%s\n", InfoText);
+
+    if (pCalendarItem != NULL) // if memory was allocated
+    {
+        do
+        {
+            CheckDate = scanf("%s", pCalendarItem);
+
+            clearBuffer();
+
+            // if empty input is allowed and it was given
+            // the CheckDate has to be set to 1
+            if (CheckDate || EmptyIsOn)
+                CheckDate = 1;
+
+        } while (!CheckDate);
+
+        char *pCalendarItemAdded = malloc(strlen(pCalendarItem));
+        strcpy(pCalendarItemAdded, pCalendarItem);
+
+        free(pCalendarItem);
+
+        *CalendarItem = pCalendarItem;
+
+    }
+
+    else
+        printf("Kein Speicher verfuegbar!\n");
 }

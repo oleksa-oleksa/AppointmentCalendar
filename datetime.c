@@ -232,7 +232,7 @@ void getDate (char *InfoText, TDate *Date)
 
     do
     {
-        printf("%s", InfoText);
+        printf("%s\n", InfoText);
         CheckDate = scanf("%s", EnteredDate);
         clearBuffer();
         if (CheckDate)
@@ -257,7 +257,7 @@ void getTime (char *InfoText, TTime *Time, int withSec)
 
     do
     {
-        printf("%s", InfoText);
+        printf("%s\n", InfoText);
         CheckDate = scanf("%s", EnteredDate);
         clearBuffer();
         if (CheckDate)

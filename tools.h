@@ -43,6 +43,18 @@
      ***************************************************************************/
     int askYesOrNo (char *);
 
-//TODO: Alexandra: getText
+
+    /***************************************************************************
+     *  function:    getText
+     *  description: Reads description / location of appointment
+     *  parameter:   text: the message (question) to be asked.
+     *               Maximal lenght of input (depends from type)
+     *               Pointer at data structure for keeping location or description.
+     *               EmptyisOn = 1 (user can skip the input), or = 0 (Input is necessary)
+     *  result :     1 if the date is valid, 0 if the date is invalid.
+     ***************************************************************************/
+    int getText (char *, int MaxInput, char *, short EmptyIsOn);
+
+// TODO Alexandra: GetText - FERTIG
 
 #endif //TOOLS_TOOLS_H

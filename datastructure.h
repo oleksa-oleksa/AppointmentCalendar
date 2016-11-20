@@ -3,6 +3,8 @@
 
 #define MAX_APPOINTMENTS 100
 #define MAX_CHARS 20
+#define MAX_DESCRIPTION 100
+#define MAX_LOCATION 15
 
 typedef enum {
     NotaDay, Mo, Tu, We, Th, Fr, Sa, Su
@@ -26,8 +28,8 @@ typedef struct {
 typedef struct {
     TDate Date;
     TTime Time;
-    char Decription;
-    char Location;
+    char *Decription;
+    char *Location;
     TTime *Duration;
 } TAppointment;
 

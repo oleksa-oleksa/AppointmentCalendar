@@ -80,11 +80,11 @@
     void getDate (char *InfoText, TTime *Time, int witSec);
 
 
-//TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben.
-//TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben.
+//TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben. - FERTIG
+//TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben. - THE DURATION OF TERMIN IS NOT DONE
 //TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern.
 //TODO: Tim: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben. - FERTIG
 //TODO: Kati: printDate soll Datum formatiert ausgeben
 //TODO: Tim: printTime soll Zeit formatiert ausgeben. - FERTIG
-#endif //UEB1_DATETIME_H
+#endif
 
