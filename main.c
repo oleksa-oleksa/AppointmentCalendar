@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include "datastructure.h"
 #include "datetime.h"
 #include "tools.h"
