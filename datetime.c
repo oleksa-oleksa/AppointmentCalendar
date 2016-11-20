@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "datastructure.h"
-#include "tools.c"
+#include "tools.h"
 
 
 /***************************************************************************

@@ -77,7 +77,7 @@
      *               withSec: 1 is for reading the seconds; 0 is for ignoring the input of seconds
      *  result :
      ***************************************************************************/
-    void getDate (char *InfoText, TTime *Time, int witSec);
+    void getTime (char *InfoText, TTime *Time, int witSec);
 
 
 //TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben. - FERTIG

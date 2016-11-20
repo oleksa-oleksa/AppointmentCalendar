@@ -59,7 +59,7 @@ int askYesOrNo(char *text)
     do
     {
         //   Beispielausgabe("Möchten Sie noch einmal? (j/n) ", 'I');
-        printf(text);
+        printf("%s", text);
         Erg = scanf("%c", &Abfrage);
         clearBuffer();
 
