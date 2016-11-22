@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "datastructure.h"
 #include "tools.h"
+#include <math.h>
 
 
 /***************************************************************************
@@ -92,7 +93,8 @@ int isDateValid(TDate Date)
 int getDateFromString(char *Input, TDate *Date)
 {
 
-    int D, M, Y, CheckDate;
+    int D, M, Y, CheckDate, intDayOfTheWeek, c; //Die beiden ersten Stellen der Jahreszahl, bei den Monaten Januar und Februar die ersten Stellen des Vorjahres
+    TDayOfTheWeek dayOfTheWeek;
     char point = '.';
     char *pD, *pM, *pY, *tmp;
 
@@ -137,6 +139,16 @@ int getDateFromString(char *Input, TDate *Date)
 
     CheckDate *= isDateValid (*Date);
 
+
+    if (M == 2 || M == 1) {
+        c = (int) floor(Y - 1 / 100);
+    } else {
+        c = (int) floor(Y / 100);
+    }
+
+    double x = (D + (2.6 * M - 0.2) + Y + (Y / 4) + (c / 4) - 2 * c);
+
+    intDayOfTheWeek = (int) x % 7;
 
     return CheckDate;
 
