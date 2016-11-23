@@ -93,11 +93,11 @@ int isDateValid(TDate Date)
 int getDateFromString(char *Input, TDate *Date)
 {
 
-    int D, M, Y, CheckDate, intDayOfTheWeek, c; //Die beiden ersten Stellen der Jahreszahl, bei den Monaten Januar und Februar die ersten Stellen des Vorjahres
-    TDayOfTheWeek dayOfTheWeek;
+    int D, M, Y, y, m, CheckDate, intDayOfTheWeek, c; //Die beiden ersten Stellen der Jahreszahl, bei den Monaten Januar und Februar die ersten Stellen des Vorjahres
     char point = '.';
     char *pD, *pM, *pY, *tmp;
 
+    int months[] = {0, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; //Months in julian count
     pD = Input;
     tmp = Input;
 
@@ -139,16 +139,51 @@ int getDateFromString(char *Input, TDate *Date)
 
     CheckDate *= isDateValid (*Date);
 
+    m = months[M];
 
-    if (M == 2 || M == 1) {
+    if (m == 2 || m == 1) {
         c = (int) floor(Y - 1 / 100);
     } else {
         c = (int) floor(Y / 100);
     }
 
-    double x = (D + (2.6 * M - 0.2) + Y + (Y / 4) + (c / 4) - 2 * c);
+    if (m == 2 || m == 1) {
+        y = (int) floor(Y - 1 % 100);
+    } else {
+        y = (int) floor(Y % 100);
+    }
+
+    double x = (D + (2.6 * m - 0.2) + y + (y / 4) + (c / 4) - 2 * c);
+
+
 
     intDayOfTheWeek = (int) x % 7;
+
+    switch (intDayOfTheWeek) {
+        case 0:
+            Date->DayOfTheWeek = Su;
+            break;
+        case 1:
+            Date->DayOfTheWeek = Mo;
+            break;
+        case 2:
+            Date->DayOfTheWeek = Tu;
+            break;
+        case 3:
+            Date->DayOfTheWeek = We;
+            break;
+        case 4:
+            Date->DayOfTheWeek = Th;
+            break;
+        case 5:
+            Date->DayOfTheWeek = Fr;
+            break;
+        case 6:
+            Date->DayOfTheWeek = Sa;
+            break;
+        default:
+            break;
+    }
 
     return CheckDate;
 
@@ -283,8 +318,11 @@ void getTime (char *InfoText, TTime *Time, int withSec)
 }
 
 
+void printDate(TDate date) {
 
+    printf("%d.%d.%d", date.Day, date.Month, date.Year);
 
+}
 
 
 

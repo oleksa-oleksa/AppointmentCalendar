@@ -8,11 +8,11 @@
 
 int main()
 {
-    TTime time = {.Hour = 12, .Minute = 22, .Second = 33};
-    printTime(time);
+    TDate date;
+    getDateFromString("22.11.2016", &date);
     waitForEnter();
 
-
+/*
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -43,5 +43,5 @@ int main()
             default: printf("Fehler");
         }
     } while (choice != 7);
-
+*/
 }

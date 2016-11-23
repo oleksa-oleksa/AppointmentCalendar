@@ -60,6 +60,13 @@
      ***************************************************************************/
     void printTime(TTime time);
 
+/***************************************************************************
+*  function:
+*  description:
+*  parameter:
+*  result :
+***************************************************************************/
+void printDate(TDate date);
     /***************************************************************************
      *  function:    getDate
      *  description: reads an user´s Input, calls the sub-function for check
@@ -82,7 +89,7 @@
 
 //TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben. - FERTIG
 //TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben. - THE DURATION OF TERMIN IS NOT DONE
-//TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern.
+//TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern. - FERTIG
 //TODO: Tim: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben. - FERTIG
 //TODO: Kati: printDate soll Datum formatiert ausgeben
 //TODO: Tim: printTime soll Zeit formatiert ausgeben. - FERTIG
