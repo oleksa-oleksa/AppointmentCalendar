@@ -3,8 +3,7 @@
 #include <string.h>
 
 
-
-
+#define str(x) #x
 /***************************************************************************
 *  function:    printLine
 ***************************************************************************/
@@ -122,3 +121,4 @@ void getText (char *InfoText, int MaxInput, char **CalendarItem, short EmptyIsOn
     else
         printf("Kein Speicher verfuegbar!\n");
 }
+

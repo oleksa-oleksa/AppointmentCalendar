@@ -6,10 +6,27 @@
 #include "calendar.h"
 #include "menu.h"
 
-int main()
-{
-    TDate date;
-    getDateFromString("22.11.2016", &date);
+int main() {
+    TAppointment appointments[100];
+    int nextFree = 2;
+    appointments[0].Description = "Beschreibung1";
+    appointments[0].Date.Day = 23;
+    appointments[0].Date.Month = 11;
+    appointments[0].Date.Year = 2016;
+    appointments[0].Date.DayOfTheWeek = We;
+    appointments[0].Time.Hour = 12;
+    appointments[0].Time.Minute = 50;
+    appointments[0].Location = "Ort";
+
+    appointments[1].Description = "Beschreibung12";
+    appointments[1].Date.Day = 24;
+    appointments[1].Date.Month = 11;
+    appointments[1].Date.Year = 2016;
+    appointments[1].Date.DayOfTheWeek = We;
+    appointments[1].Time.Hour = 13;
+    appointments[1].Time.Minute = 56;
+    appointments[1].Location = "Ort2";
+    listCalendar(appointments, nextFree);
     waitForEnter();
 
 /*

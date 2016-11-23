@@ -5,13 +5,15 @@
 #ifndef UEB1_CALENDAR_H
 #define UEB1_CALENDAR_H
 
+#include "datastructure.h"
+
 /***************************************************************************
  *  function:    createAppointment
  *  description:  
  *  parameter:      
  *  result :     
  ***************************************************************************/
-void createAppointment();
+void createAppointment(TAppointment *appointment);
 /***************************************************************************
  *  function:    editAppointment
  *  description: 
@@ -46,7 +48,7 @@ void sortCalendar();
  *  parameter:
  *  result :
  ***************************************************************************/
-void listCalendar();
+void listCalendar(TAppointment *appointments, int amount);
 
 //TODO: Kati: freeCalendar
 //TODO: Tim: freeAppointment
