@@ -53,7 +53,7 @@
      *               EmptyisOn = 1 (user can skip the input), or = 0 (Input is necessary)
      *  result :     1 if the date is valid, 0 if the date is invalid.
      ***************************************************************************/
-    int getText (char *, int MaxInput, char *, short EmptyIsOn);
+    int getText(char *, int MaxInput, char *, short isAllowedEmpty);
 
 // TODO Alexandra: GetText - FERTIG
 

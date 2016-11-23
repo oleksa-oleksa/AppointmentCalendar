@@ -297,7 +297,7 @@ void getDate (char *InfoText, TDate *Date)
 *  function:    getTime
 *  description: reads an user´s Input, calls the sub-function for check
 ***************************************************************************/
-void getTime (char *InfoText, TTime *Time, int withSec)
+void getTime(char *InfoText, TTime *Time, int withSec, int isDuration)
 {
     char EnteredDate[MAX_CHARS];
     int CheckDate;
@@ -307,6 +307,7 @@ void getTime (char *InfoText, TTime *Time, int withSec)
         printf("%s\n", InfoText);
         CheckDate = scanf("%s", EnteredDate);
         clearBuffer();
+
         if (CheckDate)
         {
 
@@ -320,13 +321,6 @@ void getTime (char *InfoText, TTime *Time, int withSec)
 
 void printDate(TDate date) {
 
-    printf("%d.%d.%d", date.Day, date.Month, date.Year);
+    printf("XX, %d.%d.%d", date.Day, date.Month, date.Year);
 
 }
-
-
-
-
-
-
-

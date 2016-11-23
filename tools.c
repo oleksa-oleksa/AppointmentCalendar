@@ -3,8 +3,7 @@
 #include <string.h>
 
 
-
-
+#define str(x) #x
 /***************************************************************************
 *  function:    printLine
 ***************************************************************************/
@@ -88,37 +87,35 @@ void waitForEnter ()
 *  function:    getText
 *  description: Reads description / location of appointment
 ***************************************************************************/
-void getText (char *InfoText, int MaxInput, char **CalendarItem, short EmptyIsOn)
+void getText(char *infoText, int maxInput, char *targetText, short isAllowedEmpty)
 {
-    int CheckDate;
-    char *pCalendarItem = (char *) malloc(MaxInput); // reserves a place in memory for user´s input
+    int input;
+    char *pInputString = malloc((maxInput + 1) * sizeof(char)); // reserves a place in memory for user´s input
 
-    printf("%s\n", InfoText);
+    printf("%s\n", infoText);
 
-    if (pCalendarItem != NULL) // if memory was allocated
+    if (pInputString != NULL) // if memory was allocated
     {
         do
         {
-            CheckDate = scanf("%s", pCalendarItem);
+            input = scanf("%s", pInputString);
 
             clearBuffer();
 
             // if empty input is allowed and it was given
             // the CheckDate has to be set to 1
-            if (CheckDate || EmptyIsOn)
-                CheckDate = 1;
+            if (input || isAllowedEmpty)
+                input = 1;
 
-        } while (!CheckDate);
+        } while (!input);
+        //*(pInputString + maxInput + 1) = '\n';
 
-        char *pCalendarItemAdded = malloc(strlen(pCalendarItem));
-        strcpy(pCalendarItemAdded, pCalendarItem);
+        strcpy(targetText, pInputString);
 
-        free(pCalendarItem);
-
-        *CalendarItem = pCalendarItem;
-
+        free(pInputString);
     }
 
     else
         printf("Kein Speicher verfuegbar!\n");
 }
+

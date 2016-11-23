@@ -6,13 +6,11 @@
 #include "calendar.h"
 #include "menu.h"
 
-int main()
-{
-    TDate date;
-    getDateFromString("22.11.2016", &date);
-    waitForEnter();
+int main() {
+    TAppointment appointments[100];
+    int nextFree = 0;
 
-/*
+
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -28,8 +26,10 @@ int main()
 
         switch(choice)
         {
-            case 1: createAppointment();
-                    break;
+            case 1:
+                createAppointment(&appointments[nextFree]);
+                nextFree++;
+                break;
             case 2: editAppointment();
                     break;
             case 3: deleteAppointment();
@@ -38,10 +38,11 @@ int main()
                     break;
             case 5: sortCalendar();
                     break;
-            case 6: listCalendar();
+            case 6:
+                listCalendar(appointments, nextFree);
                     break;
             default: printf("Fehler");
         }
     } while (choice != 7);
-*/
+
 }
