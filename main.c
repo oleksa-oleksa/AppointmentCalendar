@@ -10,15 +10,7 @@ int main() {
     TAppointment appointments[100];
     int nextFree = 0;
 
-    char *text = malloc(50 * sizeof(char));
-    char **pText = &text;
 
-    getText("Text eingeben", 50, *pText, 0);
-    printf("Text %s", text);
-    waitForEnter();
-
-
-    /*
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -52,5 +44,5 @@ int main() {
             default: printf("Fehler");
         }
     } while (choice != 7);
-*/
+
 }
