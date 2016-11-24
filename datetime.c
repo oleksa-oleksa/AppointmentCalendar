@@ -208,7 +208,7 @@ int isTimeValid(TTime Time)
 int getTimeFromString(char *Input, TTime *Time, int withSec)
 {
     //h = hour, m = minute, s = second
-    int H, Min, S = 0, CheckTime;
+    int H, Min, S, CheckTime;
     char semicol = ':';
 
     //pH = pHour, pM = pMinute, pS = pSecond, tmpT = pTmpTime

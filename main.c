@@ -7,10 +7,10 @@
 #include "menu.h"
 
 int main() {
-    TAppointment appointments[MAX_APPOINTMENTS];
+    TAppointment *appointments[MAX_APPOINTMENTS];
     int nextFree = 0;
 
-    /*
+/*
     appointments[0].Description = "Beschreibung";
     appointments[0].Location = "Ort";
     appointments[0].Date.Day = 12;
@@ -38,7 +38,7 @@ int main() {
         switch(choice)
         {
             case 1:
-                createAppointment(&appointments[nextFree]);
+                createAppointment(*(appointments + nextFree));
                 nextFree++;
                 break;
             case 2: editAppointment();
@@ -50,7 +50,7 @@ int main() {
             case 5: sortCalendar();
                     break;
             case 6:
-                listCalendar(appointments, nextFree);
+                listCalendar(*appointments, nextFree);
                     break;
             case 7:
                 break;
