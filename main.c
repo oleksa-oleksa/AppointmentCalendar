@@ -18,7 +18,7 @@ int main() {
     waitForEnter();
 
 
-    /*
+
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -52,5 +52,4 @@ int main() {
             default: printf("Fehler");
         }
     } while (choice != 7);
-*/
 }

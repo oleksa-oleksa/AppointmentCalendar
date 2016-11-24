@@ -87,8 +87,8 @@ void printDate(TDate date);
     void getTime (char *InfoText, TTime *Time, int witSec);
 
 
-//TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben. - FERTIG
-//TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben. - THE DURATION OF TERMIN IS NOT DONE
+//TODO: Alexandra: getDate lässt Benutzer ein Datum eingeben. - FERTIG - WORKS
+//TODO: Alexandra: getTime lässt Benutzer eine Zeit eingeben. - FERTIG IN TEST
 //TODO: Kati: getDateFromString um Ermittlung des Wochentags erweitern. - FERTIG
 //TODO: Tim: getTimeFromString ändern - es soll möglich sein, eine Uhrzeit wahlweise mit oder ohne Sekunden anzugeben. - FERTIG
 //TODO: Kati: printDate soll Datum formatiert ausgeben -FERTIG
