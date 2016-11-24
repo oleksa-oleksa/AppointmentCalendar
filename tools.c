@@ -87,10 +87,11 @@ void waitForEnter ()
 *  function:    getText
 *  description: Reads description / location of appointment
 ***************************************************************************/
-void getText(char *infoText, int maxInput, char *targetText, short isAllowedEmpty)
+void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmpty)
 {
     int input;
     char *pInputString = malloc((maxInput + 1) * sizeof(char)); // reserves a place in memory for user´s input
+    char *pTargetString = NULL;
 
     printf("%s\n", infoText);
 
@@ -110,9 +111,13 @@ void getText(char *infoText, int maxInput, char *targetText, short isAllowedEmpt
         } while (!input);
         //*(pInputString + maxInput + 1) = '\n';
 
-        strcpy(targetText, pInputString);
+        pTargetString = malloc(strlen(pInputString) * sizeof(char));
 
+        strcpy(pTargetString, pInputString);
+
+        *targetText = pTargetString;
         free(pInputString);
+        free(pTargetString);
     }
 
     else
