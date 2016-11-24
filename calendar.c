@@ -2,12 +2,13 @@
 // Created by tim on 28.10.16.
 //
 
-#include <afxres.h>
 #include <stdio.h>
+#include <malloc.h>
 #include "calendar.h"
 #include "datastructure.h"
 #include "tools.h"
 #include "datetime.h"
+#include <string.h>
 
 int AppointmentCount = 0;
 TAppointment Calendar[MAX_APPOINTMENTS];
