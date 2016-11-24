@@ -8,8 +8,9 @@
 
 int main() {
     TAppointment appointments[MAX_APPOINTMENTS];
-    int nextFree = 1;
+    int nextFree = 0;
 
+    /*
     appointments[0].Description = "Beschreibung";
     appointments[0].Location = "Ort";
     appointments[0].Date.Day = 12;
@@ -19,7 +20,7 @@ int main() {
     appointments[0].Time.Minute = 12;
     appointments[0].Duration->Minute = 5;
     appointments[0].Duration->Hour = 12;
-
+*/
 
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
