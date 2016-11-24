@@ -19,9 +19,9 @@ void createAppointment(TAppointment *appointment) {
     (*(appointment)).Description = malloc(MAX_DESCRIPTION * sizeof(char));
     (*appointment).Location = malloc(MAX_LOCATION * sizeof(char));
 
-    getDate("Bitte geben Sie das Datum ein. ", appointment->Date);
+    getDate("Bitte geben Sie das Datum ein. ", &appointment->Date);
 
-    getTime("Bitte geben Sie die Zeit des Termins ein. ", appointment->Time, 0);
+    getTime("Bitte geben Sie die Zeit des Termins ein. ", &appointment->Time, 0);
 
     appointment->Duration = malloc(sizeof(TTime));
 
