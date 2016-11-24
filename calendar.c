@@ -23,6 +23,10 @@ void createAppointment(TAppointment *appointment) {
 
     getTime("Bitte geben Sie die Zeit des Termins ein. ", appointment->Time, 0);
 
+    appointment->Duration = malloc(sizeof(TTime));
+
+    getTime("Bitte geben Sie die Termindauer ein. ", appointment->Duration, 0);
+
     getText("Bitte geben Sie die Terminbeschreibung an. ", MAX_DESCRIPTION, appointment->Description, 0);
 
     getText("Bitte geben Sie den Ort des Termins an. ", MAX_LOCATION, appointment->Location, 1);
