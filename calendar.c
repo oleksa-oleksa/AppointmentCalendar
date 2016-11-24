@@ -18,9 +18,9 @@ void createAppointment(TAppointment *appointment) {
     (*(appointment)).Description = malloc(MAX_DESCRIPTION * sizeof(char));
     (*appointment).Location = malloc(MAX_LOCATION * sizeof(char));
 
-    getDate("Bitte geben Sie das Datum ein. ", &(appointment)->Date);
+    getDate("Bitte geben Sie das Datum ein. ", appointment->Date);
 
-    getTime("Bitte geben Sie die Zeit des Termins ein. ", &(appointment)->Time, 0);
+    getTime("Bitte geben Sie die Zeit des Termins ein. ", appointment->Time, 0);
 
     getText("Bitte geben Sie die Terminbeschreibung an. ", MAX_DESCRIPTION, appointment->Description, 0);
 
@@ -52,11 +52,11 @@ void listCalendar(TAppointment *appointments, int amount) {
     for (i; i < amount; i++) {
         printLine('=', 78);
         printf("\n");
-        printDate((*(appointments + i)).Date);
+        printDate(*(appointments + i)->Date);
         printf("\n");
         printLine('-', 15);
         printf("\n   ");
-        printTime((*(appointments + i)).Time);
+        printTime(*(appointments + i)->Time);
         printf(" -> %15s | %48s", (*(appointments + i)).Location, (*(appointments + i)).Description);
         printf("\n \n");
     }
