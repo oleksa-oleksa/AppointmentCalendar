@@ -117,7 +117,7 @@ void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmp
 
         *targetText = pTargetString;
         free(pInputString);
-        free(pTargetString);
+        //free(pTargetString);
     }
 
     else

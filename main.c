@@ -7,18 +7,20 @@
 #include "menu.h"
 
 int main() {
-    TAppointment appointments[100];
-    int nextFree = 0;
+    TAppointment appointments[MAX_APPOINTMENTS];
+    int nextFree = 1;
 
-    char *text = malloc(50 * sizeof(char));
-    char **pText = &text;
+    appointments[0].Description = "Beschreibung";
+    appointments[0].Location = "Ort";
+    appointments[0].Date.Day = 12;
+    appointments[0].Date.Month = 12;
+    appointments[0].Date.Year = 2016;
+    appointments[0].Time.Hour = 12;
+    appointments[0].Time.Minute = 12;
+    appointments[0].Duration->Minute = 5;
+    appointments[0].Duration->Hour = 12;
 
-    getText("Text eingeben", 50, *pText, 0);
-    printf("Text %s", text);
-    waitForEnter();
 
-
-    /*
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -49,8 +51,12 @@ int main() {
             case 6:
                 listCalendar(appointments, nextFree);
                     break;
+            case 7:
+                break;
             default: printf("Fehler");
         }
     } while (choice != 7);
-*/
+
+    freeCalendar(appointments, MAX_APPOINTMENTS);
+    waitForEnter();
 }
