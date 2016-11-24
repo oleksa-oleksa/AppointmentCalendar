@@ -297,7 +297,7 @@ void getDate (char *InfoText, TDate *Date)
 *  function:    getTime
 *  description: reads an user´s Input, calls the sub-function for check
 ***************************************************************************/
-void getTime(char *InfoText, TTime *Time, int withSec, int isDuration)
+void getTime(char *InfoText, TTime *Time, int withSec)
 {
     char EnteredDate[MAX_CHARS];
     int CheckDate;

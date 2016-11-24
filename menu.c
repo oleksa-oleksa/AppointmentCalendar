@@ -21,7 +21,7 @@ int getMenu(char *Title, char **Points, unsigned int anz){
         {
             printf("%i. %s \n",i+1,Points[i]);
         }
-        printf("\nBitte wählen Sie einen Menüpunkt: ");
+        printf("\nBitte wählen Sie einen Menüpunkt:\n ");
         valid = scanf("%i",&choice);
         clearBuffer();
         if(choice > anz || choice <= 0)
