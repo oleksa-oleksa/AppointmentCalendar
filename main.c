@@ -7,9 +7,20 @@
 #include "menu.h"
 
 int main() {
-    TAppointment appointments[100];
+    TAppointment appointments[MAX_APPOINTMENTS];
     int nextFree = 0;
 
+    /*
+    appointments[0].Description = "Beschreibung";
+    appointments[0].Location = "Ort";
+    appointments[0].Date.Day = 12;
+    appointments[0].Date.Month = 12;
+    appointments[0].Date.Year = 2016;
+    appointments[0].Time.Hour = 12;
+    appointments[0].Time.Minute = 12;
+    appointments[0].Duration->Minute = 5;
+    appointments[0].Duration->Hour = 12;
+*/
 
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
@@ -41,8 +52,12 @@ int main() {
             case 6:
                 listCalendar(appointments, nextFree);
                     break;
+            case 7:
+                break;
             default: printf("Fehler");
         }
     } while (choice != 7);
 
+    freeCalendar(appointments, MAX_APPOINTMENTS);
+    waitForEnter();
 }

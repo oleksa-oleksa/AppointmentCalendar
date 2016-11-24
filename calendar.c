@@ -70,5 +70,12 @@ void freeAppointment(TAppointment *appointment) {
     free(appointment->Description);
     free(appointment->Location);
     free(appointment->Duration);
+    free(&appointment);
+}
 
+void freeCalendar(TAppointment *appointment, int amount) {
+    int i = 0;
+    for (i; i < amount; i++) {
+        freeAppointment((appointment + i));
+    }
 }
