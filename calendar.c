@@ -15,10 +15,6 @@ TAppointment Calendar[MAX_APPOINTMENTS];
 
 //TODO: createAppointment
 void createAppointment(TAppointment *appointment) {
-
-    (*(appointment)).Description = malloc(MAX_DESCRIPTION * sizeof(char));
-    (*appointment).Location = malloc(MAX_LOCATION * sizeof(char));
-
     getDate("Bitte geben Sie das Datum ein. ", &appointment->Date);
 
     getTime("Bitte geben Sie die Zeit des Termins ein. ", &appointment->Time, 0);
@@ -27,9 +23,9 @@ void createAppointment(TAppointment *appointment) {
 
     getTime("Bitte geben Sie die Termindauer ein. ", appointment->Duration, 0);
 
-    getText("Bitte geben Sie die Terminbeschreibung an. ", MAX_DESCRIPTION, appointment->Description, 0);
+    getText("Bitte geben Sie die Terminbeschreibung an. ", MAX_DESCRIPTION, &appointment->Description, 0);
 
-    getText("Bitte geben Sie den Ort des Termins an. ", MAX_LOCATION, appointment->Location, 1);
+    getText("Bitte geben Sie den Ort des Termins an. ", MAX_LOCATION, &appointment->Location, 1);
 }
 
 void editAppointment() {

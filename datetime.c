@@ -264,7 +264,7 @@ int getTimeFromString(char *Input, TTime *Time, int withSec)
 }
 
 void printTime(TTime time) {
-    printf("%d:%d", time.Hour, time.Minute);
+    printf("%02d:%02d", time.Hour, time.Minute);
 }
 
 
