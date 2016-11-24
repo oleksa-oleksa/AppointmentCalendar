@@ -251,13 +251,20 @@ int getTimeFromString(char *Input, TTime *Time, int withSec)
 
         // reading the seconds
         S = atoi(pS);
+        Time->Hour = H;
+        Time->Minute = Min;
+        Time->Second = S;
+    }
+
+    else {
+
+        S = 0;
+        Time->Hour = H;
+        Time->Minute = Min;
+        Time->Second = S;
     }
 
     CheckTime *= isTimeValid (*Time);
-
-    Time->Hour = H;
-    Time->Minute = Min;
-    Time->Second = S;
 
     return CheckTime;
 

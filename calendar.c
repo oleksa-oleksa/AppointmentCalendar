@@ -17,11 +17,11 @@ TAppointment Calendar[MAX_APPOINTMENTS];
 void createAppointment(TAppointment *appointment) {
     getDate("Bitte geben Sie das Datum ein. ", &appointment->Date);
 
-    getTime("Bitte geben Sie die Zeit des Termins ein. ", &appointment->Time, 0);
+    getTime("Bitte geben Sie die Zeit des Termins ein. ", &appointment->Time, 1);
 
     appointment->Duration = malloc(sizeof(TTime));
 
-    getTime("Bitte geben Sie die Termindauer ein. ", appointment->Duration, 0);
+    getTime("Bitte geben Sie die Termindauer ein. ", appointment->Duration, 1);
 
     getText("Bitte geben Sie die Terminbeschreibung an. ", MAX_DESCRIPTION, &appointment->Description, 0);
 
