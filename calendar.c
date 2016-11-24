@@ -57,11 +57,11 @@ void listCalendar(TAppointment *appointments, int amount) {
     for (i; i < amount; i++) {
         printLine('=', 78);
         printf("\n");
-        printDate(*(appointments + i)->Date);
+        printDate((appointments + i)->Date);
         printf("\n");
         printLine('-', 15);
         printf("\n   ");
-        printTime(*(appointments + i)->Time);
+        printTime((appointments + i)->Time);
         printf(" -> %15s | %48s", (*(appointments + i)).Location, (*(appointments + i)).Description);
         printf("\n \n");
     }
