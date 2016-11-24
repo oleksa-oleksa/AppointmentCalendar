@@ -26,8 +26,8 @@ typedef struct {
 
 
 typedef struct {
-    TDate *Date;
-    TTime *Time;
+    TDate Date;
+    TTime Time;
     char *Description;
     char *Location;
     TTime *Duration;
