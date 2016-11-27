@@ -7,21 +7,25 @@
 #include "menu.h"
 
 int main() {
-    TAppointment *appointments[MAX_APPOINTMENTS];
-    int nextFree = 0;
+    TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
+    int appointmentCount = 0;
 
-/*
-    appointments[0].Description = "Beschreibung";
-    appointments[0].Location = "Ort";
-    appointments[0].Date.Day = 12;
-    appointments[0].Date.Month = 12;
-    appointments[0].Date.Year = 2016;
-    appointments[0].Time.Hour = 12;
-    appointments[0].Time.Minute = 12;
-    appointments[0].Duration->Minute = 5;
-    appointments[0].Duration->Hour = 12;
-*/
-
+    int i = 0;
+    calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
+    for (; i <= 35; i++) {
+        (*(appointments + i)).Duration = malloc(sizeof(TTime));
+        (*(appointments + i)).Description = "Beschreibung Sdfsdafkljhsöjdklhölsdkfjlskdfjsaedfsdfsdaf sdfdafsdf";
+        (*(appointments + i)).Location = malloc(15 * sizeof(char));
+        sprintf((*(appointments + i)).Location, "%d", i + 1);
+        (*(appointments + i)).Date.Day = 12;
+        (*(appointments + i)).Date.Month = 12;
+        (*(appointments + i)).Date.Year = 2016;
+        (*(appointments + i)).Time.Hour = 12;
+        (*(appointments + i)).Time.Minute = 12;
+        (*(appointments + i)).Duration->Minute = 5;
+        (*(appointments + i)).Duration->Hour = 12;
+        appointmentCount++;
+    }
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -35,11 +39,16 @@ int main() {
     {
         choice = getMenu("Terminverwaltung", Menu, 7);
 
-        switch(choice)
-        {
+        switch (choice) {
             case 1:
-                createAppointment(*(appointments + nextFree));
-                nextFree++;
+                if (appointmentCount < MAX_APPOINTMENTS) {
+                    createAppointment((appointments + appointmentCount));
+                    appointmentCount++;
+                } else {
+                    printf("Keine freien Speicherplätze mehr vorhanden!");
+                    waitForEnter();
+                }
+
                 break;
             case 2: editAppointment();
                     break;
@@ -50,7 +59,7 @@ int main() {
             case 5: sortCalendar();
                     break;
             case 6:
-                listCalendar(*appointments, nextFree);
+                listCalendar(appointments, appointmentCount - 1);
                     break;
             case 7:
                 break;
@@ -58,6 +67,5 @@ int main() {
         }
     } while (choice != 7);
 
-    freeCalendar(appointments, MAX_APPOINTMENTS);
-    waitForEnter();
+    freeCalendar(&appointments, MAX_APPOINTMENTS);
 }

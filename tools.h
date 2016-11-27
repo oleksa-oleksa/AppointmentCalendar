@@ -10,6 +10,22 @@
      ***************************************************************************/
     void waitForEnter ();
 
+/***************************************************************************
+ *  function:    waitForEnter
+ *  description: Holds the program flow before Enter key is pressed
+ *  parameter:   -
+ *  result :     -
+ ***************************************************************************/
+void waitForEnterNoPrompt();
+
+/***************************************************************************
+ *  function:    waitForEnter
+ *  description: Holds the program flow before Enter key is pressed
+ *  parameter:   -
+ *  result :     -
+ ***************************************************************************/
+void waitForEnterSpecialPrompt(char *prompt);
+
     /***************************************************************************
      *  function:    printLine
      *  description: prints '-' n times

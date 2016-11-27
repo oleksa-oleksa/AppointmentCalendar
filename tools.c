@@ -78,9 +78,30 @@ int askYesOrNo(char *text)
 ***************************************************************************/
 void waitForEnter ()
 {
+    printf("Bitte die Eingabetaste drücken...");
     char c;
     scanf("%c", &c);
     clearBuffer();
+}
+
+/***************************************************************************
+*  function:    waitForEnter
+***************************************************************************/
+void waitForEnterNoPrompt() {
+    char c;
+    scanf("%c", &c);
+    clearBuffer();
+}
+
+/***************************************************************************
+*  function:    waitForEnter
+***************************************************************************/
+void waitForEnterSpecialPrompt(char *prompt) {
+    printf(prompt);
+    char c;
+    scanf("%c", &c);
+    clearBuffer();
+
 }
 
 /***************************************************************************
@@ -93,7 +114,7 @@ void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmp
     char *pInputString = malloc((maxInput + 1) * sizeof(char)); // reserves a place in memory for user´s input
     char *pTargetString = NULL;
 
-    printf("%s\n", infoText);
+    printf("%s", infoText);
 
     if (pInputString != NULL) // if memory was allocated
     {
