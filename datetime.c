@@ -9,46 +9,45 @@
 *  function:    isLeapYear
 *  description: Checks if the input date is a leap year.
 ***************************************************************************/
-int isLeapYear (int Y)
+int isLeapYear(int year)
 {
-    int leap;
+   int isLeapYear;
 
-    if (Y % 4 == 0)
+   if (year % 4 == 0)
     {
-        if (Y % 100 != 0)
+       if (year % 100 != 0)
         {
-            leap = 1;
+           isLeapYear = 1;
+        }
+
+        else if (year % 400 == 0)
+        {
+           isLeapYear = 1;
         }
 
         else
-        if (Y % 400 == 0)
         {
-            leap = 1;
-        }
-
-        else
-        {
-            leap = 0;
+           isLeapYear = 0;
         }
     }
     else
     {
-        leap = 0;
+       isLeapYear = 0;
     }
 
-    return leap;
+   return isLeapYear;
 }
 
 /***************************************************************************
 *  function:    getDaysOfMonth
 *  description: Returns the amount of days of the input month.
 ***************************************************************************/
-int getDaysOfMonth(TDate Date)
+int getDaysOfMonth(TDate date)
 {
     int daysOfMonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if(Date.Month == 2)
+   if (date.Month == 2)
     {
-        if(isLeapYear(Date.Year))
+       if (isLeapYear(date.Year))
         {
             return 29;
         }
@@ -57,9 +56,9 @@ int getDaysOfMonth(TDate Date)
             return 28;
         }
     }
-    if(Date.Month >= 1 && Date.Month <=12)
+   if (date.Month >= 1 && date.Month <= 12)
     {
-        return daysOfMonth[Date.Month];
+       return daysOfMonth[date.Month];
     }
     else
     {
@@ -71,9 +70,9 @@ int getDaysOfMonth(TDate Date)
 *  description: Checks if the input date is valid.
 ***************************************************************************/
 
-int isDateValid(TDate Date)
+int isDateValid(TDate date)
 {
-    if(getDaysOfMonth(Date) && Date.Day <= getDaysOfMonth(Date) && Date.Day > 0 && Date.Year >= 0 )
+   if (getDaysOfMonth(date) && date.Day <= getDaysOfMonth(date) && date.Day > 0 && date.Year >= 0)
     {
         return 1;
     }
@@ -90,70 +89,84 @@ int isDateValid(TDate Date)
  *  function:    getDateFromString
  *  description: Parses the input string into a TDate.
  ***************************************************************************/
-int getDateFromString(char *Input, TDate *Date)
+int getDateFromString(char *pInput, TDate *pDate)
 {
 
-    int D, M, Y, y, m, CheckDate, intDayOfTheWeek, c; //Die beiden ersten Stellen der Jahreszahl, bei den Monaten Januar und Februar die ersten Stellen des Vorjahres
-    char point = '.';
-    char *pD, *pM, *pY, *tmp;
+   int givenDay;
+   int givenMonth;
+   int givenYear;
+   int julianYear;
+   int julianMonth;
+   int isValid; //If the given delimiter is valid.
+   int intDayOfTheWeek;
+   int first2DigitsOfYear; //Die beiden ersten Stellen der Jahreszahl, bei den Monaten Januar und Februar die ersten Stellen des Vorjahres
+   char delimiter = '.';
+   char *pDay; //String that holds the number of the day.
+   char *pMonth; //String that holds the number of the month.
+   char *pYear; //String that holds the number of the year.
+   char *pTmp; //String to save a string temporarily
 
     int months[] = {0, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; //Months in julian count
-    pD = Input;
-    tmp = Input;
+   pDay = pInput;
+   pTmp = pInput;
 
     // Looking for a first non-digit sign and moving a pointer to a month´s side
-    while (*tmp && (*tmp >= '0' && *tmp <= '9'))
+   while (*pTmp && (*pTmp >= '0' && *pTmp <= '9'))
     {
-        tmp++;
+       pTmp++;
     }
 
-    D = atoi(pD);
+   givenDay = atoi(pDay);
 
-    // checks if the correct point was entered
-    CheckDate = (point == *tmp);
+   // checks if the correct delimiter was entered
+   isValid = (delimiter == *pTmp);
 
-    tmp++; // Skips the dots
+   pTmp++; // Skips the dots
 
-    pM = tmp;
+   pMonth = pTmp;
 
-    while (*tmp && (*tmp >= '0' && *tmp <= '9'))
+   while (*pTmp && (*pTmp >= '0' && *pTmp <= '9'))
     {
-        tmp++;
+       pTmp++;
     }
 
-    M = atoi(pM);
+   givenMonth = atoi(pMonth);
 
-    CheckDate *= (point == *tmp);
+   isValid *= (delimiter == *pTmp);
 
-    if (*tmp == '\0') {
+   if (*pTmp == '\0')
+   {
         return 0;
     }
-    tmp++; // Skips the dots
-    pY = tmp;
+   pTmp++; // Skips the dots
+   pYear = pTmp;
 
-    Y = atoi(pY);
+   givenYear = atoi(pYear);
 
-    Date->Day = D;
-    Date->Month = M;
-    Date->Year = Y;
+   pDate->Day = givenDay;
+   pDate->Month = givenMonth;
+   pDate->Year = givenYear;
 
-    CheckDate *= isDateValid (*Date);
+   isValid *= isDateValid(*pDate);
 
-    m = months[M];
+   julianMonth = months[givenMonth];
 
-    if (m == 2 || m == 1) {
-        c = (int) floor(Y - 1 / 100);
+   if (julianMonth == 2 || julianMonth == 1)
+   {
+      first2DigitsOfYear = (int) floor(givenYear - 1 / 100);
     } else {
-        c = (int) floor(Y / 100);
+      first2DigitsOfYear = (int) floor(givenYear / 100);
     }
 
-    if (m == 2 || m == 1) {
-        y = (int) floor(Y - 1 % 100);
+   if (julianMonth == 2 || julianMonth == 1)
+   {
+      julianYear = (int) floor(givenYear - 1 % 100);
     } else {
-        y = (int) floor(Y % 100);
+      julianYear = (int) floor(givenYear % 100);
     }
 
-    double x = (D + (2.6 * m - 0.2) + y + (y / 4) + (c / 4) - 2 * c);
+   double x = (givenDay + (2.6 * julianMonth - 0.2) + julianYear + (julianYear / 4) + (first2DigitsOfYear / 4) -
+               2 * first2DigitsOfYear);
 
 
 
@@ -161,31 +174,31 @@ int getDateFromString(char *Input, TDate *Date)
 
     switch (intDayOfTheWeek) {
         case 0:
-            Date->DayOfTheWeek = Su;
+           pDate->DayOfTheWeek = Su;
             break;
         case 1:
-            Date->DayOfTheWeek = Mo;
+           pDate->DayOfTheWeek = Mo;
             break;
         case 2:
-            Date->DayOfTheWeek = Tu;
+           pDate->DayOfTheWeek = Tu;
             break;
         case 3:
-            Date->DayOfTheWeek = We;
+           pDate->DayOfTheWeek = We;
             break;
         case 4:
-            Date->DayOfTheWeek = Th;
+           pDate->DayOfTheWeek = Th;
             break;
         case 5:
-            Date->DayOfTheWeek = Fr;
+           pDate->DayOfTheWeek = Fr;
             break;
         case 6:
-            Date->DayOfTheWeek = Sa;
+           pDate->DayOfTheWeek = Sa;
             break;
         default:
             break;
     }
 
-    return CheckDate;
+   return isValid;
 
 }
 
@@ -193,9 +206,10 @@ int getDateFromString(char *Input, TDate *Date)
 *  function:    isTimeValid
 *  description: Checks if the input time is valid.
 ***************************************************************************/
-int isTimeValid(TTime Time)
+int isTimeValid(TTime time)
 {
-    if(Time.Hour >= 0 && Time.Hour <= 23 && Time.Minute >= 0 && Time.Minute <= 59 && Time.Second >= 0 && Time.Second <= 59)
+   if (time.Hour >= 0 && time.Hour <= 23 && time.Minute >= 0 && time.Minute <= 59 && time.Second >= 0 &&
+       time.Second <= 59)
         return 1;
     else
         return 0;
@@ -205,68 +219,75 @@ int isTimeValid(TTime Time)
 *  function:    getTimeFromString
 *  description: Parses the input string into a TTime.
 ***************************************************************************/
-int getTimeFromString(char *Input, TTime *Time, int withSec)
+int getTimeFromString(char *input, TTime *pTime, int withSeconds)
 {
     //h = hour, m = minute, s = second
-    int H, Min, S, CheckTime;
-    char semicol = ':';
+   int hour;
+   int minute;
+   int second;
+   int isValid;
+   char delimiter = ':';
 
-    //pH = pHour, pM = pMinute, pS = pSecond, tmpT = pTmpTime
-    char *pH, *pMin, *pS, *tmpT;
+   //pHour = pHour, pM = pMinute, pS = pSecond, tmpT = pTmpTime
+   char *pHour;
+   char *pMinute;
+   char *pSecond;
+   char *pTmp;
 
-    pH = Input;
-    tmpT = Input;
+   pHour = input;
+   pTmp = input;
 
-    while (*tmpT >= '0' && *tmpT <= '9' )
+   while (*pTmp >= '0' && *pTmp <= '9')
     {
-        tmpT++;
+       pTmp++;
     }
 
     // the (probably) semicolon was found
     // reading the hours
-    H = atoi (pH);
+   hour = atoi(pHour);
 
     // checking if a semicolon stays in a string entered
-    CheckTime = (semicol == *tmpT);
+   isValid = (delimiter == *pTmp);
 
-    tmpT++;
-    pMin = tmpT;
+   pTmp++;
+   pMinute = pTmp;
 
-    while (*tmpT >= '0' && *tmpT <= '9' )
+   while (*pTmp >= '0' && *pTmp <= '9')
     {
-        tmpT++;
+       pTmp++;
     }
 
     // the (probably) semicolon was found
     // reading the minutes
-    Min = atoi (pMin);
+   minute = atoi(pMinute);
 
-    if (withSec) {
+   if (withSeconds)
+   {
         // checking if a semicolon stays in a string entered
-        CheckTime *= (semicol == *tmpT);
+      isValid *= (delimiter == *pTmp);
 
-        tmpT++;
-        pS = tmpT;
+      pTmp++;
+      pSecond = pTmp;
 
 
         // reading the seconds
-        S = atoi(pS);
-        Time->Hour = H;
-        Time->Minute = Min;
-        Time->Second = S;
+      second = atoi(pSecond);
+      pTime->Hour = hour;
+      pTime->Minute = minute;
+      pTime->Second = second;
     }
 
     else {
 
-        S = 0;
-        Time->Hour = H;
-        Time->Minute = Min;
-        Time->Second = S;
+      second = 0;
+      pTime->Hour = hour;
+      pTime->Minute = minute;
+      pTime->Second = second;
     }
 
-    CheckTime *= isTimeValid (*Time);
+   isValid *= isTimeValid(*pTime);
 
-    return CheckTime;
+   return isValid;
 
 }
 
@@ -279,23 +300,23 @@ void printTime(TTime time) {
 *  function:    getDate
 *  description: reads an user´s Input, calls the sub-function for check
 ***************************************************************************/
-void getDate (char *InfoText, TDate *Date)
+void getDate(char *pInfoText, TDate *pDate)
 {
-    char EnteredDate[MAX_CHARS];
-    int CheckDate;
+   char enteredDate[MAX_CHARS];
+   int isValid;
 
     do
     {
-        printf("%s", InfoText);
-        CheckDate = scanf("%s", EnteredDate);
+       printf("%s", pInfoText);
+       isValid = scanf("%s", enteredDate);
         clearBuffer();
-        if (CheckDate)
+       if (isValid)
         {
 
-            CheckDate *= getDateFromString(EnteredDate, Date);
+           isValid *= getDateFromString(enteredDate, pDate);
         }
 
-    } while (!CheckDate);
+    } while (!isValid);
 
 }
 
@@ -304,24 +325,23 @@ void getDate (char *InfoText, TDate *Date)
 *  function:    getTime
 *  description: reads an user´s Input, calls the sub-function for check
 ***************************************************************************/
-void getTime(char *InfoText, TTime *Time, int withSec)
+void getTime(char *pInfoText, TTime *pTime, int withSeconds)
 {
-    char EnteredDate[MAX_CHARS];
-    int CheckDate;
+   char enteredDate[MAX_CHARS];
+   int isValid;
 
     do
     {
-        printf("%s", InfoText);
-        CheckDate = scanf("%s", EnteredDate);
+       printf("%s", pInfoText);
+       isValid = scanf("%s", enteredDate);
         clearBuffer();
 
-        if (CheckDate)
+       if (isValid)
         {
-
-            CheckDate *= getTimeFromString(EnteredDate, Time, withSec);
+           isValid *= getTimeFromString(enteredDate, pTime, withSeconds);
         }
 
-    } while (!CheckDate);
+    } while (!isValid);
 
 }
 

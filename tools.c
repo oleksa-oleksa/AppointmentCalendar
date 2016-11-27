@@ -7,13 +7,13 @@
 /***************************************************************************
 *  function:    printLine
 ***************************************************************************/
-void printLine (char s, int n)
+void printLine(char printedChar, int amount)
 {
     int i;
 
-    for (i = 0; i < n; i++)
+    for (i = 0; i < amount; i++)
     {
-        printf("%c", s);
+        printf("%c", printedChar);
     }
 }
 
@@ -51,22 +51,22 @@ void clearScreen()
 /***************************************************************************
  *  function:    askYesOrNo
  ***************************************************************************/
-int askYesOrNo(char *text)
+int askYesOrNo(char *pPrompt)
 {
-    char Abfrage;
-    int Erg;
+    char input;
+    int readCharacters;
     do
     {
         //   Beispielausgabe("Möchten Sie noch einmal? (j/n) ", 'I');
-        printf("%s", text);
-        Erg = scanf("%c", &Abfrage);
+        printf("%s", pPrompt);
+        readCharacters = scanf("%c", &input);
         clearBuffer();
 
-        if(Abfrage != 'J' && Abfrage != 'j' && Abfrage != 'n' && Abfrage != 'N')
-            Erg = 0;
-    } while(!Erg);
+        if (input != 'J' && input != 'j' && input != 'n' && input != 'N')
+            readCharacters = 0;
+    } while (!readCharacters);
 
-    if(Abfrage == 'j' || Abfrage == 'J')
+    if (input == 'j' || input == 'J')
         return 1;
     else
         return 0;
@@ -79,9 +79,10 @@ int askYesOrNo(char *text)
 void waitForEnter ()
 {
     printf("Bitte die Eingabetaste dr%ccken...", ue);
-    char enter = '0';
-    while (enter != 'r' && enter != '\n') {
-        enter = (char) getchar();
+    char isValid = '0';
+    while (isValid != 'r' && isValid != '\n')
+    {
+        isValid = (char) getchar();
     }
 }
 
@@ -89,9 +90,10 @@ void waitForEnter ()
 *  function:    waitForEnter
 ***************************************************************************/
 void waitForEnterNoPrompt() {
-    char enter = '0';
-    while (enter != 'r' && enter != '\n') {
-        enter = (char) getchar();
+    char isValid = '0';
+    while (isValid != 'r' && isValid != '\n')
+    {
+        isValid = (char) getchar();
     }
 }
 
@@ -100,9 +102,10 @@ void waitForEnterNoPrompt() {
 ***************************************************************************/
 void waitForEnterSpecialPrompt(char *prompt) {
     printf(prompt);
-    char enter = '0';
-    while (enter != 'r' && enter != '\n') {
-        enter = (char) getchar();
+    char isValid = '0';
+    while (isValid != 'r' && isValid != '\n')
+    {
+        isValid = (char) getchar();
     }
 
 }
@@ -111,13 +114,13 @@ void waitForEnterSpecialPrompt(char *prompt) {
 *  function:    getText
 *  description: Reads description / location of appointment
 ***************************************************************************/
-void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmpty)
+void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedEmpty)
 {
     int input;
     char *pInputString = malloc((maxInput + 1) * sizeof(char)); // reserves a place in memory for user´s input
     char *pTargetString = NULL;
 
-    printf("%s", infoText);
+    printf("%s", pInfoText);
 
     if (pInputString != NULL) // if memory was allocated
     {
@@ -139,7 +142,7 @@ void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmp
 
         strcpy(pTargetString, pInputString);
 
-        *targetText = pTargetString;
+        *pTargetText = pTargetString;
         free(pInputString);
         //free(pTargetString);
     }
@@ -147,4 +150,3 @@ void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmp
     else
         printf("Kein Speicher verfuegbar!\n");
 }
-

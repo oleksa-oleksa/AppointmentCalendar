@@ -7,30 +7,31 @@
 #include <stdio.h>
 #include <string.h>
 
-int getMenu(char *Title, char **Points, unsigned int anz){
-    int valid = 0;
+int getMenu(char *pTitle, char **pItems, unsigned int amount)
+{
+    int isValid = 0;
     int choice;
     do
     {
         int i = 0;
         clearScreen();
-        printf("%s \n",Title);
-        printLine('=', strlen(Title));
+        printf("%s \n", pTitle);
+        printLine('=', strlen(pTitle));
         printf("\n");
-        for (i = 0; i < anz; ++i)
+        for (i = 0; i < amount; ++i)
         {
-            printf("%i. %s \n",i+1,Points[i]);
+            printf("%i. %s \n", i + 1, pItems[i]);
         }
         printf("\nBitte w%chlen Sie einen Men%cpunkt:\n ", ae, ue);
-        valid = scanf("%i",&choice);
+        isValid = scanf("%i", &choice);
         clearBuffer();
-        if(choice > anz || choice <= 0)
+        if (choice > amount || choice <= 0)
         {
             printf("Fehler, keine g%cltige Men%cwahl \n\n", ue, ue);
-            valid = 0;
+            isValid = 0;
         }
 
-    } while(!valid);
+    } while (!isValid);
 
     return choice;
 

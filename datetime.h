@@ -40,7 +40,7 @@
      *               date: the output TDate
      *  result :     1 if the date is valid, 0 if the date is invalid.
      ***************************************************************************/
-    int getDateFromString(char *input, TDate *date);
+    int getDateFromString(char *pInput, TDate *pDate);
 
     /***************************************************************************
      *  function:    getTimeFromString
@@ -74,7 +74,7 @@ void printDate(TDate date);
      *               TDate: pointer for data structure
      *  result :
      ***************************************************************************/
-    void getDate (char *InfoText, TDate *Date);
+    void getDate(char *pInfoText, TDate *pDate);
 
     /***************************************************************************
      *  function:    getTime
@@ -84,7 +84,7 @@ void printDate(TDate date);
      *               withSec: 1 is for reading the seconds; 0 is for ignoring the input of seconds
      *  result :
      ***************************************************************************/
-    void getTime (char *InfoText, TTime *Time, int witSec);
+    void getTime(char *pInfoText, TTime *pTime, int withSeconds);
 
 
 //TODO: Alexandra: getTime IN TEST

@@ -19,25 +19,15 @@ void createAppointment(TAppointment *appointment) {
     TAppointment *tmpAppointment = malloc(sizeof(TAppointment));
 
     getDate("Datum        : ", &(tmpAppointment->Date));
-
     getTime("Uhrzeit      : ", &(tmpAppointment->Time), 0);
-
     (*(tmpAppointment)).Duration = malloc(sizeof(TTime));
-
     getTime("Dauer        : ", tmpAppointment->Duration, 0);
-
     getText("Beschreibung : ", MAX_DESCRIPTION, &(tmpAppointment->Description), 0);
-
     getText("Ort          : ", MAX_LOCATION, &(tmpAppointment->Location), 1);
-
     *appointment = *tmpAppointment;
-
     free(tmpAppointment);
-
     printf("Termin gespeichert. \n");
-
     waitForEnter();
-
 }
 
 void editAppointment() {
@@ -72,37 +62,42 @@ void printAppointment(TAppointment appointment) {
 
 //TODO: listCalendar
 void listCalendar(TAppointment *appointments, int amount) {
+   int currentAppointment = 0; //saves the current Appointment
+   int appointmentsOnScreen = 0; //saves the number of appointments on the screen
+   int page = 1;
+
     printf("Liste der Termine \n");
     printLine('=', strlen("Liste der Termine"));
     printf("\n \n");
-    int i = 0; //counter variable for appointment pointer
-    int ii = 0; //counter variable for max appointments on screen at the same time
-    int page = 1;
+
     char *prompt = malloc(strlen("Bitte Enter drücken, um die nächsten 100 Termine anzuzeigen...") * sizeof(char));
-    for (i; i < amount; i++) {
-        if (ii >= 15) {
-            if (amount - 1 - i >= 15) {
+   for (currentAppointment; currentAppointment < amount; currentAppointment++)
+   {
+      if (appointmentsOnScreen >= 15)
+      {
+         if (amount - 1 - currentAppointment >= 15)
+         {
                 sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken, um die n%cchsten %d Termine anzuzeigen",
                         page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae,
                         MAX_APPOINTMENTS_ON_SCREEN);
                 waitForEnterSpecialPrompt(prompt);
             } else {
                 sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken, um die n%cchsten %d Termine anzuzeigen",
-                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae, amount - i);
+                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae,
+                        amount - currentAppointment);
                 waitForEnterSpecialPrompt(prompt);
             }
 
             sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken... ",
                     page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue);
 
-
-            ii = 0;
+         appointmentsOnScreen = 0;
 
             page++;
         }
-        printAppointment(*(appointments + i));
+      printAppointment(*(appointments + currentAppointment));
         printf("\n \n");
-        ii++;
+      appointmentsOnScreen++;
     }
     //free(prompt);
     printf("Seite %d/%d \n\n", page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN));
@@ -110,16 +105,14 @@ void listCalendar(TAppointment *appointments, int amount) {
 }
 
 void freeAppointment(TAppointment *appointment) {
-
     if (appointment) {
         free(appointment);
     }
 }
 
 void freeCalendar(TAppointment *appointment, int amount) {
-    int i = 0;
+   int i = 0; //control variable for the for-Loop
     for (i; i < amount; i++) {
         freeAppointment((appointment + i));
     }
 }
-

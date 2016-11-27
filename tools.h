@@ -39,7 +39,7 @@ void waitForEnterSpecialPrompt(char *prompt);
      *  parameter:   Char to be printed, n as an amounts of repeats
      *  result :     -
      ***************************************************************************/
-    void printLine (char s, int n);
+    void printLine(char printedChar, int amount);
 
     /***************************************************************************
      *  function:    clearBuffer
@@ -76,7 +76,7 @@ void waitForEnterSpecialPrompt(char *prompt);
      *               EmptyisOn = 1 (user can skip the input), or = 0 (Input is necessary)
      *  result :     1 if the date is valid, 0 if the date is invalid.
      ***************************************************************************/
-    void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmpty);
+    void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedEmpty);
 
 // TODO Alexandra: GetText - FERTIG
 
