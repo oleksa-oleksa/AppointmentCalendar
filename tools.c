@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tools.h"
 
 
-#define str(x) #x
 /***************************************************************************
 *  function:    printLine
 ***************************************************************************/
@@ -78,7 +78,7 @@ int askYesOrNo(char *text)
 ***************************************************************************/
 void waitForEnter ()
 {
-    printf("Bitte die Eingabetaste drücken...");
+    printf("Bitte die Eingabetaste dr%ccken...", ue);
     char enter = '0';
     while (enter != 'r' && enter != '\n') {
         enter = (char) getchar();
@@ -100,9 +100,10 @@ void waitForEnterNoPrompt() {
 ***************************************************************************/
 void waitForEnterSpecialPrompt(char *prompt) {
     printf(prompt);
-    char c;
-    scanf("%c", &c);
-    clearBuffer();
+    char enter = '0';
+    while (enter != 'r' && enter != '\n') {
+        enter = (char) getchar();
+    }
 
 }
 

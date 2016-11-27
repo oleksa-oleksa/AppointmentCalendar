@@ -78,23 +78,33 @@ void listCalendar(TAppointment *appointments, int amount) {
     int i = 0; //counter variable for appointment pointer
     int ii = 0; //counter variable for max appointments on screen at the same time
     int page = 1;
+    char *prompt = malloc(strlen("Bitte Enter drücken, um die nächsten 100 Termine anzuzeigen...") * sizeof(char));
     for (i; i < amount; i++) {
         if (ii >= 15) {
-            printf("Seite %d/%d \n\n", page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN));
             if (amount - 1 - i >= 15) {
-                printf("Bitte Enter drücken, um die nächsten %d ", MAX_APPOINTMENTS_ON_SCREEN);
+                sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken, um die n%cchsten %d Termine anzuzeigen",
+                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae,
+                        MAX_APPOINTMENTS_ON_SCREEN);
+                waitForEnterSpecialPrompt(prompt);
             } else {
-                printf("Bitte Enter drücken, um die nächsten %d ", amount - i);
+                sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken, um die n%cchsten %d Termine anzuzeigen",
+                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae, amount - i);
+                waitForEnterSpecialPrompt(prompt);
             }
-            printf("Termine anzuzeigen... ");
+
+            sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken... ",
+                    page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue);
+
+
             ii = 0;
+
             page++;
-            waitForEnterNoPrompt();
         }
         printAppointment(*(appointments + i));
         printf("\n \n");
         ii++;
     }
+    //free(prompt);
     printf("Seite %d/%d \n\n", page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN));
     waitForEnter();
 }

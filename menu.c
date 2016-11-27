@@ -21,12 +21,12 @@ int getMenu(char *Title, char **Points, unsigned int anz){
         {
             printf("%i. %s \n",i+1,Points[i]);
         }
-        printf("\nBitte wählen Sie einen Menüpunkt:\n ");
+        printf("\nBitte w%chlen Sie einen Men%cpunkt:\n ", ae, ue);
         valid = scanf("%i",&choice);
         clearBuffer();
         if(choice > anz || choice <= 0)
         {
-            printf("Fehler, keine gültige Menüwahl \n\n");
+            printf("Fehler, keine g%cltige Men%cwahl \n\n", ue, ue);
             valid = 0;
         }
 

@@ -26,11 +26,11 @@ int main() {
         (*(appointments + i)).Duration->Hour = 12;
         appointmentCount++;
     }
-    
+
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
-                    "Termin löschen",
+                    "Termin l\x94schen",
                     "Termin suchen",
                     "Termine sortieren",
                     "Termine auflisten",

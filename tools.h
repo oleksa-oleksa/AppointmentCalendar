@@ -1,6 +1,13 @@
 #ifndef TOOLS_TOOLS_H
 #define TOOLS_H TOOLS_H
 
+#define AE (unsigned char)142
+#define ae (unsigned char)132
+#define OE (unsigned char)153
+#define oe (unsigned char)148
+#define UE (unsigned char)154
+#define ue (unsigned char)129
+#define ss (unsigned char)225
 
     /***************************************************************************
      *  function:    waitForEnter
@@ -69,7 +76,7 @@ void waitForEnterSpecialPrompt(char *prompt);
      *               EmptyisOn = 1 (user can skip the input), or = 0 (Input is necessary)
      *  result :     1 if the date is valid, 0 if the date is invalid.
      ***************************************************************************/
-    int getText(char *, int MaxInput, char **, short isAllowedEmpty);
+    void getText(char *infoText, int maxInput, char **targetText, short isAllowedEmpty);
 
 // TODO Alexandra: GetText - FERTIG
 
