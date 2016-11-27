@@ -79,18 +79,20 @@ int askYesOrNo(char *text)
 void waitForEnter ()
 {
     printf("Bitte die Eingabetaste drücken...");
-    char c;
-    scanf("%c", &c);
-    clearBuffer();
+    char enter = '0';
+    while (enter != 'r' && enter != '\n') {
+        enter = (char) getchar();
+    }
 }
 
 /***************************************************************************
 *  function:    waitForEnter
 ***************************************************************************/
 void waitForEnterNoPrompt() {
-    char c;
-    scanf("%c", &c);
-    clearBuffer();
+    char enter = '0';
+    while (enter != 'r' && enter != '\n') {
+        enter = (char) getchar();
+    }
 }
 
 /***************************************************************************

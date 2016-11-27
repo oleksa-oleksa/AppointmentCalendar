@@ -26,6 +26,7 @@ int main() {
         (*(appointments + i)).Duration->Hour = 12;
         appointmentCount++;
     }
+    
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
@@ -67,5 +68,5 @@ int main() {
         }
     } while (choice != 7);
 
-    freeCalendar(&appointments, MAX_APPOINTMENTS);
+    freeCalendar(appointments, MAX_APPOINTMENTS);
 }

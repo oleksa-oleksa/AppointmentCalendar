@@ -56,9 +56,9 @@ void listCalendar(TAppointment *appointments, int amount);
  *  parameter:   
  *  result :     
  ***************************************************************************/
-void freeAppointment(TAppointment **appointment);
+void freeAppointment(TAppointment *appointment);
 
-void freeCalendar(TAppointment **appointment, int amount);
+void freeCalendar(TAppointment *appointment, int amount);
 
 //TODO: Kati: freeCalendar
 //TODO: Tim: freeAppointment

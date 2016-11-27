@@ -99,14 +99,14 @@ void listCalendar(TAppointment *appointments, int amount) {
     waitForEnter();
 }
 
-void freeAppointment(TAppointment **appointment) {
+void freeAppointment(TAppointment *appointment) {
 
-    if (*appointment != NULL) {
-        free(*appointment);
+    if (appointment) {
+        free(appointment);
     }
 }
 
-void freeCalendar(TAppointment **appointment, int amount) {
+void freeCalendar(TAppointment *appointment, int amount) {
     int i = 0;
     for (i; i < amount; i++) {
         freeAppointment((appointment + i));
