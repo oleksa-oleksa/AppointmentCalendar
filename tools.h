@@ -78,6 +78,5 @@ void waitForEnterSpecialPrompt(char *prompt);
      ***************************************************************************/
     void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedEmpty);
 
-// TODO Alexandra: GetText - FERTIG
 
 #endif //TOOLS_TOOLS_H

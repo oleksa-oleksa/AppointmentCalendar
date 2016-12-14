@@ -347,7 +347,11 @@ void getTime(char *pInfoText, TTime *pTime, int withSeconds)
 
 
 void printDate(TDate date) {
+    char *thisDay[] = {"NotaDay", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+    TDayOfTheWeek dayTest = date.DayOfTheWeek;
 
-    printf("XX, %d.%d.%d", date.Day, date.Month, date.Year);
+   if (dayTest > 7)
+     dayTest = NotaDay;
+    printf("%s, %d.%d.%d", thisDay[dayTest], date.Day, date.Month, date.Year);
 
 }
