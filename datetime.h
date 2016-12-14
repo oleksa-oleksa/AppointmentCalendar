@@ -87,7 +87,6 @@ void printDate(TDate date);
     void getTime(char *pInfoText, TTime *pTime, int withSeconds);
 
 
-//TODO: Alexandra: getTime IN TEST
 
 #endif
 

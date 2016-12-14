@@ -43,7 +43,7 @@ int main() {
             case 5: sortCalendar();
                     break;
             case 6:
-                listCalendar(appointments, appointmentCount - 1);
+                listCalendar(appointments, appointmentCount);
                     break;
             case 7:
                 break;

@@ -126,9 +126,7 @@ void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedE
     {
         do
         {
-
-            input = scanf("%s", pInputString);
-
+            input = scanf("%[^\n]s", pInputString);
             clearBuffer();
 
             // if empty input is allowed and it was given
