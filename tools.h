@@ -9,13 +9,13 @@
 #define ue (unsigned char)129
 #define ss (unsigned char)225
 
-    /***************************************************************************
-     *  function:    waitForEnter
-     *  description: Holds the program flow before Enter key is pressed
-     *  parameter:   -
-     *  result :     -
-     ***************************************************************************/
-    void waitForEnter ();
+/***************************************************************************
+*  function:    waitForEnter
+*  description: Holds the program flow before Enter key is pressed
+*  parameter:   -
+*  result :     -
+ *  ***************************************************************************/
+void waitForEnter ();
 
 /***************************************************************************
  *  function:    waitForEnter
