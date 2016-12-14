@@ -126,6 +126,7 @@ void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedE
     {
         do
         {
+
             input = scanf("%s", pInputString);
 
             clearBuffer();

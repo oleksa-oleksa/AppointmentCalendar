@@ -10,23 +10,6 @@ int main() {
     TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
     int appointmentCount = 0;
 
-    int i = 0;
-    calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
-    for (; i <= 35; i++) {
-        (*(appointments + i)).Duration = malloc(sizeof(TTime));
-        (*(appointments + i)).Description = "Beschreibung Sdfsdafkljhsöjdklhölsdkfjlskdfjsaedfsdfsdaf sdfdafsdf";
-        (*(appointments + i)).Location = malloc(15 * sizeof(char));
-        sprintf((*(appointments + i)).Location, "%d", i + 1);
-        (*(appointments + i)).Date.Day = 12;
-        (*(appointments + i)).Date.Month = 12;
-        (*(appointments + i)).Date.Year = 2016;
-        (*(appointments + i)).Time.Hour = 12;
-        (*(appointments + i)).Time.Minute = 12;
-        (*(appointments + i)).Duration->Minute = 5;
-        (*(appointments + i)).Duration->Hour = 12;
-        appointmentCount++;
-    }
-
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
