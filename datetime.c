@@ -355,3 +355,4 @@ void printDate(TDate date) {
     printf("%s, %d.%d.%d", thisDay[dayTest], date.Day, date.Month, date.Year);
 
 }
+

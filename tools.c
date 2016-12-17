@@ -101,7 +101,7 @@ void waitForEnterNoPrompt() {
 *  function:    waitForEnter
 ***************************************************************************/
 void waitForEnterSpecialPrompt(char *prompt) {
-    printf(prompt);
+    printf("%s", prompt);
     char isValid = '0';
     while (isValid != 'r' && isValid != '\n')
     {

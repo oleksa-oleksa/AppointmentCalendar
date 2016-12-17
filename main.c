@@ -5,10 +5,12 @@
 #include "tools.h"
 #include "calendar.h"
 #include "menu.h"
+#include "database.h"
 
 int main() {
     TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
     int appointmentCount = 0;
+    char *DbFileName = "calendar.xml";
 
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
@@ -25,15 +27,17 @@ int main() {
 
         switch (choice) {
             case 1:
-                if (appointmentCount < MAX_APPOINTMENTS) {
-                    createAppointment((appointments + appointmentCount));
-                    appointmentCount++;
-                } else {
-                    printf("Keine freien Speicherplätze mehr vorhanden!");
-                    waitForEnter();
-                }
+                    if (appointmentCount < MAX_APPOINTMENTS) {
+                        createAppointment((appointments + appointmentCount));
+                        appointmentCount++;
+                     }
 
-                break;
+                    else {
+                         printf("Keine freien Speicherplätze mehr vorhanden!");
+                         waitForEnter();
+                     }
+
+                    break;
             case 2: editAppointment();
                     break;
             case 3: deleteAppointment();
@@ -43,13 +47,20 @@ int main() {
             case 5: sortCalendar();
                     break;
             case 6:
-                listCalendar(appointments, appointmentCount);
+                    listCalendar(appointments, appointmentCount);
                     break;
             case 7:
-                break;
+                    if (appointmentCount > 0){
+                        saveCalendar(DbFileName, appointments, appointmentCount);
+                    }
+
+                    break;
             default: printf("Fehler");
         }
     } while (choice != 7);
 
-    freeCalendar(appointments, MAX_APPOINTMENTS);
+    freeCalendar(appointments);
+
+    return 0;
+
 }
