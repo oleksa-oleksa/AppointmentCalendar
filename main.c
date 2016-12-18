@@ -50,8 +50,21 @@ int main() {
                     listCalendar(appointments, appointmentCount);
                     break;
             case 7:
+
+
                     if (appointmentCount > 0){
-                        saveCalendar(DbFileName, appointments, appointmentCount);
+                        int isSaved = saveCalendar(DbFileName, appointments, appointmentCount);
+
+                        if (isSaved) {
+                            printf("\nAlle Terminen wurden gescpeichert in die Datei calendar.xml\n\n");
+                            waitForEnter();
+                        }
+                        else {
+                            printf("\nFehler beim Speichern!\n");
+                            printf("Die neuen Terminen sind nicht gescpeichert!");
+                            waitForEnter();
+
+                        }
                     }
 
                     break;

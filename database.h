@@ -41,4 +41,10 @@ void writeDate(FILE *file, TDate *date);
  *  ***************************************************************************/
 void writeTime(FILE *, TTime *);
 
+/***************************************************************************
+*  int:    writeTDuration
+*  description: is equal to writeTime
+***************************************************************************/
+void writeDuration(FILE *, TTime *);
+
 #endif
