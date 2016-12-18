@@ -15,8 +15,8 @@ int getMenu(char *pTitle, char **pItems, unsigned int amount)
     {
         int i = 0;
         clearScreen();
-        printf("%s \n", pTitle);
-        printLine('=', strlen(pTitle));
+        printf("\n%s \n", pTitle);
+        printLine('=', (strlen(pTitle) + 1));
         printf("\n");
         for (i = 0; i < amount; ++i)
         {

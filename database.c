@@ -100,6 +100,7 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
 
     if (DbFile == NULL) {
         printf("Datei nicht erzeugt/geoffnet! \n");
+        return 0;
 
     } else {
 

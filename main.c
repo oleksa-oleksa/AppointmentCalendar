@@ -23,7 +23,7 @@ int main() {
 
     do
     {
-        choice = getMenu("Terminverwaltung", Menu, 7);
+        choice = getMenu("Terminverwaltung v.4.0", Menu, 7);
 
         switch (choice) {
             case 1:
@@ -57,6 +57,7 @@ int main() {
 
                         if (isSaved) {
                             printf("\nAlle Terminen wurden gescpeichert in die Datei calendar.xml\n\n");
+                            printf("Das Programm wurde erfolgreich beendet...");
                             waitForEnter();
                         }
                         else {
