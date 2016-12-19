@@ -1,3 +1,7 @@
+//
+// Created by tim on 28.10.16.
+//
+
 #ifndef UEB1_MENU_H
 #define UEB1_MENU_H
 
@@ -10,4 +14,4 @@
  *  result :     the chosen item
  ***************************************************************************/
 int getMenu(char *, char **, unsigned int);
-#endif
+#endif //UEB1_MENU_H

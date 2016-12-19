@@ -62,6 +62,7 @@ void printAppointment(TAppointment appointment) {
 
 //TODO: listCalendar
 void listCalendar(TAppointment *appointments, int amount) {
+   int currentAppointment = 0; //saves the current Appointment
    int appointmentsOnScreen = 0; //saves the number of appointments on the screen
    int page = 1;
 
@@ -70,7 +71,7 @@ void listCalendar(TAppointment *appointments, int amount) {
     printf("\n \n");
 
     char *prompt = malloc(strlen("Bitte Enter drücken, um die nächsten 100 Termine anzuzeigen...") * sizeof(char));
-   for (int currentAppointment = 0; currentAppointment < amount; currentAppointment++)
+   for (currentAppointment; currentAppointment < amount; currentAppointment++)
    {
       if (appointmentsOnScreen >= 15)
       {
@@ -109,6 +110,9 @@ void freeAppointment(TAppointment *appointment) {
     }
 }
 
-void freeCalendar(TAppointment *appointments) {
-    free(appointments);
+void freeCalendar(TAppointment *appointment, int amount) {
+   int i = 0; //control variable for the for-Loop
+    for (i; i < amount; i++) {
+        freeAppointment((appointment + i));
+    }
 }

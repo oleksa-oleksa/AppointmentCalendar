@@ -1,5 +1,5 @@
 #ifndef DATABASE_DATABASE_H
-#define DATABASE_DATABASE_H
+#define DATABASE_H DATABASE_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,34 +11,8 @@
 
 /***************************************************************************
 *  int:    saveCalendar
-*  description: Opens the file and puts <Calendar> and </Canendar> beetween appointments
-*  parameter:   fileName, TAppointment, counter
-*  result :     notZero if was succesful saved
- *  ***************************************************************************/
-int saveCalendar(char *DbFileName, TAppointment *appointments, int amount);
-
-/***************************************************************************
-*  int:    saveAppointment
-*  description: Saves current appointment into file
+*  description: Opens the file and puts <Calendar> and </Canendra> beetween appointments
 *  parameter:   fileName,
 *  result :     bool if was succesful saved
  *  ***************************************************************************/
-void saveAppointment(FILE *DbFile, TAppointment *appointment);
-
-/***************************************************************************
-*  int:    writeDate
-*  description: wtites formated TDate into a file
-*  parameter:   pointer to a file, pointer to TDate
-*  result :     -
- *  ***************************************************************************/
-void writeDate(FILE *file, TDate *date);
-
-/***************************************************************************
-*  int:    writeTime
-*  description: wtites formated TTime into a file
-*  parameter:   pointer to a file, pointer to TTime
-*  result :     -
- *  ***************************************************************************/
-void writeTime(FILE *, TTime *);
-
-#endif
+int saveCalendar(char *DbFileName);
