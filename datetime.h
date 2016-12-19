@@ -49,7 +49,7 @@ int getDateFromString(char *pInput, TDate *pDate);
  *               date: the output TTime
  *  result :     1 if the date is valid, 0 if the date is invalid.
  ***************************************************************************/
-int getTimeFromString(char *input, TTime *time);
+int getTimeFromString(char *input, TTime *time, int sec);
 
 
 /***************************************************************************
