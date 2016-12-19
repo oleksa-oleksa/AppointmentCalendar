@@ -9,8 +9,16 @@
 
 int main() {
     TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
-    int appointmentCount = 0;
     char *DbFileName = "calendar.xml";
+
+    /******* This part loads appointments into a memory
+     * and increments appointmentCount */
+
+    int appointmentCount = loadCalendar(DbFileName, appointments, appointmentCount);
+
+    printDbInfo(appointmentCount);
+
+    /******** Menu output on the screen   **/
 
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",

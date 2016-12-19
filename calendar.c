@@ -1,7 +1,3 @@
-//
-// Created by tim on 28.10.16.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "calendar.h"
