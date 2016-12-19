@@ -117,17 +117,17 @@ int parseDateInAppointment(FILE *DbFile, TDate *pDate)
         pEndTag = pDateLine;
         char *tmp = pEndTag;
 
-        while(tmp) {
+        while(*tmp) {
             pEndTag++; // staying at \0
             tmp++;
         }
 
-        (*pEndTag)--; // End of String
+        pEndTag--; // End of String
 
         while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= (strlen(fBeginDate) - 1); // position at beginning of end-tag
+        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
         isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
 
         if(isCorrectTag)
@@ -169,7 +169,7 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
         pEndTag = pTimeLine;
         char *tmp = pEndTag;
 
-        while(tmp) {
+        while(*tmp) {
             pEndTag++; // staying at \0
             tmp++;
         }
@@ -179,7 +179,7 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
         while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= (strlen(fBeginDate) - 1); // position at beginning of end-tag
+        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
         isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
 
         if(isCorrectTag)
@@ -220,7 +220,7 @@ int parseDurationInAppointment(FILE *DbFile, TTime *pTime)
         pEndTag = pDurationLine;
         char *tmp = pEndTag;
 
-        while(tmp) {
+        while(*tmp) {
             pEndTag++; // staying at \0
             tmp++;
         }
@@ -230,7 +230,7 @@ int parseDurationInAppointment(FILE *DbFile, TTime *pTime)
         while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= (strlen(fBeginDate) - 1); // position at beginning of end-tag
+        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
         isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
 
         if(isCorrectTag)
@@ -271,7 +271,7 @@ int parseTextInAppointment(FILE *DbFile, char **pText)
         pEndTag = pTextLine;
         char *tmp = pEndTag;
 
-        while(tmp) {
+        while(*tmp) {
             pEndTag++; // staying at \0
             tmp++;
         }
@@ -281,7 +281,7 @@ int parseTextInAppointment(FILE *DbFile, char **pText)
         while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= (strlen(fBeginDate) - 1); // position at beginning of end-tag
+        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
         isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
 
         if(isCorrectTag)
@@ -312,7 +312,6 @@ int loadAppointment(FILE *DbFile, TAppointment appointment){
     fgetc(DbFile); // skip the end line symbol
     deleteWhiteSpaces(pAppointmentLine);
     reallocTagMemory(&pAppointmentLine);
-    printf("%s - is read where <Appointment> has to be\n", pAppointmentLine);
 
     int isCorrectTag = parseTag(&pAppointmentLine, &fBeginAppointment, strlen(fBeginAppointment));
 
@@ -325,8 +324,7 @@ int loadAppointment(FILE *DbFile, TAppointment appointment){
             /********** Detecting what kind of tag is the next **/
             long pos = ftell(DbFile);
             fscanf(DbFile, "%3[^\n]s", testSymb);
-            fseek(DbFile, SEEK_SET, pos);
-            printf("%s - detected as next Tag\n", testSymb); // TEST DON'T DELETE
+            fseek(DbFile, pos, SEEK_SET);
 
             /********** if DATE */
             if (strncmp(testSymb, "<Da", 3) == 0) {
@@ -361,13 +359,21 @@ int loadAppointment(FILE *DbFile, TAppointment appointment){
         } while(strncmp(testSymb, "</A", 3) != 0);
     }
 
-    else
+    fscanf(DbFile, "%s", pAppointmentLine); // read the garbage
+    fgetc(DbFile);
+    char *pEndFile = malloc(MAX_CHARS * sizeof(char));
+    fscanf(DbFile, "%[^\n]s", pEndFile);
+    fgetc(DbFile); // skip the end line symbol
+    deleteWhiteSpaces(pEndFile);
+    reallocTagMemory(&pEndFile);
 
-    {
-        printf("\nDie Datenbank-Datei hat ein falshes Format\n");
+    if (parseTag(&pEndFile, &fEndFile, strlen(fEndFile)))
+            isCorrectTag = -10;  // the correct end of a database
+                               // is reached
+     else {
+        printf("\nDie Struktur der Datenbank-Datei hat ein falshes Format\n");
         waitForEnter();
         return isCorrectTag;
-
     }
 
     return isCorrectTag;
@@ -380,7 +386,7 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
 
     FILE *DbFile;
 
-    DbFile = fopen(DbFileName, "rb");
+    DbFile = fopen(DbFileName, "r+");
 
     char *pCalendarLine = malloc(MAX_CHARS * sizeof(char)); // memory allocation 20 symbols for <Calendar>-Tag
 
@@ -394,7 +400,6 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
         reallocTagMemory(&pCalendarLine);
 
         int isCorrectFile = parseTag(&pCalendarLine, &fBeginFile, strlen(fBeginFile));
-        // printf("%s - is read where <Calendar> has to be\n", pCalendarLine); // TEST DON'T DELETE
 
         /******* Extracting appointments between tags */
         if (isCorrectFile)
@@ -402,8 +407,9 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
 
 
             for (amount = 0; ; amount++)
-            { // if the end of a file will be reached,
-                                           // loop will be broken by if-statement below
+            {
+                // if the end of a file will be reached,
+                // loop will be broken by if-statement below
 
                 int isCorrectRecord = loadAppointment(DbFile, *(appointments + amount));
 
@@ -414,15 +420,16 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                     break;
                 }
 
-                if (feof(DbFile)) // if it is a real EOF
-                {
-                    break;
+                if (isCorrectRecord == -10) {
+                    printf("\nAlle Terminen wurden erfolgreich hochgeladen...\n");
+                    return 1;
                 }
             }
         }
 
+
         else {
-            printf("Die Datenbank-Datei hat ein falshes Format\n");
+            printf("Der Anfang der Datenbank-Datei hat ein falshes Format\n");
             waitForEnter();
             return -1;
         }
@@ -509,11 +516,16 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
 ***************************************************************************/
 void printDbInfo(int appointmentCount){
     if (appointmentCount){
-        printf("\n%i Termine sind in der Datenbank vorhanden\n\n", appointmentCount);
+        if (appointmentCount == 1)
+            printf("%i Termin ist in der Datenbank vorhanden.\n", appointmentCount);
+
+        else
+            printf("%i Termine sind in der Datenbank vorhanden.\n", appointmentCount);
+
     }
 
     else {
-        printf("\nBitte legen Sie einen neuen Termin an\n\n");
+        printf("\nBitte legen Sie einen neuen Termin an\n");
     }
 }
 
