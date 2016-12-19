@@ -101,7 +101,7 @@ void reallocTagMemory(char **pThisStr);
 *  description: parces a date in format dd.mm.yyyy
  *  into a TDate of current appointment
 ***************************************************************************/
-int parseDateInAppointment(FILE *, char **, TDate *);
+int parseDateInAppointment(FILE *, TDate *);
 
 
 /***************************************************************************
@@ -109,18 +109,18 @@ int parseDateInAppointment(FILE *, char **, TDate *);
 *  description: parces a date in format hh:mm:ss
  *  into a TTime of current appointment
 ***************************************************************************/
-int parseTimeInAppointment(FILE *, char **, TTime *);
+int parseTimeInAppointment(FILE *, TTime *);
 
 /***************************************************************************
 *  void:    parseDurationInAppointment
 *  description: equal to parseTimeInAppointment
 ***************************************************************************/
-int parseTimeInAppointment(FILE *, char **, TTime *);
+int parseTimeInAppointment(FILE *, TTime *);
 
 /***************************************************************************
 *  void:    parseTextInAppointment
 *  description: saves Text into a specified field
 ***************************************************************************/
-int parseTextInAppointment(FILE *, char **, char **);
+int parseTextInAppointment(FILE *, char **);
 
 #endif
