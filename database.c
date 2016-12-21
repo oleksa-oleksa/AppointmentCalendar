@@ -93,10 +93,10 @@ int parseDateInAppointment(FILE *DbFile, TDate *pDate)
 
     char *pEndTag;
     char *pSomeText; // here is text between tags
-    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
-    char *pDateParsed = malloc(MAX_CHARS * sizeof(char));
-    memset(pDataBuffer, 0, MAX_CHARS); // fill all with NULL
-    memset(pDateParsed, 0, MAX_CHARS); // fill all with NULL
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    char *pDateParsed = malloc(MAX_BUFFER_SIZE* sizeof(char));
+    memset(pDataBuffer, 0, MAX_BUFFER_SIZE); // fill all with NULL
+    memset(pDateParsed, 0, MAX_BUFFER_SIZE); // fill all with NULL
 
     char *pDateLine = pDataBuffer;
     fscanf(DbFile, "%[^\n]s", pDateLine);
@@ -132,6 +132,8 @@ int parseDateInAppointment(FILE *DbFile, TDate *pDate)
         }
     }
 
+    free(pDataBuffer);
+    free(pDateParsed);
     fgetc(DbFile); // skip the end line symbol
     return isCorrectTag;
 }
@@ -145,10 +147,10 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
-    char *pTimeParsed = malloc(MAX_CHARS * sizeof(char));
-    memset(pTimeParsed, 0, MAX_CHARS); // fill all with NULL
-    memset(pDataBuffer, 0, MAX_CHARS); // fill all with NULL
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    char *pTimeParsed = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    memset(pTimeParsed, 0, MAX_BUFFER_SIZE); // fill all with NULL
+    memset(pDataBuffer, 0, MAX_BUFFER_SIZE); // fill all with NULL
 
     char *pTimeLine = pDataBuffer;
     
@@ -186,6 +188,8 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
         }
     }
 
+    free(pDataBuffer);
+    free(pTimeParsed);
     fgetc(DbFile); // skip the end line symbol
     return isCorrectTag;
 }
@@ -198,10 +202,10 @@ int parseDurationInAppointment(FILE *DbFile, TTime **pTime)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
-    char *pDurationParsed = malloc(MAX_CHARS * sizeof(char));
-    memset(pDataBuffer, 0, MAX_CHARS); // fill all with NULL
-    memset(pDurationParsed, 0, MAX_CHARS); // fill all with NULL
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    char *pDurationParsed = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    memset(pDataBuffer, 0, MAX_BUFFER_SIZE); // fill all with NULL
+    memset(pDurationParsed, 0, MAX_BUFFER_SIZE); // fill all with NULL
 
     char *pDurationLine = pDataBuffer;
     fscanf(DbFile, "%[^\n]s", pDurationLine);
@@ -239,6 +243,8 @@ int parseDurationInAppointment(FILE *DbFile, TTime **pTime)
         }
     }
 
+    free(pDataBuffer);
+    free(pDurationParsed);
     fgetc(DbFile); // skip the end line symbol
     return isCorrectTag;
 }
@@ -251,10 +257,10 @@ int parseDescriptionInAppointment(FILE *DbFile, char **pText)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pDataBuffer = malloc(MAX_DESCRIPTION * sizeof(char));
-    char *pDescParsed = malloc(MAX_DESCRIPTION * sizeof(char));
-    memset(pDescParsed, 0, MAX_DESCRIPTION); // fill all with NULL
-    memset(pDataBuffer, 0, MAX_DESCRIPTION);
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    char *pDescParsed = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    memset(pDescParsed, 0, MAX_BUFFER_SIZE); // fill all with NULL
+    memset(pDataBuffer, 0, MAX_BUFFER_SIZE);
 
     char *pDescLine = pDataBuffer;
     fscanf(DbFile, "%[^\n]s", pDescLine);
@@ -293,6 +299,9 @@ int parseDescriptionInAppointment(FILE *DbFile, char **pText)
 
         }
     }
+
+    free(pDataBuffer);
+    free(pDescParsed);
     fgetc(DbFile); // skip the end line symbol
     return isCorrectTag;
 }
@@ -304,10 +313,10 @@ int parseLocationInAppointment(FILE *DbFile, char **pText)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pDataBuffer = malloc(MAX_DESCRIPTION * sizeof(char));
-    char *pLocParsed = malloc(MAX_DESCRIPTION * sizeof(char));
-    memset(pLocParsed, 0, MAX_DESCRIPTION); // fill all with NULL
-    memset(pDataBuffer, 0, MAX_DESCRIPTION);
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    char *pLocParsed = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    memset(pLocParsed, 0, MAX_BUFFER_SIZE); // fill all with NULL
+    memset(pDataBuffer, 0, MAX_BUFFER_SIZE);
 
     char *pLocLine = pDataBuffer;
     fscanf(DbFile, "%[^\n]s", pLocLine);
@@ -347,6 +356,8 @@ int parseLocationInAppointment(FILE *DbFile, char **pText)
 
         }
     }
+    free(pDataBuffer);
+    free(pLocParsed);
     fgetc(DbFile); // skip the end line symbol
     return isCorrectTag;
 }
@@ -357,10 +368,9 @@ int parseLocationInAppointment(FILE *DbFile, char **pText)
 ***************************************************************************/
 int loadAppointment(FILE *DbFile, TAppointment *appointment){
 
-    char *pDataStart;
     /****** Obligatory part of each appointment */
-    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
-    memset(pDataBuffer, 0, MAX_CHARS);
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char));
+    memset(pDataBuffer, 0, MAX_BUFFER_SIZE);
     long oldPos = ftell(DbFile);
 
     fscanf(DbFile, "%[^\n]s", pDataBuffer);
@@ -439,7 +449,7 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
     FILE *DbFile;
 
     DbFile = fopen(DbFileName, "r+");
-    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char)); // memory allocation 20 symbols for <Calendar>-Tag
+    char *pDataBuffer = malloc(MAX_BUFFER_SIZE * sizeof(char)); // memory allocation 20 symbols for <Calendar>-Tag
 
     if (DbFile != NULL){
         char *pCalendarLine = pDataBuffer;
