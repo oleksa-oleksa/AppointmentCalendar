@@ -1,7 +1,3 @@
-//
-// Created by tim on 28.10.16.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "calendar.h"
@@ -54,15 +50,19 @@ void printAppointment(TAppointment appointment) {
     printLine('-', 15);
     printf("\n   ");
     printTime(appointment.Time);
+    char *Location = "";
+
+    if (appointment.Location)
+        Location = appointment.Location;
+
     if (strlen(appointment.Description) <= 48)
-        printf(" -> %-15s | %-48s", appointment.Location, appointment.Description);
+        printf(" -> %-15s | %-48s", Location, appointment.Description);
     else
-        printf(" -> %-15s | %-44s ...", appointment.Location, appointment.Description);
+        printf(" -> %-15s | %-44s ...", Location, appointment.Description);
 }
 
 //TODO: listCalendar
 void listCalendar(TAppointment *appointments, int amount) {
-   int currentAppointment = 0; //saves the current Appointment
    int appointmentsOnScreen = 0; //saves the number of appointments on the screen
    int page = 1;
 
@@ -71,7 +71,7 @@ void listCalendar(TAppointment *appointments, int amount) {
     printf("\n \n");
 
     char *prompt = malloc(strlen("Bitte Enter drücken, um die nächsten 100 Termine anzuzeigen...") * sizeof(char));
-   for (currentAppointment; currentAppointment < amount; currentAppointment++)
+   for (int currentAppointment = 0; currentAppointment < amount; currentAppointment++)
    {
       if (appointmentsOnScreen >= 15)
       {
@@ -110,9 +110,6 @@ void freeAppointment(TAppointment *appointment) {
     }
 }
 
-void freeCalendar(TAppointment *appointment, int amount) {
-   int i = 0; //control variable for the for-Loop
-    for (i; i < amount; i++) {
-        freeAppointment((appointment + i));
-    }
+void freeCalendar(TAppointment *appointments) {
+    free(appointments);
 }

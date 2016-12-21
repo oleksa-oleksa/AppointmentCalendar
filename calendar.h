@@ -1,7 +1,3 @@
-//
-// Created by tim on 28.10.16.
-//
-
 #ifndef UEB1_CALENDAR_H
 #define UEB1_CALENDAR_H
 
@@ -56,12 +52,6 @@ void listCalendar(TAppointment *appointments, int amount);
  *  parameter:   
  *  result :     
  ***************************************************************************/
-void freeAppointment(TAppointment *appointment);
+void freeCalendar(TAppointment *appointments);
 
-void freeCalendar(TAppointment *appointment, int amount);
-
-//TODO: Kati: freeCalendar
-//TODO: Tim: freeAppointment
-//TODO: Kati: listCalendar gibt nach Ausgabe einer Listenüberschrift alle Termine tabellarisch aus. Zuerst wird das Datum ausgegeben, darunter alle Termine dieses Datums.
-//TODO: Tim: createAppointment lässt den Benutzer einen neuen Termin erstellen. Benutzer soll Datum, Uhrzeit, Terminbeschreibung, Ort und Dauer eingeben können.
 #endif //UEB1_CALENDAR_H

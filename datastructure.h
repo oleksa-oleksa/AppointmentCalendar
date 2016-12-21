@@ -6,6 +6,7 @@
 #define MAX_DESCRIPTION 100
 #define MAX_LOCATION 15
 #define MAX_APPOINTMENTS_ON_SCREEN 15
+#define MAX_BUFFER_SIZE 256
 
 typedef enum {
     NotaDay, Mo, Tu, We, Th, Fr, Sa, Su
