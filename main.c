@@ -13,8 +13,8 @@ int main() {
 
     /******* This part loads appointments into a memory
      * and increments appointmentCount */
-
-    int appointmentCount = loadCalendar(DbFileName, appointments, appointmentCount);
+    int appointmentCount = 0;
+    appointmentCount = loadCalendar(DbFileName, appointments, appointmentCount);
 
     printDbInfo(appointmentCount);
 
@@ -64,13 +64,12 @@ int main() {
                         int isSaved = saveCalendar(DbFileName, appointments, appointmentCount);
 
                         if (isSaved) {
-                            printf("\nAlle Terminen wurden gescpeichert in die Datei calendar.xml\n\n");
+                            printf("\nAlle Terminen wurden in die Datei calendar.xml gespeichert.\n\n");
                             printf("Das Programm wurde erfolgreich beendet...");
-                            waitForEnter();
                         }
                         else {
                             printf("\nFehler beim Speichern!\n");
-                            printf("Die neuen Terminen sind nicht gescpeichert!");
+                            printf("Die neuen Terminen sind nicht gespeichert!");
                             waitForEnter();
 
                         }

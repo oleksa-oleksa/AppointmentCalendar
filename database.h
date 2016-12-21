@@ -78,7 +78,7 @@ void printDbInfo(int);
 *  void:    deleteWhiteSpaces
 *  description: deletes spaces and horisontal tabs
 ***************************************************************************/
-void deleteWhiteSpaces(char *);
+void deleteWhiteSpaces(char **);
 
 
 /***************************************************************************
@@ -118,9 +118,15 @@ int parseTimeInAppointment(FILE *, TTime *);
 int parseTimeInAppointment(FILE *, TTime *);
 
 /***************************************************************************
-*  void:    parseTextInAppointment
+*  void:    parseDescriptionInAppointment
+*  description: saves Description into a specified field
+***************************************************************************/
+int parseDescriptionInAppointment(FILE *, char **);
+
+/***************************************************************************
+*  void:    parseLocationInAppointment
 *  description: saves Text into a specified field
 ***************************************************************************/
-int parseTextInAppointment(FILE *, char **);
+int parseLocationInAppointment(FILE *, char **);
 
 #endif

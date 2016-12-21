@@ -64,35 +64,25 @@ void writeDuration(FILE *file, TTime *time)
 /***************************************************************************
 *  void:    deleteWhiteSpaces
 ***************************************************************************/
-void deleteWhiteSpaces(char *pCalendarLine){
-    while ((*pCalendarLine == 20) || (*pCalendarLine == 0))
-        pCalendarLine++;
+void deleteWhiteSpaces(char **pString){
+  char *str = *pString;
+
+  while (*str == 0x20 || *str == 9)
+    str++;
+
+  *pString = str;
 }
+
+
 
 /***************************************************************************
 *  int:    parseTag
 ***************************************************************************/
 int parseTag(char **pThisLine, char **pExample, int length)
 {
-
     int isSame = strncmp(*pThisLine, *pExample, length);
 
     return (!isSame);
-}
-
-/***************************************************************************
-*  void:    reallocTagMemory
-***************************************************************************/
-void reallocTagMemory(char **pThisStr)
-{
-
-    char *pTmpStr = malloc((strlen(*pThisStr) + 1) * sizeof(char));
-
-    strcpy(pTmpStr, *pThisStr);
-
-    free(*pThisStr);
-    *pThisStr = pTmpStr;
-
 }
 
 /***************************************************************************
@@ -100,15 +90,17 @@ void reallocTagMemory(char **pThisStr)
 ***************************************************************************/
 int parseDateInAppointment(FILE *DbFile, TDate *pDate)
 {
+
     char *pEndTag;
     char *pSomeText; // here is text between tags
-    char *pDateLine = malloc(MAX_CHARS * sizeof(char));
+    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
     char *pDateParsed = malloc(MAX_CHARS * sizeof(char));
+    memset(pDataBuffer, 0, MAX_CHARS); // fill all with NULL
     memset(pDateParsed, 0, MAX_CHARS); // fill all with NULL
 
+    char *pDateLine = pDataBuffer;
     fscanf(DbFile, "%[^\n]s", pDateLine);
-    deleteWhiteSpaces(pDateLine);
-    reallocTagMemory(&pDateLine);
+    deleteWhiteSpaces(&pDateLine);
 
     /******* If it is a real <Date> */
     int isCorrectTag = parseTag(&pDateLine, &fBeginDate, strlen(fBeginDate));
@@ -132,11 +124,11 @@ int parseDateInAppointment(FILE *DbFile, TDate *pDate)
 
         if(isCorrectTag)
         {
-            pSomeText = pDateLine + strlen(fBeginDate); // position at first char of text to be parsed
-            strncpy(pDateParsed, pSomeText, pEndTag - pSomeText);
-            deleteWhiteSpaces(pDateParsed);
-            reallocTagMemory(&pDateParsed);
-            getDateFromString(pDateParsed, pDate); // execute a date
+          pSomeText = pDateLine + strlen(fBeginDate); // position at first char of text to be parsed
+          deleteWhiteSpaces(&pSomeText);
+
+          strncpy(pDateParsed, pSomeText, pEndTag - pSomeText);
+          getDateFromString(pDateParsed, pDate); // execute a date
         }
     }
 
@@ -153,17 +145,18 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pTimeLine = malloc(MAX_CHARS * sizeof(char));
+    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
     char *pTimeParsed = malloc(MAX_CHARS * sizeof(char));
     memset(pTimeParsed, 0, MAX_CHARS); // fill all with NULL
+    memset(pDataBuffer, 0, MAX_CHARS); // fill all with NULL
 
-
+    char *pTimeLine = pDataBuffer;
+    
     fscanf(DbFile, "%[^\n]s", pTimeLine);
-    deleteWhiteSpaces(pTimeLine);
-    reallocTagMemory(&pTimeLine);
+    deleteWhiteSpaces(&pTimeLine);
 
     /******* If it is a real <Time> */
-    int isCorrectTag = parseTag(&pTimeLine, &fBeginDate, strlen(fBeginDate));
+    int isCorrectTag = parseTag(&pTimeLine, &fBeginTime, strlen(fBeginTime));
     if (isCorrectTag)
     {
         pEndTag = pTimeLine;
@@ -179,16 +172,17 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
         while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
-        isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
+        pEndTag -= strlen(fBeginTime); // position at beginning of end-tag
+        isCorrectTag = parseTag(&pEndTag, &fEndTime, strlen(fEndTime));
 
         if(isCorrectTag)
         {
-            pSomeText = pTimeLine + strlen(fBeginDate); // position at first char of text to be parsed
+            pSomeText = pTimeLine + strlen(fBeginTime); // position at first char of text to be parsed
             strncpy(pTimeParsed, pSomeText, pEndTag - pSomeText);
-            deleteWhiteSpaces(pTimeParsed);
-            reallocTagMemory(&pTimeParsed);
-            getTimeFromString(pTimeParsed, pTime, 0); // execute a date
+            char *pTimeData = pTimeParsed;
+            deleteWhiteSpaces(&pTimeData);
+
+            getTimeFromString(pTimeData, pTime, 0); // execute a date
         }
     }
 
@@ -200,21 +194,21 @@ int parseTimeInAppointment(FILE *DbFile, TTime *pTime)
 /***************************************************************************
 *  int:    parseDurationInAppointment
 ***************************************************************************/
-int parseDurationInAppointment(FILE *DbFile, TTime *pTime)
+int parseDurationInAppointment(FILE *DbFile, TTime **pTime)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pDurationLine = malloc(MAX_CHARS * sizeof(char));
+    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
     char *pDurationParsed = malloc(MAX_CHARS * sizeof(char));
+    memset(pDataBuffer, 0, MAX_CHARS); // fill all with NULL
     memset(pDurationParsed, 0, MAX_CHARS); // fill all with NULL
 
-
+    char *pDurationLine = pDataBuffer;
     fscanf(DbFile, "%[^\n]s", pDurationLine);
-    deleteWhiteSpaces(pDurationLine);
-    reallocTagMemory(&pDurationLine);
+    deleteWhiteSpaces(&pDurationLine);
 
     /******* If it is a real <Duration> */
-    int isCorrectTag = parseTag(&pDurationLine, &fBeginDate, strlen(fBeginDate));
+    int isCorrectTag = parseTag(&pDurationLine, &fBeginDuration, strlen(fBeginDuration));
     if (isCorrectTag)
     {
         pEndTag = pDurationLine;
@@ -230,16 +224,18 @@ int parseDurationInAppointment(FILE *DbFile, TTime *pTime)
         while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
-        isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
+        pEndTag -= strlen(fBeginDuration); // position at beginning of end-tag
+        isCorrectTag = parseTag(&pEndTag, &fEndDuration, strlen(fEndDuration));
 
         if(isCorrectTag)
         {
-            pSomeText = pDurationLine + strlen(fBeginDate); // position at first char of text to be parsed
+            pSomeText = pDurationLine + strlen(fBeginDuration); // position at first char of text to be parsed
             strncpy(pDurationParsed, pSomeText, pEndTag - pSomeText);
-            deleteWhiteSpaces(pDurationParsed);
-            reallocTagMemory(&pDurationParsed);
-            getTimeFromString(pDurationParsed, pTime, 0); // execute a date
+            char *pDurationContent= pDurationParsed;
+            deleteWhiteSpaces(&pDurationContent);
+
+            *pTime = malloc(sizeof(TTime));
+            getTimeFromString(pDurationContent, *pTime, 0); // execute a date
         }
     }
 
@@ -249,26 +245,26 @@ int parseDurationInAppointment(FILE *DbFile, TTime *pTime)
 
 
 /***************************************************************************
-*  int:    parseTextInAppointment
+*  int:    parseDescriptionInAppointment
 ***************************************************************************/
-int parseTextInAppointment(FILE *DbFile, char **pText)
+int parseDescriptionInAppointment(FILE *DbFile, char **pText)
 {
     char *pEndTag;
     char *pSomeText;
-    char *pTextLine = malloc(MAX_DESCRIPTION * sizeof(char));
-    char *pTextParsed = malloc(MAX_DESCRIPTION * sizeof(char));
-    memset(pTextParsed, 0, MAX_CHARS); // fill all with NULL
+    char *pDataBuffer = malloc(MAX_DESCRIPTION * sizeof(char));
+    char *pDescParsed = malloc(MAX_DESCRIPTION * sizeof(char));
+    memset(pDescParsed, 0, MAX_DESCRIPTION); // fill all with NULL
+    memset(pDataBuffer, 0, MAX_DESCRIPTION);
 
+    char *pDescLine = pDataBuffer;
+    fscanf(DbFile, "%[^\n]s", pDescLine);
+    deleteWhiteSpaces(&pDescLine);
 
-    fscanf(DbFile, "%[^\n]s", pTextLine);
-    deleteWhiteSpaces(pTextLine);
-    reallocTagMemory(&pTextLine);
-
-    /******* If it is a real <Duration> */
-    int isCorrectTag = parseTag(&pTextLine, &fBeginDate, strlen(fBeginDate));
+    /******* If it is a real <Description> */
+    int isCorrectTag = parseTag(&pDescLine, &fBeginDescription, strlen(fBeginDescription));
     if (isCorrectTag)
     {
-        pEndTag = pTextLine;
+        pEndTag = pDescLine;
         char *tmp = pEndTag;
 
         while(*tmp) {
@@ -278,19 +274,22 @@ int parseTextInAppointment(FILE *DbFile, char **pText)
 
         pEndTag--; // End of String
 
-        while ((*pEndTag == 20) || (*pEndTag == 0)) // skipping white spaces
+        while ((*pEndTag == 0x20) || (*pEndTag == 0)) // skipping white spaces
             pEndTag--;
 
-        pEndTag -= strlen(fBeginDate); // position at beginning of end-tag
-        isCorrectTag = parseTag(&pEndTag, &fEndDate, strlen(fEndDate));
+        pEndTag -= strlen(fEndDescription)-1; // position at beginning of end-tag
+        isCorrectTag = parseTag(&pEndTag, &fEndDescription, strlen(fEndDescription));
 
         if(isCorrectTag)
         {
-            pSomeText = pTextLine + strlen(fBeginDate); // position at first char of text to be parsed
-            strncpy(pTextParsed, pSomeText, pEndTag - pSomeText);
-            deleteWhiteSpaces(pTextParsed);
-            reallocTagMemory(&pTextParsed);
-            *pText = pTextParsed; // parsed Text is saved into a specified field of structure
+            pSomeText = pDescLine + strlen(fBeginDescription); // position at first char of text to be parsed
+            deleteWhiteSpaces(&pSomeText);
+            int resultLength = pEndTag-pSomeText+1;
+            char *pResult = malloc(resultLength);
+            memset(pResult, 0, resultLength);
+            strncpy(pResult, pSomeText, resultLength-1);
+
+            *pText = pResult; // parsed Text is saved into a specified field of structure
 
         }
     }
@@ -299,83 +298,136 @@ int parseTextInAppointment(FILE *DbFile, char **pText)
 }
 
 /***************************************************************************
+*  int:    parseLocationInAppointment
+***************************************************************************/
+int parseLocationInAppointment(FILE *DbFile, char **pText)
+{
+    char *pEndTag;
+    char *pSomeText;
+    char *pDataBuffer = malloc(MAX_DESCRIPTION * sizeof(char));
+    char *pLocParsed = malloc(MAX_DESCRIPTION * sizeof(char));
+    memset(pLocParsed, 0, MAX_DESCRIPTION); // fill all with NULL
+    memset(pDataBuffer, 0, MAX_DESCRIPTION);
+
+    char *pLocLine = pDataBuffer;
+    fscanf(DbFile, "%[^\n]s", pLocLine);
+    deleteWhiteSpaces(&pLocLine);
+
+    /******* If it is a real <Location> */
+    int isCorrectTag = parseTag(&pLocLine, &fBeginLocation, strlen(fBeginLocation));
+    if (isCorrectTag)
+    {
+        pEndTag = pLocLine;
+        char *tmp = pEndTag;
+
+        while(*tmp) {
+            pEndTag++; // staying at \0
+            tmp++;
+        }
+
+        pEndTag--; // End of String
+
+        while ((*pEndTag == 0x20) || (*pEndTag == 0)) // skipping white spaces
+            pEndTag--;
+
+        pEndTag -= strlen(fEndLocation)-1; // position at beginning of end-tag
+        isCorrectTag = parseTag(&pEndTag, &fEndLocation, strlen(fEndLocation));
+
+        if(isCorrectTag)
+        {
+            pSomeText = pLocLine + strlen(fBeginLocation); // position at first char of text to be parsed
+            deleteWhiteSpaces(&pSomeText);
+            int resultLength = pEndTag - pSomeText;
+            char *pResult = malloc(resultLength);
+            memset(pResult, 0, resultLength);
+
+            strncpy(pResult, pSomeText, pEndTag - pSomeText);
+
+            *pText = pResult; // parsed Text is saved into a specified field of structure
+
+        }
+    }
+    fgetc(DbFile); // skip the end line symbol
+    return isCorrectTag;
+}
+
+
+/***************************************************************************
 *  int:    loadAppointment
 ***************************************************************************/
-int loadAppointment(FILE *DbFile, TAppointment appointment){
+int loadAppointment(FILE *DbFile, TAppointment *appointment){
 
-    fpos_t pPosition;
-    char testSymb[3] = {0,0,0};
-
+    char *pDataStart;
     /****** Obligatory part of each appointment */
-    char *pAppointmentLine = malloc(MAX_CHARS * sizeof(char));
-    fscanf(DbFile, "%[^\n]s", pAppointmentLine);
-    fgetc(DbFile); // skip the end line symbol
-    deleteWhiteSpaces(pAppointmentLine);
-    reallocTagMemory(&pAppointmentLine);
+    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char));
+    memset(pDataBuffer, 0, MAX_CHARS);
+    long oldPos = ftell(DbFile);
 
-    int isCorrectTag = parseTag(&pAppointmentLine, &fBeginAppointment, strlen(fBeginAppointment));
+    fscanf(DbFile, "%[^\n]s", pDataBuffer);
+    fgetc(DbFile); // skip the end line symbol
+
+    char *pData = pDataBuffer;
+    deleteWhiteSpaces(&pData);
+
+    int isCorrectTag = parseTag(&pData, &fBeginAppointment, strlen(fBeginAppointment));
 
     if (isCorrectTag)
     { // if it is a real appointment record in a database
-
+        int gotDuration = 0;
         /********** Start of a Loop for Appointment's Parsing */
+        char *pContent = 0;
         do
         {
             /********** Detecting what kind of tag is the next **/
             long pos = ftell(DbFile);
-            fscanf(DbFile, "%3[^\n]s", testSymb);
+            pContent = pDataBuffer;
+
+            fscanf(DbFile, "%[^\n]s", pContent);
+            deleteWhiteSpaces(&pContent);
             fseek(DbFile, pos, SEEK_SET);
 
             /********** if DATE */
-            if (strncmp(testSymb, "<Da", 3) == 0) {
-                isCorrectTag = parseDateInAppointment(DbFile, &appointment.Date);
-
+            if (strncmp(pContent, "<Da", 3) == 0) {
+                isCorrectTag = parseDateInAppointment(DbFile, &appointment->Date);
             }
 
             /********** if TIME */
-            if (strncmp(testSymb, "<Ti", 3) == 0) {
-                isCorrectTag = parseTimeInAppointment(DbFile, &appointment.Time);
-
+            if (strncmp(pContent, "<Ti", 3) == 0) {
+                isCorrectTag = parseTimeInAppointment(DbFile, &appointment->Time);
             }
 
             /********** if DURATION */
-            if (strncmp(testSymb, "<Du", 3) == 0) {
-                isCorrectTag = parseDurationInAppointment(DbFile, &appointment.Time);
-
+            if (strncmp(pContent, "<Du", 3) == 0) {
+                isCorrectTag = parseDurationInAppointment(DbFile, &appointment->Duration);
+                gotDuration = isCorrectTag;
             }
 
-            /********** if DECSRIPTION */
-            if (strncmp(testSymb, "<De", 3) == 0) {
-                isCorrectTag = parseTextInAppointment(DbFile, &appointment.Description);
-
+            /********** if DESCRIPTION */
+            if (strncmp(pContent, "<De", 3) == 0) {
+              isCorrectTag = parseDescriptionInAppointment(DbFile, &appointment->Description);
             }
 
             /********** if LOCATION */
-            if (strncmp(testSymb, "<De", 3) == 0) {
-                isCorrectTag = parseTextInAppointment(DbFile, &appointment.Location);
-
+            if (strncmp(pContent, "<Lo", 3) == 0) {
+                isCorrectTag = parseLocationInAppointment(DbFile, &appointment->Location);
             }
 
-        } while(strncmp(testSymb, "</A", 3) != 0);
+        } while(strncmp(pContent, "</A", 3) != 0);
+
+        if (isCorrectTag && !gotDuration) {
+            appointment->Duration = malloc(sizeof(TTime));
+            appointment->Duration->Hour = 1;
+        }
+
+        fscanf(DbFile, "%[^\n]s", pDataBuffer); // read the garbage
+        fgetc(DbFile);
+
+    } else {
+        fseek(DbFile, oldPos, SEEK_SET);
+        isCorrectTag = 0;
     }
 
-    fscanf(DbFile, "%s", pAppointmentLine); // read the garbage
-    fgetc(DbFile);
-    char *pEndFile = malloc(MAX_CHARS * sizeof(char));
-    fscanf(DbFile, "%[^\n]s", pEndFile);
-    fgetc(DbFile); // skip the end line symbol
-    deleteWhiteSpaces(pEndFile);
-    reallocTagMemory(&pEndFile);
-
-    if (parseTag(&pEndFile, &fEndFile, strlen(fEndFile)))
-            isCorrectTag = -10;  // the correct end of a database
-                               // is reached
-     else {
-        printf("\nDie Struktur der Datenbank-Datei hat ein falshes Format\n");
-        waitForEnter();
-        return isCorrectTag;
-    }
-
+    free(pDataBuffer);
     return isCorrectTag;
 }
 
@@ -387,17 +439,14 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
     FILE *DbFile;
 
     DbFile = fopen(DbFileName, "r+");
-
-    char *pCalendarLine = malloc(MAX_CHARS * sizeof(char)); // memory allocation 20 symbols for <Calendar>-Tag
+    char *pDataBuffer = malloc(MAX_CHARS * sizeof(char)); // memory allocation 20 symbols for <Calendar>-Tag
 
     if (DbFile != NULL){
-
+        char *pCalendarLine = pDataBuffer;
         fscanf(DbFile, "%[^\n]s", pCalendarLine);
         fgetc(DbFile); // skip the end line symbol
-        deleteWhiteSpaces(pCalendarLine);
-
-        /******** Memory reallocation^ */
-        reallocTagMemory(&pCalendarLine);
+  
+        deleteWhiteSpaces(&pCalendarLine);
 
         int isCorrectFile = parseTag(&pCalendarLine, &fBeginFile, strlen(fBeginFile));
 
@@ -411,7 +460,7 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                 // if the end of a file will be reached,
                 // loop will be broken by if-statement below
 
-                int isCorrectRecord = loadAppointment(DbFile, *(appointments + amount));
+                int isCorrectRecord = loadAppointment(DbFile, appointments + amount);
 
                 // if Database file has a wrong structure and
                 // appointment can not be parsed
@@ -420,10 +469,17 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                     break;
                 }
 
-                if (isCorrectRecord == -10) {
-                    printf("\nAlle Terminen wurden erfolgreich hochgeladen...\n");
-                    return 1;
-                }
+            }
+
+            fscanf(DbFile, "%[^\n]s", pCalendarLine);
+            fgetc(DbFile); // skip the end line symbol
+            deleteWhiteSpaces(&pCalendarLine);
+            if (parseTag(&pCalendarLine, &fEndFile, strlen(fEndFile))) {
+                printf("Alle Termine wurden ergolgreich hochgeladen.\n");
+                fclose(DbFile);
+                return amount;
+            } else {
+                printf("Der End der Databank-Datei ist falsch\n");
             }
         }
 

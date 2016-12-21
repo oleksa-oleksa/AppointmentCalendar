@@ -50,10 +50,15 @@ void printAppointment(TAppointment appointment) {
     printLine('-', 15);
     printf("\n   ");
     printTime(appointment.Time);
+    char *Location = "";
+
+    if (appointment.Location)
+        Location = appointment.Location;
+
     if (strlen(appointment.Description) <= 48)
-        printf(" -> %-15s | %-48s", appointment.Location, appointment.Description);
+        printf(" -> %-15s | %-48s", Location, appointment.Description);
     else
-        printf(" -> %-15s | %-44s ...", appointment.Location, appointment.Description);
+        printf(" -> %-15s | %-44s ...", Location, appointment.Description);
 }
 
 //TODO: listCalendar
