@@ -243,6 +243,7 @@ int parseDurationInAppointment(FILE *DbFile, TTime **pTime)
         }
     }
 
+
     free(pDataBuffer);
     free(pDurationParsed);
     fgetc(DbFile); // skip the end line symbol

@@ -37,7 +37,7 @@ void searchAppointment();
  *  parameter:
  *  result :
  ***************************************************************************/
-void sortCalendar();
+void sortCalendar(TAppointment *appointments, int amount);
 /***************************************************************************
  *  function:    listCalendar
  *  description:

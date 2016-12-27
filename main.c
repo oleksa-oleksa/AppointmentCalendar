@@ -52,7 +52,7 @@ int main() {
                     break;
             case 4: searchAppointment();
                     break;
-            case 5: sortCalendar();
+            case 5: sortCalendar(appointments, appointmentCount);
                     break;
             case 6:
                     listCalendar(appointments, appointmentCount);

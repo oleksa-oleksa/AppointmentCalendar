@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "calendar.h"
+#include "menu.h"
+#include "sort.h"
 #include "datastructure.h"
 #include "tools.h"
 #include "datetime.h"
@@ -38,7 +40,73 @@ void searchAppointment() {
 
 }
 
-void sortCalendar() {
+int orderByDate(TAppointment *a, TAppointment *b)
+{
+
+    if (a->Date.Year < b->Date.Year) {
+       return -1;
+    }
+
+
+    if (a->Date.Year > b->Date.Year) {
+     return 1;
+    }
+
+
+    if (a->Date.Year == b->Date.Year) {
+        if (a->Date.Month == b->Date.Month) {
+
+            if (a->Date.Day == b->Date.Day) {
+                return 0;
+            }
+
+            else {
+                if (a->Date.Day > b->Date.Day) {
+                    return 1;
+                }
+
+                else {
+                    return -1;
+                }
+            }
+        }
+        else {
+            if (a->Date.Month > b->Date.Month) {
+                return 1;
+            }
+
+            else {
+                return -1;
+            }
+        }
+
+        }
+    }
+
+}
+
+void sortCalendar(TAppointment *appointments, int amount) {
+
+    int choice;
+    char *Menu[] = {"Sortieren nach Datum und Uhrzeit",
+                    "Sortieren nach Beschreibung",
+                    "Sortieren nach Ort",
+                    "Sortieren nach Dauer",
+                    "Zuruck zum Hauptmenu"};
+
+    do
+    {
+        choice = getMenu("Termine sortieren", Menu, 5);
+
+        switch (choice) {
+            case 1:
+                quickSortAppointments(appointments, 0, amount, orderByDate);
+                break;
+            case 2:
+                break;
+            default: printf("Fehler");
+        }
+    }while (choice != 5);
 
 }
 
@@ -104,11 +172,6 @@ void listCalendar(TAppointment *appointments, int amount) {
     waitForEnter();
 }
 
-void freeAppointment(TAppointment *appointment) {
-    if (appointment) {
-        free(appointment);
-    }
-}
 
 void freeCalendar(TAppointment *appointments) {
     free(appointments);
