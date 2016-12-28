@@ -40,6 +40,122 @@ void searchAppointment() {
 
 }
 
+int orderByDescription(TAppointment *a, TAppointment *b)
+{
+
+    int n = strcmp(a->Description, b->Description);
+
+    if (n == 0) {
+        return 0;
+    }
+    else {
+        if (n < 0)
+            return -1;
+        else
+            return 1;
+    }
+
+}
+
+
+int orderByLocation(TAppointment *a, TAppointment *b)
+{
+
+    int n = strcmp(a->Location, b->Location);
+
+    if (n == 0) {
+        return 0;
+    }
+    else {
+        if (n < 0)
+            return -1;
+        else
+            return 1;
+    }
+
+}
+
+int orderByTime(TAppointment *a, TAppointment *b)
+{
+    if (a->Time.Hour < b->Time.Hour) {
+        return -1;
+    }
+
+
+    if (a->Time.Hour > b->Time.Hour) {
+        return 1;
+    }
+
+
+        if (a->Time.Minute == b->Time.Minute) {
+
+            if (a->Time.Second == b->Time.Second) {
+                return 0;
+            }
+
+            else {
+                if (a->Time.Second > b->Time.Second) {
+                    return 1;
+                }
+
+                else {
+                    return -1;
+                }
+            }
+        }
+        else {
+            if (a->Time.Minute > b->Time.Minute) {
+                return 1;
+            }
+
+            else {
+                return -1;
+            }
+        }
+}
+
+
+
+int orderByDuration(TAppointment *a, TAppointment *b)
+{
+    if (a->Duration->Hour < b->Duration->Hour) {
+        return -1;
+    }
+
+
+    if (a->Duration->Hour > b->Duration->Hour) {
+        return 1;
+    }
+
+
+        if (a->Duration->Minute == b->Duration->Minute) {
+
+            if (a->Duration->Second == b->Duration->Second) {
+                return 0;
+            }
+
+            else {
+                if (a->Duration->Second > b->Duration->Second) {
+                    return 1;
+                }
+
+                else {
+                    return -1;
+                }
+            }
+        }
+        else {
+            if (a->Duration->Minute > b->Duration->Minute) {
+                return 1;
+            }
+
+            else {
+                return -1;
+            }
+        }
+ }
+
+
 int orderByDate(TAppointment *a, TAppointment *b)
 {
 
@@ -53,7 +169,6 @@ int orderByDate(TAppointment *a, TAppointment *b)
     }
 
 
-    if (a->Date.Year == b->Date.Year) {
         if (a->Date.Month == b->Date.Month) {
 
             if (a->Date.Day == b->Date.Day) {
@@ -80,9 +195,37 @@ int orderByDate(TAppointment *a, TAppointment *b)
             }
         }
 
-        }
-    }
+}
 
+int orderByDateTime(TAppointment *a, TAppointment *b)
+{
+    int dateComparison = orderByDate(a, b);
+
+    if (dateComparison == 0)
+        return orderByTime(a, b);
+
+    return dateComparison;
+
+}
+
+int orderByDescriptionDateTime(TAppointment *a, TAppointment *b)
+{
+    int desComp = orderByDescription(a, b);
+
+    if (desComp == 0)
+        return orderByDateTime(a,b);
+
+    return desComp;
+}
+
+int orderByLocationDateTime(TAppointment *a, TAppointment *b)
+{
+    int locComp = orderByLocation(a, b);
+
+    if (locComp == 0)
+        return orderByDateTime(a,b);
+
+    return locComp;
 }
 
 void sortCalendar(TAppointment *appointments, int amount) {
@@ -100,10 +243,28 @@ void sortCalendar(TAppointment *appointments, int amount) {
 
         switch (choice) {
             case 1:
-                quickSortAppointments(appointments, 0, amount, orderByDate);
+                quickSortAppointments(appointments, amount, orderByDateTime);
+                printf("Termine sind nach Datum sortiert\n");
                 break;
             case 2:
+                quickSortAppointments(appointments, amount, orderByDescriptionDateTime);
+                printf("Termine sind nach Beschreibung sortiert\n");
+
                 break;
+            case 3:
+                quickSortAppointments(appointments, amount, orderByLocationDateTime);
+                printf("Termine sind nach Ort sortiert\n");
+                break;
+
+            case 4:
+                quickSortAppointments(appointments, amount, orderByDuration);
+                quickSortAppointments(appointments, amount, orderByDate);
+                quickSortAppointments(appointments, amount, orderByTime);
+                printf("Termine sind nach Dauer sortiert\n");
+
+            case 5:
+                break;
+
             default: printf("Fehler");
         }
     }while (choice != 5);

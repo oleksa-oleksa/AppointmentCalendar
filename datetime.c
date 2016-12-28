@@ -95,18 +95,14 @@ int getDateFromString(char *pInput, TDate *pDate)
    int givenDay;
    int givenMonth;
    int givenYear;
-   int julianYear;
-   int julianMonth;
    int isValid; //If the given delimiter is valid.
    int intDayOfTheWeek;
-   int first2DigitsOfYear; //Die beiden ersten Stellen der Jahreszahl, bei den Monaten Januar und Februar die ersten Stellen des Vorjahres
    char delimiter = '.';
    char *pDay; //String that holds the number of the day.
    char *pMonth; //String that holds the number of the month.
    char *pYear; //String that holds the number of the year.
    char *pTmp; //String to save a string temporarily
 
-    int months[] = {0, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; //Months in julian count
    pDay = pInput;
    pTmp = pInput;
 
@@ -143,34 +139,27 @@ int getDateFromString(char *pInput, TDate *pDate)
 
    givenYear = atoi(pYear);
 
+    if (givenYear < 1583) {
+        isValid = 0;// Only Gregorian Dates are allowed
+        printf("Das ist zu früh :) Geben Sie das Jahr später als 1583 ein! \n");
+    }
+
    pDate->Day = givenDay;
    pDate->Month = givenMonth;
    pDate->Year = givenYear;
 
    isValid *= isDateValid(*pDate);
 
-   julianMonth = months[givenMonth];
-
-   if (julianMonth == 2 || julianMonth == 1)
-   {
-      first2DigitsOfYear = (int) floor(givenYear - 1 / 100);
-    } else {
-      first2DigitsOfYear = (int) floor(givenYear / 100);
-    }
-
-   if (julianMonth == 2 || julianMonth == 1)
-   {
-      julianYear = (int) floor(givenYear - 1 % 100);
-    } else {
-      julianYear = (int) floor(givenYear % 100);
-    }
-
-   double x = (givenDay + (2.6 * julianMonth - 0.2) + julianYear + (julianYear / 4) + (first2DigitsOfYear / 4) -
-               2 * first2DigitsOfYear);
+    /********* Determine the day of the week */
+    /********* Works only after the year 1582*/
+    int a = (14 - givenMonth) / 12;
+    int y = givenYear - a;
+    int m = givenMonth + 12 * a - 2;
+    int x = (7000 + (givenDay + y + (y / 4) - (y / 100) + (y / 400) + (31 * m) / 12));
 
 
 
-    intDayOfTheWeek = (int) x % 7;
+    intDayOfTheWeek = x % 7;
 
     switch (intDayOfTheWeek) {
         case 0:

@@ -2,39 +2,22 @@
 #include <stdlib.h>
 #include "datastructure.h"
 #include "datetime.h"
-
+#include <string.h>
 
 void swapAppointment(TAppointment *a, TAppointment *b)
 {
     TAppointment swp;
 
-    memcpy(&swp, a, sizeof(TAppointment));
-    memcpy(a, b, sizeof(TAppointment));
-    memcpy(b, &swp, sizeof(TAppointment));
+    swp = *a;
+    *a = *b;
+    *b = swp;
 }
 
-
-void qsort(TAppointment *appointments, int lowerBound, int upperBound, int (*ordering) (TAppointment *a, TAppointment *b),
-           void (*swapAppointment) (TAppointment *a, TAppointment *b))
-{
-
-    int idx;
-
-    if (lowerBound >= upperBound)
-        return;
-    else
-    {
-        idx = partition(appointments, lowerBound, upperBound);
-        qsort(appointments, lowerBound, idx - 1);
-        qsort(appointments, idx + 1, upperBound);
-    }
-}
 
 int partition (TAppointment *appointments, int lowerBound, int upperBound, int (*ordering) (TAppointment *a, TAppointment *b),
                void (*swapAppointment) (TAppointment *a, TAppointment *b))
 {
     int i = lowerBound, j = upperBound;
-    int temp;
     TAppointment *pivot = appointments + lowerBound;
 
     while (i <= j)
@@ -64,8 +47,26 @@ int partition (TAppointment *appointments, int lowerBound, int upperBound, int (
 }
 
 
-void quickSortAppointments(TAppointment *appointments, int amount, int (*ordering) (TAppointment *a, TAppointment *b))
+
+void qSortAlgorithm(TAppointment *appointments, int lowerBound, int upperBound,
+                    int (*ordering)(TAppointment *a, TAppointment *b),
+                    void (*swapAppointment)(TAppointment *a, TAppointment *b))
 {
 
-    qsort(appointments, 0, (amount - 1), ordering, swapAppointment);
+    int idx;
+
+    if (lowerBound >= upperBound)
+        return;
+    else
+    {
+        idx = partition(appointments, lowerBound, upperBound, ordering, swapAppointment);
+        qSortAlgorithm(appointments, lowerBound, idx - 1, ordering, swapAppointment);
+        qSortAlgorithm(appointments, idx + 1, upperBound, ordering, swapAppointment);
+    }
+}
+
+
+void quickSortAppointments(TAppointment *appointments, int amount, int (*ordering) (TAppointment *a, TAppointment *b))
+{
+    qSortAlgorithm(appointments, 0, (amount - 1), ordering, swapAppointment);
 }
