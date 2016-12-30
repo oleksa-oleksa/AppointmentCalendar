@@ -334,6 +334,46 @@ void getTime(char *pInfoText, TTime *pTime, int withSeconds)
 
 }
 
+long long timeToSec(TTime *thisTime)
+{
+    long long allSeconds = thisTime->Second + 60 * thisTime->Minute + 3600 * thisTime->Hour;
+    return allSeconds;
+}
+
+void secToTime(long long allSeconds, TTime *end)
+{
+    int h = allSeconds / 3600;
+    int m = (allSeconds - h * 3600) / 60;
+    int s = allSeconds - h * 3600 - m * 60;
+
+    end->Hour = h;
+    end->Minute = m;
+    end->Second = s;
+}
+
+void addTime(TTime *time, TTime *duration, TTime *end)
+{
+    // the overflow after midnight must generate 1 extra day for every 86400 seconds of overflow
+
+    int extraDay = 0; // amount of whole days after midnight
+    long long extraSeconds = 0; // amount of seconds after midnight
+
+    long long secBegin = timeToSec(time);
+    long long secDuration = timeToSec(duration);
+
+    long long addedSec = secBegin + secDuration;
+
+    if (addedSec > 86399) // if after midnight
+    {
+        extraDay = ((addedSec - 86400) / 86400) + 1;
+        extraSeconds = addedSec - extraDay * 86400;
+        secToTime(extraSeconds, end);
+    }
+    else {
+        secToTime(addedSec, end);
+    }
+
+}
 
 void printDate(TDate date) {
     char *thisDay[] = {"NotaDay", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};

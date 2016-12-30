@@ -87,6 +87,8 @@ void getDate(char *pInfoText, TDate *pDate);
  ***************************************************************************/
 void getTime(char *pInfoText, TTime *pTime, int withSeconds);
 
+void addTime(TTime *time, TTime *duration, TTime *end);
+
 
 #endif
 

@@ -279,6 +279,16 @@ void printAppointment(TAppointment appointment) {
     printLine('-', 15);
     printf("\n   ");
     printTime(appointment.Time);
+
+    TTime endTime;
+
+    if(appointment.Duration != 0)
+    {
+        addTime(&appointment.Time, appointment.Duration, &endTime);
+    }
+    printf(" - ");
+    printTime(endTime);
+
     char *Location = "";
 
     if (appointment.Location)
