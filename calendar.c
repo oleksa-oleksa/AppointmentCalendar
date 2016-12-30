@@ -228,6 +228,18 @@ int orderByLocationDateTime(TAppointment *a, TAppointment *b)
     return locComp;
 }
 
+int orderByDurationDateTime(TAppointment *a, TAppointment *b)
+{
+    int locComp = orderByDuration(a, b);
+
+    if (locComp == 0)
+        return orderByDateTime(a,b);
+
+    return locComp;
+
+
+}
+
 void sortCalendar(TAppointment *appointments, int amount) {
 
     int choice;
@@ -245,22 +257,20 @@ void sortCalendar(TAppointment *appointments, int amount) {
             case 1:
                 quickSortAppointments(appointments, amount, orderByDateTime);
                 printf("Termine sind nach Datum sortiert\n");
-                break;
+                return;
             case 2:
                 quickSortAppointments(appointments, amount, orderByDescriptionDateTime);
                 printf("Termine sind nach Beschreibung sortiert\n");
-
-                break;
+                return;
             case 3:
                 quickSortAppointments(appointments, amount, orderByLocationDateTime);
                 printf("Termine sind nach Ort sortiert\n");
-                break;
+                return;
 
             case 4:
-                quickSortAppointments(appointments, amount, orderByDuration);
-                quickSortAppointments(appointments, amount, orderByDate);
-                quickSortAppointments(appointments, amount, orderByTime);
+                quickSortAppointments(appointments, amount, orderByDurationDateTime);
                 printf("Termine sind nach Dauer sortiert\n");
+                return;
 
             case 5:
                 break;
