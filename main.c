@@ -31,7 +31,7 @@ int main() {
 
     do
     {
-        choice = getMenu("Terminverwaltung v.4.0", Menu, 7);
+        choice = getMenu("Terminverwaltung v.5.0", Menu, 7);
 
         switch (choice) {
             case 1:

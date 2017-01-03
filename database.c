@@ -486,7 +486,8 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
             fgetc(DbFile); // skip the end line symbol
             deleteWhiteSpaces(&pCalendarLine);
             if (parseTag(&pCalendarLine, &fEndFile, strlen(fEndFile))) {
-                printf("Alle Termine wurden ergolgreich hochgeladen.\n");
+                printLine('_', 45);
+                printf("\nAlle Termine wurden ergolgreich hochgeladen.\n");
                 fclose(DbFile);
                 return amount;
             } else {
@@ -583,16 +584,24 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
 ***************************************************************************/
 void printDbInfo(int appointmentCount){
     if (appointmentCount){
-        if (appointmentCount == 1)
+        if (appointmentCount == 1) {
             printf("%i Termin ist in der Datenbank vorhanden.\n", appointmentCount);
+            printLine('_', 45);
+            printf("\n\n");
+        }
 
-        else
+        else {
             printf("%i Termine sind in der Datenbank vorhanden.\n", appointmentCount);
+            printLine('_', 45);
+            printf("\n");
+        }
 
     }
 
     else {
         printf("\nBitte legen Sie einen neuen Termin an\n");
+        printLine('_', 45);
+        printf("\n");
     }
 }
 
