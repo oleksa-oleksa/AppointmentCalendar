@@ -2,6 +2,7 @@
 #include "tools.h"
 #include <stdio.h>
 #include <string.h>
+#include "escapesequenzen.h"
 
 int getMenu(char *pTitle, char **pItems, unsigned int amount)
 {
@@ -18,12 +19,12 @@ int getMenu(char *pTitle, char **pItems, unsigned int amount)
         {
             printf("%i. %s \n", i + 1, pItems[i]);
         }
-        printf("\nBitte w%chlen Sie einen Men%cpunkt:\n ", ae, ue);
+        printf("\nBitte wählen Sie einen Menüpunkt:\n ");
         isValid = scanf("%i", &choice);
         clearBuffer();
         if (choice > amount || choice <= 0)
         {
-            printf("Fehler, keine g%cltige Men%cwahl \n\n", ue, ue);
+            printf("Fehler, keine gültige Menüwahl \n\n");
             isValid = 0;
         }
 

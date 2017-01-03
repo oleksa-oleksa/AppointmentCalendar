@@ -187,6 +187,11 @@ int getDateFromString(char *pInput, TDate *pDate)
             break;
     }
 
+   if (isValid == 0)
+   {
+       printf("Das Datumformat ist falsch.\n");
+   }
+
    return isValid;
 
 }
@@ -276,7 +281,13 @@ int getTimeFromString(char *input, TTime *pTime, int withSeconds)
 
    isValid *= isTimeValid(*pTime);
 
-   return isValid;
+   if (isValid == 0)
+   {
+       printf("Das Zeit- oder Dauerformat ist falsch.\n");
+   }
+
+
+    return isValid;
 
 }
 

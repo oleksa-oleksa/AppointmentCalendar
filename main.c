@@ -6,8 +6,13 @@
 #include "calendar.h"
 #include "menu.h"
 #include "database.h"
+#include "escapesequenzen.h"
 
 int main() {
+
+    setUnicode(); // If Win32 is detected, the proper UTF-8 will be set
+    clearScreen();
+
     TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
     char *DbFileName = "calendar.xml";
 
@@ -17,13 +22,14 @@ int main() {
     appointmentCount = loadCalendar(DbFileName, appointments, appointmentCount);
 
     printDbInfo(appointmentCount);
+    waitForEnter();
 
     /******** Menu output on the screen   **/
 
     int choice;
     char *Menu[] = {"Neuen Termin anlegen",
                     "Termin bearbeiten",
-                    "Termin l\x94schen",
+                    "Termin löschen",
                     "Termin suchen",
                     "Termine sortieren",
                     "Termine auflisten",
@@ -38,6 +44,7 @@ int main() {
                     if (appointmentCount < MAX_APPOINTMENTS) {
                         createAppointment((appointments + appointmentCount));
                         appointmentCount++;
+                        printDbInfo(appointmentCount);
                      }
 
                     else {
@@ -64,13 +71,19 @@ int main() {
                         int isSaved = saveCalendar(DbFileName, appointments, appointmentCount);
 
                         if (isSaved) {
+                            FORECOLOR_GREEN;
                             printf("\nAlle Terminen wurden in die Datei calendar.xml gespeichert.\n\n");
-                            printf("Das Programm wurde erfolgreich beendet...");
+                            ATTRIBUTE_OFF;
+                            printf("Das Programm wurde erfolgreich beendet...\n");
                         }
                         else {
+                            FORECOLOR_RED;
                             printf("\nFehler beim Speichern!\n");
-                            printf("Die neuen Terminen sind nicht gespeichert!");
+                            printf("Die neuen Terminen sind nicht gespeichert!\n\n");
+                            ATTRIBUTE_OFF;
                             waitForEnter();
+                            printf("Das Programm wurde beendet...\n");
+
 
                         }
                     }

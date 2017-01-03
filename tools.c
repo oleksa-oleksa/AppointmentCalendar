@@ -2,7 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tools.h"
+#include "escapesequenzen.h"
 
+/***************************************************************************
+*  function:    detectOSsetUnicode
+***************************************************************************/
+void setUnicode()
+{
+#ifdef __APPLE__
+#endif
+
+#ifdef _WIN32 // SET UTF-8 on Win32
+    #include<windows.h>
+    SetConsoleOutputCP(65001);
+#endif
+}
 
 /***************************************************************************
 *  function:    printLine
@@ -15,6 +29,7 @@ void printLine(char printedChar, int amount)
     {
         printf("%c", printedChar);
     }
+    printf("\n");
 }
 
 /***************************************************************************
@@ -44,7 +59,8 @@ void clearScreen()
 #endif
 
 #ifdef __APPLE__
-    system("clear");
+    CLEAR;
+    HOME;
 #endif
 }
 
@@ -78,7 +94,7 @@ int askYesOrNo(char *pPrompt)
 ***************************************************************************/
 void waitForEnter ()
 {
-    printf("Bitte die Eingabetaste dr%ccken...", ue);
+    printf("Bitte die Eingabetaste drücken...");
     char isValid = '0';
     while (isValid != 'r' && isValid != '\n')
     {

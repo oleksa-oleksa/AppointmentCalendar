@@ -8,23 +8,34 @@
 #include "datetime.h"
 #include <string.h>
 #include <math.h>
+#include "escapesequenzen.h"
+#include "database.h"
 
 int AppointmentCount = 0;
 TAppointment Calendar[MAX_APPOINTMENTS];
 
-//TODO: createAppointment
 void createAppointment(TAppointment *appointment) {
     TAppointment *tmpAppointment = malloc(sizeof(TAppointment));
 
-    getDate("Datum        : ", &(tmpAppointment->Date));
-    getTime("Uhrzeit      : ", &(tmpAppointment->Time), 0);
+    clearScreen();
+
+    FORECOLOR_GREEN;
+    printLine('-', 78);
+    printf("                     Neuen Termin anlegen:\n");
+    printLine('-', 78);
+    printf("\n");
+
+    ATTRIBUTE_OFF;
+
+    getDate("Datum: ", &(tmpAppointment->Date));
+    getTime("Uhrzeit: ", &(tmpAppointment->Time), 0);
     (*(tmpAppointment)).Duration = malloc(sizeof(TTime));
-    getTime("Dauer        : ", tmpAppointment->Duration, 0);
-    getText("Beschreibung : ", MAX_DESCRIPTION, &(tmpAppointment->Description), 0);
-    getText("Ort          : ", MAX_LOCATION, &(tmpAppointment->Location), 1);
+    getTime("Dauer: ", tmpAppointment->Duration, 0);
+    getText("Beschreibung: ", MAX_DESCRIPTION, &(tmpAppointment->Description), 0);
+    getText("Ort: ", MAX_LOCATION, &(tmpAppointment->Location), 1);
     *appointment = *tmpAppointment;
     free(tmpAppointment);
-    printf("Termin gespeichert. \n");
+    printf("Neuen Termin ist angelegt. \n");
     waitForEnter();
 }
 
@@ -257,19 +268,27 @@ void sortCalendar(TAppointment *appointments, int amount) {
             case 1:
                 quickSortAppointments(appointments, amount, orderByDateTime);
                 printf("Termine sind nach Datum sortiert\n");
+                printLine('-', strlen("Termine sind nach Datum sortiert"));
+                printf("\n");
                 return;
             case 2:
                 quickSortAppointments(appointments, amount, orderByDescriptionDateTime);
                 printf("Termine sind nach Beschreibung sortiert\n");
+                printLine('-', strlen("Termine sind nach Beschreibung sortiert"));
+                printf("\n");
                 return;
             case 3:
                 quickSortAppointments(appointments, amount, orderByLocationDateTime);
                 printf("Termine sind nach Ort sortiert\n");
+                printLine('-', strlen("Termine sind nach Ort sortiert"));
+                printf("\n");
                 return;
 
             case 4:
                 quickSortAppointments(appointments, amount, orderByDurationDateTime);
                 printf("Termine sind nach Dauer sortiert\n");
+                printLine('-', strlen("Termine sind nach Dauer sortiert"));
+                printf("\n");
                 return;
 
             case 5:
@@ -314,31 +333,34 @@ void printAppointment(TAppointment appointment) {
 void listCalendar(TAppointment *appointments, int amount) {
    int appointmentsOnScreen = 0; //saves the number of appointments on the screen
    int page = 1;
-
-    printf("Liste der Termine \n");
-    printLine('=', strlen("Liste der Termine"));
-    printf("\n \n");
+    clearScreen();
+    FORECOLOR_GREEN;
+    printLine('=', 78);
+    printf("                    Liste der Termine\n");
+    printLine('=', 78);
+    printf("\n");
+    ATTRIBUTE_OFF;
 
     char *prompt = malloc(strlen("Bitte Enter drücken, um die nächsten 100 Termine anzuzeigen...") * sizeof(char));
    for (int currentAppointment = 0; currentAppointment < amount; currentAppointment++)
    {
-      if (appointmentsOnScreen >= 15)
+      if (appointmentsOnScreen >= 5)
       {
-         if (amount - 1 - currentAppointment >= 15)
+         if (amount - 1 - currentAppointment >= 5)
          {
-                sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken, um die n%cchsten %d Termine anzuzeigen",
-                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae,
+                sprintf(prompt, "Seite %d/%d \n\nBitte Enter drücken, um die nächsten %d Termine anzuzeigen",
+                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN),
                         MAX_APPOINTMENTS_ON_SCREEN);
                 waitForEnterSpecialPrompt(prompt);
             } else {
-                sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken, um die n%cchsten %d Termine anzuzeigen",
-                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue, ae,
+                sprintf(prompt, "Seite %d/%d \n\nBitte Enter drücken, um die nächsten %d Termine anzuzeigen",
+                        page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN),
                         amount - currentAppointment);
                 waitForEnterSpecialPrompt(prompt);
             }
 
-            sprintf(prompt, "Seite %d/%d \n\nBitte Enter dr%ccken... ",
-                    page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN), ue);
+            sprintf(prompt, "Seite %d/%d \n\nBitte Enter drücken... ",
+                    page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN));
 
          appointmentsOnScreen = 0;
 

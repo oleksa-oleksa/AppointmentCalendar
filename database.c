@@ -4,6 +4,7 @@
 #include "datastructure.h"
 #include "tools.h"
 #include "datetime.h"
+#include "escapesequenzen.h"
 #include <string.h>
 #include <math.h>
 
@@ -381,6 +382,7 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
     deleteWhiteSpaces(&pData);
 
     int isCorrectTag = parseTag(&pData, &fBeginAppointment, strlen(fBeginAppointment));
+    int isCorrectTagAppointment = 0;
 
     if (isCorrectTag)
     { // if it is a real appointment record in a database
@@ -396,36 +398,59 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
             fscanf(DbFile, "%[^\n]s", pContent);
             deleteWhiteSpaces(&pContent);
             fseek(DbFile, pos, SEEK_SET);
+            isCorrectTag = 0;
+            isCorrectTagAppointment = 0;
 
             /********** if DATE */
             if (strncmp(pContent, "<Da", 3) == 0) {
-                isCorrectTag = parseDateInAppointment(DbFile, &appointment->Date);
+                isCorrectTagAppointment = parseDateInAppointment(DbFile, &appointment->Date);
+                isCorrectTag = isCorrectTagAppointment;
             }
 
             /********** if TIME */
             if (strncmp(pContent, "<Ti", 3) == 0) {
-                isCorrectTag = parseTimeInAppointment(DbFile, &appointment->Time);
+                isCorrectTagAppointment = parseTimeInAppointment(DbFile, &appointment->Time);
+                isCorrectTag = isCorrectTagAppointment;
+
             }
 
             /********** if DURATION */
             if (strncmp(pContent, "<Du", 3) == 0) {
-                isCorrectTag = parseDurationInAppointment(DbFile, &appointment->Duration);
+                isCorrectTagAppointment = parseDurationInAppointment(DbFile, &appointment->Duration);
+                isCorrectTag = isCorrectTagAppointment;
                 gotDuration = isCorrectTag;
+
             }
 
             /********** if DESCRIPTION */
             if (strncmp(pContent, "<De", 3) == 0) {
-              isCorrectTag = parseDescriptionInAppointment(DbFile, &appointment->Description);
+                isCorrectTagAppointment = parseDescriptionInAppointment(DbFile, &appointment->Description);
+                isCorrectTag = isCorrectTagAppointment;
+
             }
 
             /********** if LOCATION */
             if (strncmp(pContent, "<Lo", 3) == 0) {
-                isCorrectTag = parseLocationInAppointment(DbFile, &appointment->Location);
+                isCorrectTagAppointment = parseLocationInAppointment(DbFile, &appointment->Location);
+                isCorrectTag = isCorrectTagAppointment;
+
             }
 
-        } while(strncmp(pContent, "</A", 3) != 0);
+            if (strncmp(pContent, "</A", 3) == 0)
+            {
+                isCorrectTag = 1;
+                break;
+            }
 
-        if (isCorrectTag && !gotDuration) {
+            if (!isCorrectTagAppointment)
+            {
+                isCorrectTag = -2;
+            }
+
+
+        } while(strncmp(pContent, "</A", 3) != 0 && isCorrectTag != -2);
+
+        if (isCorrectTag == 1 && !gotDuration) {
             appointment->Duration = malloc(sizeof(TTime));
             appointment->Duration->Hour = 1;
         }
@@ -436,6 +461,7 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
     } else {
         fseek(DbFile, oldPos, SEEK_SET);
         isCorrectTag = 0;
+
     }
 
     free(pDataBuffer);
@@ -471,6 +497,7 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                 // if the end of a file will be reached,
                 // loop will be broken by if-statement below
 
+                /******* LOAD APPOINTMENT */
                 int isCorrectRecord = loadAppointment(DbFile, appointments + amount);
 
                 // if Database file has a wrong structure and
@@ -480,24 +507,47 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                     break;
                 }
 
+                if (isCorrectRecord == -2) {
+                    FORECOLOR_YELLOW;
+                    printf("\nDie Datenbank wurde teilweise ausgelesen: %i Termin(e).\n", amount);
+                    BOLD;
+                    FORECOLOR_BLUE;
+                    printf("Die neuen Terminen, die Sie jetzt anlegen,\nwerden in die gleichen Datei calendar.xml gespeichert.\n");
+                    ATTRIBUTE_OFF;
+                    printLine('-', 45);
+                    printf("\n");
+                    return amount;
+                }
+
             }
 
             fscanf(DbFile, "%[^\n]s", pCalendarLine);
             fgetc(DbFile); // skip the end line symbol
             deleteWhiteSpaces(&pCalendarLine);
             if (parseTag(&pCalendarLine, &fEndFile, strlen(fEndFile))) {
-                printLine('_', 45);
+                printLine('-', 45);
+                FORECOLOR_GREEN;
                 printf("\nAlle Termine wurden ergolgreich hochgeladen.\n");
+                ATTRIBUTE_OFF;
                 fclose(DbFile);
                 return amount;
             } else {
-                printf("Der End der Databank-Datei ist falsch\n");
+                printLine('-', 45);
+                FORECOLOR_YELLOW;
+                printf("\nDie Datenbank wurde teilweise ausgelesen: %i Termin(e).\n", amount);
+                BOLD;
+                FORECOLOR_BLUE;
+                printf("Die neuen Terminen, die Sie jetzt anlegen,\nwerden in die gleichen Datei calendar.xml gespeichert.\n");
+                ATTRIBUTE_OFF;
             }
         }
 
 
         else {
-            printf("Der Anfang der Datenbank-Datei hat ein falshes Format\n");
+            printLine('-', 45);
+            FORECOLOR_RED;
+            printf("\nDer Anfang der Datenbank-Datei hat ein falshes Format\n");
+            ATTRIBUTE_OFF;
             waitForEnter();
             return -1;
         }
@@ -548,7 +598,9 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
     DbFile = fopen(DbFileName, "wt");
 
     if (DbFile == NULL) {
+        FORECOLOR_VIOLETT;
         printf("Datei nicht erzeugt/geoffnet! \n");
+        ATTRIBUTE_OFF;
         return 0;
 
     } else {
@@ -582,26 +634,43 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
 /***************************************************************************
 *  void:    printDbInfo
 ***************************************************************************/
-void printDbInfo(int appointmentCount){
-    if (appointmentCount){
-        if (appointmentCount == 1) {
-            printf("%i Termin ist in der Datenbank vorhanden.\n", appointmentCount);
-            printLine('_', 45);
-            printf("\n\n");
-        }
+void printDbInfo(int appointmentCount) {
 
-        else {
-            printf("%i Termine sind in der Datenbank vorhanden.\n", appointmentCount);
-            printLine('_', 45);
+    switch (appointmentCount) {
+        case 0: // NO APPOINTMENTS
+            FORECOLOR_GREEN;
+            printf("Bitte legen Sie einen neuen Termin an.\n");
+            ATTRIBUTE_OFF;
+            printLine('-', 45);
             printf("\n");
-        }
+            break;
 
-    }
+        case 1: // ONLY 1 APPOINTMENT
+            FORECOLOR_VIOLETT;
+            printf("%i Termin", appointmentCount);
+            ATTRIBUTE_OFF;
+            printf(" ist in der Datenbank vorhanden.\n");
+            printLine('-', 45);
+            printf("\n\n");
+            break;
 
-    else {
-        printf("\nBitte legen Sie einen neuen Termin an\n");
-        printLine('_', 45);
-        printf("\n");
+        case -1: // ERROR MESSAGE
+            FORECOLOR_YELLOW;
+            printf("Keine Termine wurden hochgeladen...\n");
+            FORECOLOR_WHITE;
+            printf("Die neuen Terminen, die Sie jetzt anlegen, werden in die gleichen Datei calendar.xml gespeichert.\n");
+            ATTRIBUTE_OFF;
+            printLine('-', 45);
+            printf("\n");
+            break;
+
+        default: // EVERYTHING IS OK!
+            FORECOLOR_VIOLETT;
+            printf("%i Termine", appointmentCount);
+            ATTRIBUTE_OFF;
+            printf(" sind in der Datenbank vorhanden.\n");
+            printLine('-', 45);
+            printf("\n");
+            break;
     }
 }
-
