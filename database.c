@@ -510,8 +510,7 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                 if (isCorrectRecord == -2) {
                     FORECOLOR_YELLOW;
                     printf("\nDie Datenbank wurde teilweise ausgelesen: %i Termin(e).\n", amount);
-                    BOLD;
-                    FORECOLOR_BLUE;
+                    FORECOLOR_WHITE;
                     printf("Die neuen Terminen, die Sie jetzt anlegen,\nwerden in die gleichen Datei calendar.xml gespeichert.\n");
                     ATTRIBUTE_OFF;
                     printLine('-', 45);
@@ -535,8 +534,7 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                 printLine('-', 45);
                 FORECOLOR_YELLOW;
                 printf("\nDie Datenbank wurde teilweise ausgelesen: %i Termin(e).\n", amount);
-                BOLD;
-                FORECOLOR_BLUE;
+                FORECOLOR_WHITE;
                 printf("Die neuen Terminen, die Sie jetzt anlegen,\nwerden in die gleichen Datei calendar.xml gespeichert.\n");
                 ATTRIBUTE_OFF;
             }
@@ -598,7 +596,7 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
     DbFile = fopen(DbFileName, "wt");
 
     if (DbFile == NULL) {
-        FORECOLOR_VIOLETT;
+        FORECOLOR_RED;
         printf("Datei nicht erzeugt/geoffnet! \n");
         ATTRIBUTE_OFF;
         return 0;
@@ -646,7 +644,7 @@ void printDbInfo(int appointmentCount) {
             break;
 
         case 1: // ONLY 1 APPOINTMENT
-            FORECOLOR_VIOLETT;
+            FORECOLOR_GREEN;
             printf("%i Termin", appointmentCount);
             ATTRIBUTE_OFF;
             printf(" ist in der Datenbank vorhanden.\n");
@@ -665,7 +663,7 @@ void printDbInfo(int appointmentCount) {
             break;
 
         default: // EVERYTHING IS OK!
-            FORECOLOR_VIOLETT;
+            FORECOLOR_GREEN;
             printf("%i Termine", appointmentCount);
             ATTRIBUTE_OFF;
             printf(" sind in der Datenbank vorhanden.\n");

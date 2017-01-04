@@ -82,7 +82,7 @@ int main() {
                             printf("Die neuen Terminen sind nicht gespeichert!\n\n");
                             ATTRIBUTE_OFF;
                             waitForEnter();
-                            printf("Das Programm wurde beendet...\n");
+                            printf("Das Programm wurde beendet...\n\n");
 
 
                         }
