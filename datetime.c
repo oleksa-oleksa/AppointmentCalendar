@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "datastructure.h"
 #include "tools.h"
+#include "escapesequenzen.h"
 #include <math.h>
 
 
@@ -189,7 +190,9 @@ int getDateFromString(char *pInput, TDate *pDate)
 
    if (isValid == 0)
    {
+       FORECOLOR_YELLOW;
        printf("Das Datumformat ist falsch.\n");
+       ATTRIBUTE_OFF;
    }
 
    return isValid;
@@ -308,7 +311,7 @@ void getDate(char *pInfoText, TDate *pDate)
     do
     {
        printf("%s", pInfoText);
-       isValid = scanf("%s", enteredDate);
+       isValid = scanf("%[^\n]s", enteredDate);
         clearBuffer();
        if (isValid)
         {
@@ -325,7 +328,7 @@ void getDate(char *pInfoText, TDate *pDate)
 *  function:    getTime
 *  description: reads an user´s Input, calls the sub-function for check
 ***************************************************************************/
-void getTime(char *pInfoText, TTime *pTime, int withSeconds)
+void getTime(char *pInfoText, TTime *pTime, int withSeconds, int isAllowedEmpty)
 {
    char enteredDate[MAX_CHARS];
    int isValid;
@@ -333,13 +336,16 @@ void getTime(char *pInfoText, TTime *pTime, int withSeconds)
     do
     {
        printf("%s", pInfoText);
-       isValid = scanf("%s", enteredDate);
+       isValid = scanf("%[^\n]s", enteredDate);
         clearBuffer();
 
        if (isValid)
         {
            isValid *= getTimeFromString(enteredDate, pTime, withSeconds);
         }
+
+       if (isValid == 0 && isAllowedEmpty)
+           isValid = 1;
 
     } while (!isValid);
 

@@ -135,14 +135,15 @@ void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedE
     int input;
     char *pInputString = malloc((maxInput + 1) * sizeof(char)); // reserves a place in memory for user´s input
     char *pTargetString = NULL;
+    char readFormat[100];
 
     printf("%s", pInfoText);
-
+    sprintf(readFormat, "%%%i[^\n]s", maxInput);
     if (pInputString != NULL) // if memory was allocated
     {
         do
         {
-            input = scanf("%[^\n]s", pInputString);
+            input = scanf(readFormat, pInputString);
             clearBuffer();
 
             // if empty input is allowed and it was given

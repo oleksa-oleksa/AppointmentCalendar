@@ -15,10 +15,13 @@ int main() {
 
     TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
     char *DbFileName = "calendar.xml";
+    int newCount = 0; // for tracking changes to save
+    int sortedCount = 0; // same
 
     /******* This part loads appointments into a memory
      * and increments appointmentCount */
     int appointmentCount = 0;
+
     appointmentCount = loadCalendar(DbFileName, appointments, appointmentCount);
 
     printDbInfo(appointmentCount);
@@ -37,6 +40,20 @@ int main() {
 
     do
     {
+        clearScreen();
+
+        /**** Reminder about new appointments */
+        if (newCount) {
+            printInfoNewAppointments(newCount);
+        }
+
+        if (sortedCount)
+        {
+            printInfoSortedAppointments(sortedCount);
+        }
+
+        /**** MENU */
+
         choice = getMenu("Terminverwaltung v.5.0", Menu, 7);
 
         switch (choice) {
@@ -44,7 +61,7 @@ int main() {
                     if (appointmentCount < MAX_APPOINTMENTS) {
                         createAppointment((appointments + appointmentCount));
                         appointmentCount++;
-                        printDbInfo(appointmentCount);
+                        newCount++;
                      }
 
                     else {
@@ -60,6 +77,7 @@ int main() {
             case 4: searchAppointment();
                     break;
             case 5: sortCalendar(appointments, appointmentCount);
+                    sortedCount++;
                     break;
             case 6:
                     listCalendar(appointments, appointmentCount);
@@ -67,28 +85,59 @@ int main() {
             case 7:
 
 
-                    if (appointmentCount > 0){
-                        int isSaved = saveCalendar(DbFileName, appointments, appointmentCount);
+                    if (newCount > 0 || sortedCount > 0)
+                    {
 
-                        if (isSaved) {
-                            FORECOLOR_GREEN;
-                            printf("\nAlle Terminen wurden in die Datei calendar.xml gespeichert.\n\n");
-                            ATTRIBUTE_OFF;
-                            printf("Das Programm wurde erfolgreich beendet...\n");
+                        FORECOLOR_YELLOW;
+                        printf("\nWollen Sie Änderungen in die Datei speichern?\n\n");
+                        ATTRIBUTE_OFF;
+
+                        int hasChangesToSave = askYesOrNo("Speichern? (j/n): ");
+                        if (hasChangesToSave)
+                        {
+
+                            int isSaved = saveCalendar(DbFileName, appointments, appointmentCount);
+
+                            if (isSaved)
+                            {
+                                FORECOLOR_GREEN;
+                                printf(" -> Alle Terminen wurden in die Datei calendar.xml gespeichert.\n\n");
+                                ATTRIBUTE_OFF;
+                                printf("Das Programm wurde erfolgreich beendet...\n");
+                            } else
+                            {
+                                FORECOLOR_RED;
+                                printf("\nFehler beim Speichern!\n");
+                                printf("Die neuen Terminen sind nicht gespeichert!\n\n");
+                                ATTRIBUTE_OFF;
+                                waitForEnter();
+                                printf("Das Programm wurde beendet...\n\n");
+
+                            }
                         }
-                        else {
-                            FORECOLOR_RED;
-                            printf("\nFehler beim Speichern!\n");
-                            printf("Die neuen Terminen sind nicht gespeichert!\n\n");
+
+                        else
+                        {
+                            FORECOLOR_BLUE;
+                            printf(" -> Nicht speichern\n\n");
                             ATTRIBUTE_OFF;
-                            waitForEnter();
-                            printf("Das Programm wurde beendet...\n\n");
-
-
+                            printf("Das Programm wurde beendet...");
+                            printf("\n\n");
                         }
                     }
 
+                else
+                    {
+                        FORECOLOR_BLUE;
+                        printf("\nKeine Änderungen in die Datenbank sind zu speichern\n");
+                        ATTRIBUTE_OFF;
+                        printf("Das Program wurde beendet...");
+                        printf("\n\n");
+
+
+                    }
                     break;
+
             default: printf("Fehler");
         }
     } while (choice != 7);

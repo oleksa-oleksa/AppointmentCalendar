@@ -579,7 +579,7 @@ void saveAppointment(FILE *DbFile, TAppointment appointment){
         fprintf(DbFile, "%s%s%s\n", fBeginDescription, appointment.Description, fEndDescription);
     }
 
-    if(strlen(appointment.Location) != 0){
+    if(appointment.Location && strlen(appointment.Location) != 0){
         fprintf(DbFile, "%s%s%s\n", fBeginLocation, appointment.Location, fEndLocation);
     }
 

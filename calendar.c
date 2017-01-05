@@ -16,20 +16,29 @@ TAppointment Calendar[MAX_APPOINTMENTS];
 
 void createAppointment(TAppointment *appointment) {
     TAppointment *tmpAppointment = malloc(sizeof(TAppointment));
+    tmpAppointment->Duration = 0;
+    tmpAppointment->Location = 0;
 
     clearScreen();
 
-    printLine('-', 78);
-    printf("                     Neuen Termin anlegen:\n");
-    printLine('-', 78);
+    printLine('=', 35);
+    printf("   Erfassung eines neuen Termins\n");
+    printLine('=', 35);
     printf("\n");
 
-    getDate("Datum: ", &(tmpAppointment->Date));
-    getTime("Uhrzeit: ", &(tmpAppointment->Time), 0);
-    (*(tmpAppointment)).Duration = malloc(sizeof(TTime));
-    getTime("Dauer: ", tmpAppointment->Duration, 0);
-    getText("Beschreibung: ", MAX_DESCRIPTION, &(tmpAppointment->Description), 0);
-    getText("Ort: ", MAX_LOCATION, &(tmpAppointment->Location), 1);
+    getDate("Datum        : ", &(tmpAppointment->Date));
+    getTime("Uhrzeit      : ", &(tmpAppointment->Time), 0, 0);
+    TTime *duration = malloc(sizeof(TTime));
+    memset(duration, 0, sizeof(TTime));
+    getTime("Dauer        : ", duration, 0, 1);
+    if (duration->Second == duration->Minute == duration->Hour == 0) {
+        free(duration);
+    } else {
+        tmpAppointment->Duration = duration;
+    }
+
+    getText("Beschreibung : ", MAX_DESCRIPTION, &(tmpAppointment->Description), 0);
+    getText("Ort          : ", MAX_LOCATION, &(tmpAppointment->Location), 1);
     *appointment = *tmpAppointment;
     free(tmpAppointment);
     FORECOLOR_GREEN;
@@ -261,6 +270,7 @@ void sortCalendar(TAppointment *appointments, int amount) {
 
     do
     {
+        clearScreen();
         choice = getMenu("Termine sortieren", Menu, 5);
 
         switch (choice) {
@@ -310,55 +320,104 @@ void sortCalendar(TAppointment *appointments, int amount) {
 
 }
 
-void printAppointment(TAppointment appointment) {
-    FORECOLOR_BLACK;
-    printLine('=', 78);
-    ATTRIBUTE_OFF;
-    printf("\n");
-    FORECOLOR_GREEN;
-    printDate(appointment.Date);
-    ATTRIBUTE_OFF;
-    printf("\n");
-    printLine('-', 15);
+void printAppointment(TAppointment *appointment) {
     printf("\n   ");
-    printTime(appointment.Time);
+    printTime(appointment->Time);
 
     TTime endTime;
 
-    if(appointment.Duration != 0)
+    if(appointment->Duration != 0)
     {
-        addTime(&appointment.Time, appointment.Duration, &endTime);
+        addTime(&appointment->Time, appointment->Duration, &endTime);
     }
     printf(" - ");
     printTime(endTime);
 
     char *Location = "";
 
-    if (appointment.Location)
-        Location = appointment.Location;
+    if (appointment->Location)
+        Location = appointment->Location;
 
-    if (strlen(appointment.Description) <= 48)
-        printf(" -> %-15s | %-48s", Location, appointment.Description);
-    else
-        printf(" -> %-15s | %-44s ...", Location, appointment.Description);
+    /******* If Description is longer 48 symbols, then print only first 44 symbols */
+
+    char *tmpDes = appointment->Description;
+
+    if (strlen(appointment->Description) <= 48)
+        printf(" -> %-15s | %-48s", Location, appointment->Description);
+
+    else {
+        printf(" -> %-15s  | ", Location);
+        for (int i = 0; i < 44; i++)
+        {
+            printf("%c", *(tmpDes + i));
+        }
+        printf(" ...");
+
+
+    }
+
+
 }
 
-//TODO: listCalendar
+void printLineAppointment()
+{
+    printf("\n");
+    printLine('=', 90);
+    printf("\n\n");
+
+}
+
+void printInfoSortedAppointments(int newN)
+{
+    FORECOLOR_BLUE;
+    printf("Datenreihenfolge wurde aktualisiert\n");
+    ATTRIBUTE_OFF;
+}
+
+void printInfoNewAppointments(int newN)
+{
+
+    if (newN == 1)
+    {
+        FORECOLOR_BLUE;
+        printf("%d neuer Termin is angelegt\n", newN);
+        ATTRIBUTE_OFF;
+    }
+
+    else
+    {
+        FORECOLOR_BLUE;
+        printf("%d neuen Termine is angelegt\n", newN);
+        ATTRIBUTE_OFF;
+    }
+}
+
+void printDateHeader(TAppointment *a)
+{
+    FORECOLOR_GREEN;
+    printDate(a->Date);
+    ATTRIBUTE_OFF;
+    printf("\n");
+    printLine('-', 15);
+
+}
+
+
 void listCalendar(TAppointment *appointments, int amount) {
    int appointmentsOnScreen = 0; //saves the number of appointments on the screen
    int page = 1;
     clearScreen();
-    printLine('=', 78);
-    printf("                          Liste der Termine\n");
-    printLine('=', 78);
+    printLine('=', 90);
+    printf("                                 Liste der Termine\n");
+    printLine('=', 90);
     printf("\n");
 
     char *prompt = malloc(strlen("Bitte Enter drücken, um die nächsten 100 Termine anzuzeigen...") * sizeof(char));
    for (int currentAppointment = 0; currentAppointment < amount; currentAppointment++)
    {
-      if (appointmentsOnScreen >= 5)
+      if (appointmentsOnScreen >= 10)
       {
-         if (amount - 1 - currentAppointment >= 5)
+         if (amount - 1 - currentAppointment >= 10)
          {
                 sprintf(prompt, "Seite %d/%d \n\nBitte Enter drücken, um die nächsten %d Termine anzuzeigen",
                         page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN),
@@ -381,12 +440,29 @@ void listCalendar(TAppointment *appointments, int amount) {
 
             page++;
         }
-      printAppointment(*(appointments + currentAppointment));
-        printf("\n \n");
-      appointmentsOnScreen++;
+
+
+      /**** If current appointment has the same date as previous, the date will not be printed twice */
+
+       int isHeaderRequired = (currentAppointment == 0 ||
+                                      orderByDate ((appointments + currentAppointment -1), (appointments + currentAppointment)) != 0);
+
+       if (isHeaderRequired) {
+          if (currentAppointment != 0)
+              printLineAppointment();
+          printDateHeader(appointments + currentAppointment);
+
+       }
+
+       // Part for each appointment
+       printAppointment(appointments + currentAppointment);
+
+       printf("\n \n");
+       appointmentsOnScreen++;
     }
-    //free(prompt);
+
     printf("Seite %d/%d \n\n", page, (int) ceil((double) amount / (double) MAX_APPOINTMENTS_ON_SCREEN));
+    free(prompt);
     waitForEnter();
 }
 

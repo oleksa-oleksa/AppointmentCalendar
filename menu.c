@@ -11,7 +11,6 @@ int getMenu(char *pTitle, char **pItems, unsigned int amount)
     do
     {
         int i = 0;
-        clearScreen();
         printf("\n%s \n", pTitle);
         printLine('=', (strlen(pTitle) + 1));
         printf("\n");
@@ -19,6 +18,7 @@ int getMenu(char *pTitle, char **pItems, unsigned int amount)
         {
             printf("%i. %s \n", i + 1, pItems[i]);
         }
+
         printf("\nBitte wählen Sie einen Menüpunkt:\n ");
         isValid = scanf("%i", &choice);
         clearBuffer();

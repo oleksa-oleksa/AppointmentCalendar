@@ -85,7 +85,7 @@ void getDate(char *pInfoText, TDate *pDate);
  *               withSec: 1 is for reading the seconds; 0 is for ignoring the input of seconds
  *  result :
  ***************************************************************************/
-void getTime(char *pInfoText, TTime *pTime, int withSeconds);
+void getTime(char *pInfoText, TTime *pTime, int withSeconds, int e);
 
 void addTime(TTime *time, TTime *duration, TTime *end);
 

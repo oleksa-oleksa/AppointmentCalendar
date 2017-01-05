@@ -5,9 +5,9 @@
 
 /***************************************************************************
  *  function:    createAppointment
- *  description:  
- *  parameter:      
- *  result :     
+ *  description:
+ *  parameter:
+ *  result :
  ***************************************************************************/
 void createAppointment(TAppointment *appointment);
 /***************************************************************************
@@ -53,5 +53,19 @@ void listCalendar(TAppointment *appointments, int amount);
  *  result :     
  ***************************************************************************/
 void freeCalendar(TAppointment *appointments);
+
+/***************************************************************************
+ *  function: printInfoNewAppointments
+ *  description: Prints Information how many new appointmens are created
+ *  parameter:
+ *  result :  text on the screen
+ ***************************************************************************/
+void printInfoNewAppointments(int n);
+
+void printInfoSortedAppointments(int n);
+
+void printDateHeader(TAppointment *a);
+
+void printLineAppointment();
 
 #endif //UEB1_CALENDAR_H
