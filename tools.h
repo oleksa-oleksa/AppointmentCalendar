@@ -79,4 +79,4 @@ int askYesOrNo(char *);
 void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedEmpty);
 
 
-#endif //TOOLS_TOOLS_H
+#endif

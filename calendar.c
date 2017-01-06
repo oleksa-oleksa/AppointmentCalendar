@@ -28,6 +28,7 @@ void createAppointment(TAppointment *appointment) {
 
     getDate("Datum        : ", &(tmpAppointment->Date));
     getTime("Uhrzeit      : ", &(tmpAppointment->Time), 0, 0);
+
     TTime *duration = malloc(sizeof(TTime));
     memset(duration, 0, sizeof(TTime));
     getTime("Dauer        : ", duration, 0, 1);
@@ -79,6 +80,15 @@ int orderByDescription(TAppointment *a, TAppointment *b)
 
 int orderByLocation(TAppointment *a, TAppointment *b)
 {
+
+    if ((a->Location == NULL) && (b->Location == NULL))
+        return 0;
+
+    if (a->Location == NULL)
+        return 1;
+
+    if (b->Location == NULL)
+        return -1;
 
     int n = strcmp(a->Location, b->Location);
 
@@ -137,6 +147,16 @@ int orderByTime(TAppointment *a, TAppointment *b)
 
 int orderByDuration(TAppointment *a, TAppointment *b)
 {
+
+    if ((a->Duration == NULL) && (b->Duration == NULL))
+        return 0;
+
+    if (a->Duration == NULL)
+        return 1;
+
+    if (b->Duration == NULL)
+        return -1;
+
     if (a->Duration->Hour < b->Duration->Hour) {
         return -1;
     }
@@ -147,24 +167,14 @@ int orderByDuration(TAppointment *a, TAppointment *b)
     }
 
 
-        if (a->Duration->Minute == b->Duration->Minute) {
+    if (a->Duration->Minute == b->Duration->Minute) {
 
-            if (a->Duration->Second == b->Duration->Second) {
-                return 0;
-            }
-
-            else {
-                if (a->Duration->Second > b->Duration->Second) {
-                    return 1;
-                }
-
-                else {
-                    return -1;
-                }
-            }
+        if (a->Duration->Second == b->Duration->Second) {
+            return 0;
         }
+
         else {
-            if (a->Duration->Minute > b->Duration->Minute) {
+            if (a->Duration->Second > b->Duration->Second) {
                 return 1;
             }
 
@@ -172,7 +182,17 @@ int orderByDuration(TAppointment *a, TAppointment *b)
                 return -1;
             }
         }
- }
+    }
+    else {
+        if (a->Duration->Minute > b->Duration->Minute) {
+            return 1;
+        }
+
+        else {
+            return -1;
+        }
+    }
+}
 
 
 int orderByDate(TAppointment *a, TAppointment *b)
@@ -239,6 +259,7 @@ int orderByDescriptionDateTime(TAppointment *a, TAppointment *b)
 
 int orderByLocationDateTime(TAppointment *a, TAppointment *b)
 {
+
     int locComp = orderByLocation(a, b);
 
     if (locComp == 0)
@@ -290,6 +311,7 @@ void sortCalendar(TAppointment *appointments, int amount) {
                 ATTRIBUTE_OFF;
                 printLine('-', strlen("Termine sind nach Beschreibung sortiert"));
                 printf("\n");
+                waitForEnter();
                 return;
             case 3:
                 quickSortAppointments(appointments, amount, orderByLocationDateTime);
@@ -324,29 +346,38 @@ void printAppointment(TAppointment *appointment) {
     printf("\n   ");
     printTime(appointment->Time);
 
-    TTime endTime;
+    TTime endTime = appointment->Time;
 
-    if(appointment->Duration != 0)
+    if(appointment->Duration != NULL)
     {
         addTime(&appointment->Time, appointment->Duration, &endTime);
-    }
-    printf(" - ");
-    printTime(endTime);
+        printf(" - ");
+        printTime(endTime);
+    } else printf(":       ");
+
 
     char *Location = "";
+    char *LP = "";
 
-    if (appointment->Location)
+
+    if (appointment->Location) {
         Location = appointment->Location;
+        LP = "->";
+    }
+    else {
+        Location = "               ";
+        LP = "  ";
+    }
 
     /******* If Description is longer 48 symbols, then print only first 44 symbols */
 
     char *tmpDes = appointment->Description;
 
     if (strlen(appointment->Description) <= 48)
-        printf(" -> %-15s | %-48s", Location, appointment->Description);
+        printf(" %s %-15s | %-48s", LP, Location, appointment->Description);
 
     else {
-        printf(" -> %-15s  | ", Location);
+        printf(" %s %-15s  | ", LP, Location);
         for (int i = 0; i < 44; i++)
         {
             printf("%c", *(tmpDes + i));

@@ -387,6 +387,7 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
     if (isCorrectTag)
     { // if it is a real appointment record in a database
         int gotDuration = 0;
+        int gotLocation = 0;
         /********** Start of a Loop for Appointment's Parsing */
         char *pContent = 0;
         do
@@ -416,6 +417,7 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
 
             /********** if DURATION */
             if (strncmp(pContent, "<Du", 3) == 0) {
+                appointment->Duration = malloc(sizeof(TTime));
                 isCorrectTagAppointment = parseDurationInAppointment(DbFile, &appointment->Duration);
                 isCorrectTag = isCorrectTagAppointment;
                 gotDuration = isCorrectTag;
@@ -431,10 +433,26 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
 
             /********** if LOCATION */
             if (strncmp(pContent, "<Lo", 3) == 0) {
+                appointment->Location = malloc(MAX_LOCATION);
                 isCorrectTagAppointment = parseLocationInAppointment(DbFile, &appointment->Location);
                 isCorrectTag = isCorrectTagAppointment;
+                gotLocation = isCorrectTag;
 
             }
+
+            if (gotDuration == 0) {
+                appointment->Duration = 0;
+                /*appointment->Duration = malloc(sizeof(TTime));
+                appointment->Duration->Hour = 0;
+                appointment->Duration->Minute = 0;
+                appointment->Duration->Second = 0;*/
+
+            }
+
+
+            if (gotLocation == 0)
+                appointment->Location = 0;
+
 
             if (strncmp(pContent, "</A", 3) == 0)
             {
@@ -450,10 +468,6 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
 
         } while(strncmp(pContent, "</A", 3) != 0 && isCorrectTag != -2);
 
-        if (isCorrectTag == 1 && !gotDuration) {
-            appointment->Duration = malloc(sizeof(TTime));
-            appointment->Duration->Hour = 1;
-        }
 
         fscanf(DbFile, "%[^\n]s", pDataBuffer); // read the garbage
         fgetc(DbFile);
@@ -575,7 +589,7 @@ void saveAppointment(FILE *DbFile, TAppointment appointment){
     if (appointment.Duration)
         writeDuration(DbFile, appointment.Duration);
 
-    if(strlen(appointment.Description) != 0){
+    if(appointment.Description && strlen(appointment.Description) != 0){
         fprintf(DbFile, "%s%s%s\n", fBeginDescription, appointment.Description, fEndDescription);
     }
 
