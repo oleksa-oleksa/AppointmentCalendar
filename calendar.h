@@ -4,66 +4,49 @@
 #include "datastructure.h"
 
 /***************************************************************************
- *  function:    createAppointment
- *  description:
- *  parameter:
- *  result :
+ *  Creates a new appointment with optional Location and Duration
  ***************************************************************************/
 void createAppointment(TAppointment *appointment);
+
 /***************************************************************************
- *  function:    editAppointment
- *  description: 
- *  parameter:   
- *  result :     
- ***************************************************************************/
+ *
+***************************************************************************/
 void editAppointment();
+
 /***************************************************************************
- *  function:    deleteAppointment
- *  description: 
- *  parameter:   
- *  result :     
- ***************************************************************************/
+ *
+***************************************************************************/
 void deleteAppointment();
+
 /***************************************************************************
- *  function:    searchAppointment
- *  description:
- *  parameter:
- *  result :
+ *
  ***************************************************************************/
 void searchAppointment();
+
 /***************************************************************************
- *  function:    sortCalendar
- *  description:
- *  parameter:
- *  result :
+ *  Main function for sorting
  ***************************************************************************/
 void sortCalendar(TAppointment *appointments, int amount);
+
 /***************************************************************************
- *  function:    listCalendar
- *  description:
- *  parameter:
- *  result :
+ *  Helper: printAppointment
  ***************************************************************************/
 void listCalendar(TAppointment *appointments, int amount);
 
 /***************************************************************************
- *  function:    
- *  description: 
- *  parameter:   
- *  result :     
+ *  Frees allocated memory
  ***************************************************************************/
 void freeCalendar(TAppointment *appointments);
 
 /***************************************************************************
- *  function: printInfoNewAppointments
- *  description: Prints Information how many new appointmens are created
- *  parameter:
- *  result :  text on the screen
+ *  Prints Information how many new appointmens are created
  ***************************************************************************/
 void printInfoNewAppointments(int n);
-
 void printInfoSortedAppointments(int n);
 
+/***************************************************************************
+ *  Prints aate and aay of the week
+ ***************************************************************************/
 void printDateHeader(TAppointment *a);
 
 void printLineAppointment();
