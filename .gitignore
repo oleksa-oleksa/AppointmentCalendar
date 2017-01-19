@@ -1,2 +1,6 @@
-.idea
 .git
+.xml_swp
+calendar.xml
+termincalendar
+.DS_Store
+.idea
