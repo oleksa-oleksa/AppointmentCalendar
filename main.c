@@ -8,21 +8,21 @@
 #include "database.h"
 #include "escapesequenzen.h"
 
+
 int main() {
+
 
     setUnicode(); // If Win32 is detected, the proper UTF-8 will be set
     clearScreen();
 
-    TAppointment *appointments = calloc(sizeof(TAppointment), MAX_APPOINTMENTS);
     char *DbFileName = "calendar.xml";
-    int newCount = 0; // for tracking changes to save
-    int sortedCount = 0; // same
+
 
     /******* This part loads appointments into a memory
      * and increments appointmentCount */
-    int appointmentCount = 0;
 
-    appointmentCount = loadCalendar(DbFileName, appointments, appointmentCount);
+
+    appointmentCount = loadCalendar(DbFileName);
 
     printDbInfo(appointmentCount);
     waitForEnter();
@@ -34,8 +34,8 @@ int main() {
                     "Termin bearbeiten",
                     "Termin löschen",
                     "Termin suchen",
-                    "Termine sortieren",
-                    "Termine auflisten",
+                    "Termine vorwärts auflisten",
+                    "Termine rückwärts auflisten",
                     "Programm beenden"};
 
     do
@@ -47,27 +47,16 @@ int main() {
             printInfoNewAppointments(newCount);
         }
 
-        if (sortedCount)
-        {
-            printInfoSortedAppointments(sortedCount);
-        }
-
         /**** MENU */
 
-        choice = getMenu("Terminverwaltung v.5.0", Menu, 7);
+        choice = getMenu("Terminverwaltung v.6.0", Menu, 7);
 
         switch (choice) {
             case 1:
-                    if (appointmentCount < MAX_APPOINTMENTS) {
-                        createAppointment((appointments + appointmentCount));
-                        appointmentCount++;
-                        newCount++;
-                     }
 
-                    else {
-                         printf("Keine freien Speicherplätze mehr vorhanden!");
-                         waitForEnter();
-                     }
+                    createAppointment();
+                    appointmentCount++;
+                    newCount++;
 
                     break;
             case 2: editAppointment();
@@ -76,16 +65,15 @@ int main() {
                     break;
             case 4: searchAppointment();
                     break;
-            case 5: sortCalendar(appointments, appointmentCount);
-                    sortedCount++;
+            case 5: listCalendar(appointmentCount, 0); //forward
                     break;
             case 6:
-                    listCalendar(appointments, appointmentCount);
+                    listCalendar(appointmentCount, 1); // backward
                     break;
             case 7:
 
 
-                    if (newCount > 0 || sortedCount > 0)
+                    if (newCount > 0)
                     {
 
                         FORECOLOR_YELLOW;
@@ -96,7 +84,7 @@ int main() {
                         if (hasChangesToSave)
                         {
 
-                            int isSaved = saveCalendar(DbFileName, appointments, appointmentCount);
+                            int isSaved = saveCalendar(DbFileName, appointmentCount);
 
                             if (isSaved)
                             {
@@ -141,8 +129,6 @@ int main() {
             default: printf("Fehler");
         }
     } while (choice != 7);
-
-    freeCalendar(appointments);
 
     return 0;
 

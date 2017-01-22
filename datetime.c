@@ -398,6 +398,6 @@ void printDate(TDate date) {
 
    if (dayTest > 7)
      dayTest = NotaDay;
-    printf("%s, %d.%d.%d", thisDay[dayTest], date.Day, date.Month, date.Year);
+    printf("%s, %02d.%02d.%04d", thisDay[dayTest], date.Day, date.Month, date.Year);
 
 }

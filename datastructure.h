@@ -1,7 +1,6 @@
 #ifndef DATASTRUCTURE_H
 #define DATASTRUCTURE_H DATASTRUCTURE_H
 
-#define MAX_APPOINTMENTS 100
 #define MAX_CHARS 20
 #define MAX_DESCRIPTION 100
 #define MAX_LOCATION 15
@@ -26,17 +25,21 @@ typedef struct {
     int Second;
 } TTime;
 
-
-typedef struct {
+/** Double linked list **/
+typedef struct Appointments {
     TDate Date;
     TTime Time;
     char *Description;
     char *Location;
     TTime *Duration;
+    struct Appointments *Next;
+    struct Appointments *Previous;
 } TAppointment;
 
-extern int countAppointment;
-extern TAppointment Calendar[];
+extern TAppointment *FirstAppointment, *LastAppointment;
+extern int appointmentCount;
+extern int newCount;
+
 
 #endif //DATASTRUCTURE_H
 

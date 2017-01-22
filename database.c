@@ -7,6 +7,7 @@
 #include "escapesequenzen.h"
 #include <string.h>
 #include <math.h>
+#include "list.h"
 
 
 char *fBeginFile = "<Calendar>";
@@ -29,6 +30,8 @@ char *fEndDescription = "</Description>";
 
 char *fBeginLocation = "<Location>";
 char *fEndLocation = "</Location>";
+
+int newCount = 0; // for tracking changes to save
 
 /***************************************************************************
 *  int:    writeDate
@@ -442,10 +445,6 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
 
             if (gotDuration == 0) {
                 appointment->Duration = 0;
-                /*appointment->Duration = malloc(sizeof(TTime));
-                appointment->Duration->Hour = 0;
-                appointment->Duration->Minute = 0;
-                appointment->Duration->Second = 0;*/
 
             }
 
@@ -485,8 +484,11 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment){
 /***************************************************************************
 *  int:    loadCalendar
 ***************************************************************************/
-int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
+int loadCalendar(char *DbFileName){
 
+    TAppointment loadedAppoinment;
+
+    int amount;
     FILE *DbFile;
 
     DbFile = fopen(DbFileName, "r+");
@@ -512,7 +514,12 @@ int loadCalendar(char *DbFileName, TAppointment *appointments, int amount){
                 // loop will be broken by if-statement below
 
                 /******* LOAD APPOINTMENT */
-                int isCorrectRecord = loadAppointment(DbFile, appointments + amount);
+                int isCorrectRecord = loadAppointment(DbFile, &loadedAppoinment);
+
+                if (isCorrectRecord)
+                {
+                    insertInDList(&loadedAppoinment);
+                }
 
                 // if Database file has a wrong structure and
                 // appointment can not be parsed
@@ -604,8 +611,9 @@ void saveAppointment(FILE *DbFile, TAppointment appointment){
 /***************************************************************************
 *  int:    saveCalendar
 ***************************************************************************/
-int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
+int saveCalendar(char *DbFileName, int amount)
 {
+    TAppointment *thisAppointment = FirstAppointment;
     FILE *DbFile;
     DbFile = fopen(DbFileName, "wt");
 
@@ -623,9 +631,12 @@ int saveCalendar(char *DbFileName, TAppointment *appointments, int amount)
          * Writing a single termin into a file
          *****************************************/
 
-        for (int currentAppointment = 0; currentAppointment < amount; currentAppointment++){
+        for (int currentAppointment = 0; currentAppointment < amount; currentAppointment++)
+        {
 
-            saveAppointment(DbFile, *(appointments + currentAppointment));
+            saveAppointment(DbFile, *(thisAppointment));
+            thisAppointment = thisAppointment->Next;
+
         }
 
 

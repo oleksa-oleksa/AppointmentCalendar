@@ -6,7 +6,7 @@
 /***************************************************************************
  *  Creates a new appointment with optional Location and Duration
  ***************************************************************************/
-void createAppointment(TAppointment *appointment);
+void createAppointment();
 
 /***************************************************************************
  *
@@ -24,17 +24,17 @@ void deleteAppointment();
 void searchAppointment();
 
 /***************************************************************************
- *  Main function for sorting
+ *  Not necessary after rework into a double linked list
  ***************************************************************************/
-void sortCalendar(TAppointment *appointments, int amount);
+void sortCalendar();
 
 /***************************************************************************
  *  Helper: printAppointment
  ***************************************************************************/
-void listCalendar(TAppointment *appointments, int amount);
+void listCalendar(int n, int D);
 
 /***************************************************************************
- *  Frees allocated memory
+ *  Not necessary after rework into a double linked list
  ***************************************************************************/
 void freeCalendar(TAppointment *appointments);
 
@@ -42,7 +42,6 @@ void freeCalendar(TAppointment *appointments);
  *  Prints Information how many new appointmens are created
  ***************************************************************************/
 void printInfoNewAppointments(int n);
-void printInfoSortedAppointments(int n);
 
 /***************************************************************************
  *  Prints aate and aay of the week
@@ -51,4 +50,11 @@ void printDateHeader(TAppointment *a);
 
 void printLineAppointment();
 
-#endif //UEB1_CALENDAR_H
+/***************************************************************************
+ *  Finds a place for a new element
+ ***************************************************************************/
+int orderByDateTime(TAppointment *a, TAppointment *b);
+
+void printDListeinLine(TAppointment *appointment);
+
+#endif

@@ -15,7 +15,7 @@
 *  parameter:   fileName, TAppointment, counter
 *  result :     notZero if was succesful saved
 ****************************************************************************/
-int saveCalendar(char *DbFileName, TAppointment *appointments, int amount);
+int saveCalendar(char *DbFileName, int amount);
 
 
 /***************************************************************************
@@ -40,7 +40,7 @@ int loadAppointment(FILE *DbFile, TAppointment *appointment);
 *  parameter:   fileName, TAppointment, counter
 *  result :     notZero if was succesful opened and a data is transfered into a memory
  *  ***************************************************************************/
-int loadCalendar(char *, TAppointment *, int amount);
+int loadCalendar(char *);
 
 /***************************************************************************
 *  int:    writeDate
