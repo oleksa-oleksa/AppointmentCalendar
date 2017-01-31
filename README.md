@@ -9,4 +9,4 @@ Please check the separate branches, you can see how the project changed with a t
 Project includes:
 - Double linked list
 - Input/Output from xml-file
-- quick sort algorithm 
+- Quicksort algorithm 
